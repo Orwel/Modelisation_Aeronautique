@@ -1,0 +1,42 @@
+# Compiled Object files
+/obj
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Executable
+/bin
+*.exe
+*.dll
+
+# Code::Block speacial files
+*.cbp
+*.depend
+*.layout
+*.cbTemp
+
+# Ogre3D local files
+/media
+Ogre.log
+ogre.cfg
+*.pro*
+
+# Autres
+.directory
+Debug
+Release
+.project
+.cproject
+.settings/*
+*.xml
+*.7z
+*.cfg
