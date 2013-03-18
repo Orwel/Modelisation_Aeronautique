@@ -92,19 +92,21 @@ void BasicTutorial2::createViewports(void)
     mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 }
 
-
+//-------------------------------------------------------------------------------------
 bool BasicTutorial2::mouseMoved( const OIS::MouseEvent &arg )
 {
     if (mTrayMgr->injectMouseMove(arg)) return true;
     orbitalCamera->updateMovement(arg);
 }
 
+//-------------------------------------------------------------------------------------
 bool BasicTutorial2::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
     return true;
 }
 
+//-------------------------------------------------------------------------------------
 bool BasicTutorial2::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
