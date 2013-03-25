@@ -1,15 +1,18 @@
 #include "Application.h"
 
+/*****************************************************************************/
 Application::Application():mRoot(0), mWindow(0), mSceneMgr(0), nCamera(0)
 {
 
 }
 
+/*****************************************************************************/
 Application::~Application()
 {
     OGRE_DELETE mRoot;
 }
 
+/*****************************************************************************/
 bool Application::Initialize ()
 {
 #ifdef _DEBUG
@@ -52,6 +55,7 @@ bool Application::Initialize ()
     return true;
 }
 
+/*****************************************************************************/
 void Application::initScene ()
 {
     // on crée la fenêtre
@@ -85,6 +89,7 @@ void Application::initScene ()
     scene = new Scene(mSceneMgr);
 }
 
+/*****************************************************************************/
 bool Application::start ()
 {
     bool continu = true;

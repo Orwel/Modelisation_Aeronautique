@@ -8,13 +8,15 @@
 
 using namespace Ogre;
 
+
 /**
  * Classe permettant d'initialiser un projet, et contenant la boucle de rendu.
- * Il faut commencer par appeler la mÃ©thode Initialize() puis start() qui lancera la boucle de rendu.
+ * Il faut commencer par appeler la méthode Initialize() puis start() qui lancera la boucle de rendu.
  */
 class Application
 {
 public:
+    /** Constructor */
     Application();
 
     /** Destructor */
@@ -27,6 +29,7 @@ public:
 	bool start ();
 
 private:
+    /** Initialise la scene */
     void initScene ();
 
 private:

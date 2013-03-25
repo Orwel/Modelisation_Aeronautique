@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+/*****************************************************************************/
 Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager)
 {
     setLight();
@@ -15,14 +16,15 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager)
     nCube2->setScale(10,2,2);
 }
 
+/*****************************************************************************/
 Scene::~Scene()
 {
     //dtor
 }
 
+/*****************************************************************************/
 void Scene::setLight()
 {
-    //Ligths
     sceneManager->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2));
     sceneManager->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 

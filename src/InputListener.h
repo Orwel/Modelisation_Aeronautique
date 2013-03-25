@@ -9,16 +9,21 @@
 using namespace Ogre;
 using namespace OIS;
 
+/**
+*   Gestion des evenement provenant de la fenetre, du clavier, de la souris
+*/
 class InputListener: public FrameListener, public WindowEventListener, public KeyListener, public MouseListener
 {
 public:
+    /** Constructor */
     InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWindow* _window,OrbitCamera* _orbitCamera);
+    /** Destructor */
     virtual ~InputListener();
 
 private:
     /** Initialise la gestion des inputs */
 	void startOIS ();
-    // ci-dessous, l'implémentation des méthodes purement virtuelles permettant de gérer les inputs
+    // ci-dessous, l'implementation des methodes purement virtuelles permettant de gerer les inputs
 	// FrameListener
 	bool frameRenderingQueued (const FrameEvent& evt);
 
@@ -36,23 +41,23 @@ private:
 	virtual bool keyReleased (const KeyEvent &e);
 
 private:
-    /** La scène contenant les objets à manipuler */
+    /** La scene contenant les objets a manipuler */
 	Scene *scene;
-	/** Le scene manager, qui crée les objets */
+	/** Le scene manager, qui cree les objets */
 	SceneManager* sceneManager;
-	/** La fenêtre de l'application, créée dans ShortStory */
+	/** La fenetre de l'application */
 	RenderWindow* windows;
-	/** La caméra à gérer avec les touches de clavier et la souris (créée dans ShortStory) */
+	/** La camera � gerer avec les touches de clavier et la souris */
 	OrbitCamera* orbitCamera;
 
-	/** permet de gérer les inputs */
+	/** permet de gerer les inputs */
 	InputManager* inputManager;
 	/** Permet de capter les inputs de la souris */
 	Mouse* mMouse;
-	/** Permet de gérer les inputs du clavier */
+	/** Permet de capter les inputs du clavier */
 	Keyboard* mKeyboard;
 
-    /** Tant que vrai, le programe s'exécute */
+    /** Tant que vrai, le programe s'execute */
     bool mContinuer;
 };
 

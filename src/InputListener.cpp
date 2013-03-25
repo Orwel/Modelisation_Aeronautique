@@ -1,5 +1,6 @@
 #include "InputListener.h"
 
+/*****************************************************************************/
 InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWindow* _window,OrbitCamera* _orbitCamera):
     scene(_scene),sceneManager(_sceneManager),windows(_window),orbitCamera(_orbitCamera)
 {
@@ -7,12 +8,14 @@ InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWin
     mContinuer = true;
 }
 
+/*****************************************************************************/
 InputListener::~InputListener ()
 {
     WindowEventUtilities::removeWindowEventListener(windows, this);
     windowClosed(windows);
 }
 
+/*****************************************************************************/
 void InputListener::startOIS ()
 {
     LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
@@ -37,6 +40,7 @@ void InputListener::startOIS ()
     mKeyboard->setEventCallback(this);
 }
 
+/*****************************************************************************/
 bool InputListener::frameRenderingQueued (const FrameEvent& evt)
 {
     if (windows->isClosed())
@@ -48,6 +52,7 @@ bool InputListener::frameRenderingQueued (const FrameEvent& evt)
     return mContinuer;
 }
 
+/*****************************************************************************/
 void InputListener::windowResized (RenderWindow* wnd)
 {
     unsigned int width, height, depth;
@@ -59,6 +64,7 @@ void InputListener::windowResized (RenderWindow* wnd)
     ms.height = height;
 }
 
+/*****************************************************************************/
 void InputListener::windowClosed (RenderWindow* wnd)
 {
     if (wnd == windows)
@@ -67,22 +73,26 @@ void InputListener::windowClosed (RenderWindow* wnd)
     }
 }
 
+/*****************************************************************************/
 bool InputListener::mouseMoved (const MouseEvent &e)
 {
     orbitCamera->updateMovement(e);
     return true;
 }
 
+/*****************************************************************************/
 bool InputListener::mousePressed (const MouseEvent &arg, MouseButtonID id)
 {
     return true;
 }
 
+/*****************************************************************************/
 bool InputListener::mouseReleased (const MouseEvent &arg, MouseButtonID id)
 {
     return true;
 }
 
+/*****************************************************************************/
 bool InputListener::keyPressed (const KeyEvent &e)
 {
     switch (e.key)
@@ -96,6 +106,7 @@ bool InputListener::keyPressed (const KeyEvent &e)
     return mContinuer;
 }
 
+/*****************************************************************************/
 bool InputListener::keyReleased (const KeyEvent &e)
 {
     return true;
