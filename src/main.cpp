@@ -1,13 +1,9 @@
-#include "BasicTutorial2.h"
+#include "Application.h"
 
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
-#endif
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -17,11 +13,14 @@ int main(int argc, char *argv[])
 #endif
 {
     // Create application object
-    BasicTutorial2 app;
+    Application app;
 
     try
     {
-        app.go();
+        if(app.Initialize())
+        {
+            app.start();
+        }
     }
     catch( Ogre::Exception& e )
     {
@@ -35,7 +34,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-#ifdef __cplusplus
-}
-#endif
