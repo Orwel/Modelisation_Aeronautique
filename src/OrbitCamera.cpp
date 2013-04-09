@@ -42,20 +42,14 @@ void OrbitCamera::updateMovement(const OIS::MouseEvent &evt)
     {
         this->camera->setPosition(this->targetNode->_getDerivedPosition());
         this->camera->yaw(Ogre::Degree(-evt.state.X.rel * 0.25f));
-
-//		Ogre::Vector3 pitch = (this->camera->getOrientation() * Ogre::Vector3::UNIT_Y);
-//		std::cout << pitch << std::endl;
-//
-//		if(pitch < 0) pitch = -pitch;
-//		if((-evt.state.Y.rel > 0 && pitch > 10) ||
-//			(-evt.state.Y.rel < 0 && pitch < 80))
         this->camera->pitch(Ogre::Degree(-evt.state.Y.rel * 0.25f));
 
         this->camera->moveRelative(Ogre::Vector3(0, 0, dist));
+        updateOrbitingMovement(evt.state.X.rel,evt.state.Y.rel,evt.state.Z.rel);
     }
     else if (this->zooming)  // move the camera toward or away from the target
     {
-        this->camera->moveRelative(Ogre::Vector3(0, 0, -evt.state.Y.rel * 0.004f * dist));
+        updateOrbitingMovement(evt.state.Y.rel);
     }
     else if (evt.state.Z.rel != 0)  // move the camera toward or away from the target
     {
@@ -64,6 +58,21 @@ void OrbitCamera::updateMovement(const OIS::MouseEvent &evt)
             this->camera->moveRelative(Ogre::Vector3(0, 0, -evt.state.Z.rel * 0.0008f * dist));
     }
 
+}
+
+void OrbitCamera::updateOrbitingMovement(float x_rel,float y_rel,float z_rel)
+{
+    Ogre::Real dist = (this->camera->getPosition() - this->targetNode->_getDerivedPosition()).length();
+    this->camera->setPosition(this->targetNode->_getDerivedPosition());
+    this->camera->yaw(Ogre::Degree(-x_rel * 0.25f));
+    this->camera->pitch(Ogre::Degree(-y_rel * 0.25f));
+    this->camera->moveRelative(Ogre::Vector3(0, 0, dist));
+}
+
+void OrbitCamera::updateOrbitingMovement(float rel)
+{
+    Ogre::Real dist = (this->camera->getPosition() - this->targetNode->_getDerivedPosition()).length();
+    this->camera->moveRelative(Ogre::Vector3(0, 0, -rel * 0.004f * dist));
 }
 
 Ogre::Camera *OrbitCamera::getCamera(void)

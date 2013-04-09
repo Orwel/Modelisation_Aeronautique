@@ -20,6 +20,8 @@ public:
     OrbitCamera(Ogre::SceneManager *sceneMgr, Ogre::SceneNode *target);
     ~OrbitCamera();
     void updateMovement(const OIS::MouseEvent &evt);
+    void updateOrbitingMovement(float x_rel,float y_rel,float z_rel);
+    void updateOrbitingMovement(float rel);
 
     Ogre::Camera *getCamera(void);
     bool getOrbiting(void);
