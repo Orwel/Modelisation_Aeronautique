@@ -40,11 +40,6 @@ void OrbitCamera::updateMovement(const OIS::MouseEvent &evt)
 
     if (this->orbiting)   // yaw around the target, and pitch locally
     {
-        this->camera->setPosition(this->targetNode->_getDerivedPosition());
-        this->camera->yaw(Ogre::Degree(-evt.state.X.rel * 0.25f));
-        this->camera->pitch(Ogre::Degree(-evt.state.Y.rel * 0.25f));
-
-        this->camera->moveRelative(Ogre::Vector3(0, 0, dist));
         updateOrbitingMovement(evt.state.X.rel,evt.state.Y.rel,evt.state.Z.rel);
     }
     else if (this->zooming)  // move the camera toward or away from the target
