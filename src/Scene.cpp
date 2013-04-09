@@ -1,19 +1,18 @@
 #include "Scene.h"
+#include "Piece.h"
+
+
+using namespace Ogre;
 
 /*****************************************************************************/
 Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager)
 {
     setLight();
-    //Cube test
-    Ogre::Entity* entCube = sceneManager->createEntity("Cube",Ogre::SceneManager::PT_CUBE);
-    Ogre::SceneNode* nCube = sceneManager->getRootSceneNode()->createChildSceneNode("Cube");
-    nCube->attachObject(entCube);
-    nCube->setScale(2,1,10);
 
-    Ogre::Entity* entCube2 = sceneManager->createEntity("Cube2",Ogre::SceneManager::PT_CUBE);
-    Ogre::SceneNode* nCube2 = sceneManager->getRootSceneNode()->createChildSceneNode("Cube2");
-    nCube2->attachObject(entCube2);
-    nCube2->setScale(10,2,2);
+    Piece piece1(*this,100.f,50.f,80.f,true);
+    Piece piece2(*this,20.f,20.f,20.f);
+    piece1.setPosition(70,80,50);
+    piece2.PositionTo(piece1,Piece::POS_Z);
 }
 
 /*****************************************************************************/
@@ -47,4 +46,53 @@ void Scene::setLight()
     spotLight->setDirection(-1, -1, 0);
     spotLight->setPosition(Ogre::Vector3(300, 300, 0));
     spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
+}
+
+ManualObject * Scene::createPavet(float weight, float heigth, float depth,const char * name)
+{
+    weight/=2;
+    heigth/=2;
+    depth/=2;
+    ManualObject* manual;
+    if(name == nullptr)
+        manual = sceneManager->createManualObject();
+    else
+        manual = sceneManager->createManualObject(name);
+    /*Devant*/
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(1,0,0,0.5);
+    manual->position(-weight, -heigth, -depth);
+    manual->position( weight, -heigth, -depth);
+    manual->position( weight,  heigth, -depth);
+    manual->position(-weight,  heigth, -depth);
+    manual->position(-weight, -heigth, -depth);
+    manual->end();
+    /*Derriere*/
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(1,0,0,0.5);
+    manual->position(-weight, -heigth, depth);
+    manual->position( weight, -heigth, depth);
+    manual->position( weight,  heigth, depth);
+    manual->position(-weight,  heigth, depth);
+    manual->position(-weight, -heigth, depth);
+    manual->end();
+    /*Droite*/
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(1,0,0,0.5);
+    manual->position(weight, -heigth, -depth);
+    manual->position(weight, -heigth, depth);
+    manual->position(weight,  heigth, depth);
+    manual->position(weight,  heigth, -depth);
+    manual->position(weight, -heigth, -depth);
+    manual->end();
+    /*Gauche*/
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(1,0,0,0.5);
+    manual->position(-weight, -heigth, -depth);
+    manual->position(-weight, -heigth, depth);
+    manual->position(-weight,  heigth, depth);
+    manual->position(-weight,  heigth, -depth);
+    manual->position(-weight, -heigth, -depth);
+    manual->end();
+    return manual;
 }
