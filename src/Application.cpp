@@ -71,7 +71,6 @@ void Application::initScene ()
     // on crée la caméra
     nCamera = mSceneMgr->getRootSceneNode()->createChildSceneNode("camera");
     orbitalCamera = new OrbitCamera(mSceneMgr,nCamera);
-    orbitalCamera->setZooming(true);
     camera = orbitalCamera->getCamera();
     if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
     {

@@ -23,10 +23,10 @@ public:
     ~Application();
 
     /** Initialise l'appli Ogre, notamment la gestion des inputs */
-	bool Initialize ();
+    bool Initialize ();
 
-	/** Lance la boucle de rendu */
-	bool start ();
+    /** Lance la boucle de rendu */
+    bool start ();
 
 private:
     /** Initialise la scene */
@@ -34,20 +34,20 @@ private:
 
 private:
     /** La racine de Ogre */
-	Root *mRoot;
-	/** Le renderWindow, la fenétre de l'appli */
+    Root *mRoot;
+    /** Le renderWindow, la fenétre de l'appli */
     RenderWindow* mWindow;
-	/** Le scene manager, qui crée les objets */
+    /** Le scene manager, qui crée les objets */
     SceneManager* mSceneMgr;
-	/** L'objet qui créait et manipule la scÃ©ne */
-	Scene* scene;
-	/** Le comportement de la caméra */
-	OrbitCamera* orbitalCamera;
-	/** La caméra */
-	Camera* camera;
-	/** Le noeud de la caméra */
-	SceneNode* nCamera;
-	/** Le gestionnaire d'input */
+    /** L'objet qui créait et manipule la scÃ©ne */
+    Scene* scene;
+    /** Le comportement de la caméra */
+    OrbitCamera* orbitalCamera;
+    /** La caméra */
+    Camera* camera;
+    /** Le noeud de la caméra */
+    SceneNode* nCamera;
+    /** Le gestionnaire d'input */
     InputListener* inputListener;
 };
 
