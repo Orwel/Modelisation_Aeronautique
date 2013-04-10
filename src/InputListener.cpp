@@ -2,11 +2,10 @@
 
 /*****************************************************************************/
 InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWindow* _window,OrbitCamera* _orbitCamera):
-    scene(_scene),sceneManager(_sceneManager),windows(_window),orbitCamera(_orbitCamera)
+    scene(_scene),sceneManager(_sceneManager),windows(_window),modeInput(NONE),orbitCamera(_orbitCamera)
 {
     startOIS();
     mContinuer = true;
-    modeCamera = false;
     zooningOrbitalCamera = false;
 }
 
@@ -78,7 +77,17 @@ void InputListener::windowClosed (RenderWindow* wnd)
 /*****************************************************************************/
 bool InputListener::mouseMoved (const MouseEvent &e)
 {
-    orbitCamera->updateMovement(e);
+    switch(modeInput)
+    {
+    case NONE:
+        break;
+    case MODE_CAMERA:
+        orbitCamera->updateMovement(e);
+        break;
+    case MODE_MOVE_PIECE:
+        scene->moveSelectedPiece(e.state.X.rel,e.state.Y.rel,e.state.Z.rel);
+        break;
+    }
     return true;
 }
 
@@ -87,7 +96,7 @@ bool InputListener::mousePressed (const MouseEvent &arg, MouseButtonID id)
 {
     if (id == OIS::MB_Right)
     {
-        modeCamera = true;
+        modeInput = MODE_CAMERA;
         orbitCamera->setOrbiting(!zooningOrbitalCamera);
         orbitCamera->setZooming(zooningOrbitalCamera);
     }
@@ -99,7 +108,10 @@ bool InputListener::mouseReleased (const MouseEvent &arg, MouseButtonID id)
 {
     if (id == OIS::MB_Right)
     {
-        modeCamera = false;
+        if(scene->isPieceSelected())
+            modeInput = MODE_MOVE_PIECE;
+        else
+            modeInput = NONE;
         orbitCamera->setOrbiting(false);
         orbitCamera->setZooming(false);
     }

@@ -1,53 +1,79 @@
 #include "Piece.h"
+#include "Fuselage.h"
 
 using namespace Ogre;
 
 /*****************************************************************************/
-Piece::Piece(Scene &_scene,float _weight,float _heigth,float _depth,bool _fuselage):scene(_scene),
-    weight(_weight),heigth(_heigth),depth(_depth),fuselage(_fuselage)
+Piece::Piece(Scene& _scene,Fuselage& _fuselage,Volume _volume,Relative _stickFace):
+    scene(_scene),fuselage(_fuselage),volume(_volume),stickFace(_stickFace)
 {
-    manualObject = scene.createPavet(_weight,_heigth,_depth);
+    fuselage.AddPiece(this);
+    manualObject = scene.createPavet(volume);
     node = scene.sceneManager->getRootSceneNode()->createChildSceneNode();
     node->attachObject(manualObject);
+
+    MagnetismFuselage();
+    DontLeaveFuselage();
 }
 
 /*****************************************************************************/
 Piece::~Piece()
 {
-    //dtor
+
 }
 
 /*****************************************************************************/
-void Piece::PositionTo(Piece &piece,Relative face)
+void Piece::Move(float axe1,float axe2)
 {
-    Magnetism(piece, face);
-    if(piece.fuselage)
-        DontLeaveFuselage(piece);
+    Vector3 move;
+    if(stickFace == POS_X || stickFace == NEG_X )
+        move = Vector3(0,axe1,axe2);
+    else if(stickFace == POS_Y || stickFace == NEG_Y )
+        move = Vector3(axe1,0,axe2);
+    else if(stickFace == POS_Z || stickFace == NEG_Z )
+        move = Vector3(axe1,axe2,0);
+
+    node->translate(move);
+    DontLeaveFuselage();
 }
 
 /*****************************************************************************/
-void Piece::Magnetism(Piece &piece,Relative face)
+void Piece::PositionTo(Relative face)
+{
+    stickFace = face;
+    MagnetismFuselage();
+    DontLeaveFuselage();
+}
+
+/*****************************************************************************/
+void Piece::MagnetismFuselage()
+{
+    MagnetismFuselage(stickFace);
+}
+
+/*****************************************************************************/
+void Piece::MagnetismFuselage(Relative face)
 {
     Vector3 pos = node->getPosition();
     switch (face)
     {
     case POS_X:
-        pos.x = -(weight/2) + piece.getPositionFace(face);
+        pos.x = -(volume.w/2) + fuselage.getPositionFace(face);
         break;
     case NEG_X:
-        pos.x = weight/2 + piece.getPositionFace(face);
+        pos.x = volume.w/2 + fuselage.getPositionFace(face);
         break;
     case POS_Y:
-        pos.y = -(heigth/2) + piece.getPositionFace(face);
+        pos.y = -(volume.h/2) + fuselage.getPositionFace(face);
         break;
     case NEG_Y:
-        pos.y = heigth/2 + piece.getPositionFace(face);
+        pos.y = volume.h/2 + fuselage.getPositionFace(face);
         break;
     case POS_Z:
-        pos.z = -(depth/2) + piece.getPositionFace(face);
+        pos.z = -(volume.d/2) + fuselage.getPositionFace(face);
         break;
     case NEG_Z:
-        pos.z = depth/2 + piece.getPositionFace(face);
+        pos.z = volume.d/2 + fuselage.getPositionFace(face);
         break;
     }
     node->setPosition(pos);
@@ -58,40 +84,33 @@ void Piece::setPosition(float x,float y,float z)
     node->setPosition(x,y,z);
 }
 
-float Piece::getPositionFace(Relative face)
+Ogre::Vector3 Piece::getPosition()
 {
-    switch (face)
-    {
-    case POS_X:
-        return weight/2 + node->getPosition().x;
-    case NEG_X:
-        return -weight/2 + node->getPosition().x;
-    case POS_Y:
-        return heigth/2 + node->getPosition().y;
-    case NEG_Y:
-        return -heigth/2 + node->getPosition().y;
-    case POS_Z:
-        return depth/2 + node->getPosition().z;
-    case NEG_Z:
-        return -depth/2 + node->getPosition().z;
-    }
-    return 0.f;
+    return node->getPosition();
 }
 
-void Piece::DontLeaveFuselage(Piece &fuselage)
+float Piece::getPositionFace(Relative face)
 {
+    return volume.getPositionFace(node->getPosition(),face);
+}
+
+/*****************************************************************************/
+void Piece::DontLeaveFuselage()
+{
+    fuselage.getPositionFace(POS_X);
+    getPositionFace(POS_X);
     if(getPositionFace(POS_X) > fuselage.getPositionFace(POS_X))
-        Magnetism(fuselage, POS_X);
+        MagnetismFuselage(POS_X);
     else if(getPositionFace(NEG_X) < fuselage.getPositionFace(NEG_X))
-        Magnetism(fuselage, NEG_X);
+        MagnetismFuselage(NEG_X);
 
     if(getPositionFace(POS_Y) > fuselage.getPositionFace(POS_Y))
-        Magnetism(fuselage, POS_Y);
+        MagnetismFuselage(POS_Y);
     else if(getPositionFace(NEG_Y) < fuselage.getPositionFace(NEG_Y))
-        Magnetism(fuselage, NEG_Y);
+        MagnetismFuselage(NEG_Y);
 
     if(getPositionFace(POS_Z) > fuselage.getPositionFace(POS_Z))
-        Magnetism(fuselage, POS_Z);
+        MagnetismFuselage(POS_Z);
     else if(getPositionFace(NEG_Z) < fuselage.getPositionFace(NEG_Z))
-        Magnetism(fuselage, NEG_Z);
+        MagnetismFuselage(NEG_Z);
 }

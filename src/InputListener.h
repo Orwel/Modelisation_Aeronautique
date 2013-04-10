@@ -42,7 +42,7 @@ private:
 
 private:
     /** La scene contenant les objets a manipuler */
-    Scene *scene;
+    Scene* scene;
     /** Le scene manager, qui cree les objets */
     SceneManager* sceneManager;
     /** La fenetre de l'application */
@@ -59,8 +59,15 @@ private:
 
     /** Tant que vrai, le programe s'execute */
     bool mContinuer;
-    /** Mode déplacer la caméra */
-    bool modeCamera;
+
+    enum ModeInput
+    {
+        NONE,
+        MODE_CAMERA,            /** Mode déplacer la caméra */
+        MODE_MOVE_PIECE         /** Mode déplacer la piéce sélectionnée */
+    };
+    /** Mode de fonctionnement des inputs */
+    ModeInput modeInput;
     /** Zooning true, move false */
     bool zooningOrbitalCamera;
 };

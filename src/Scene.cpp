@@ -1,18 +1,17 @@
 #include "Scene.h"
 #include "Piece.h"
-
+#include "Fuselage.h"
 
 using namespace Ogre;
 
 /*****************************************************************************/
-Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager)
+Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr)
 {
     setLight();
 
-    Piece piece1(*this,100.f,50.f,80.f,true);
-    Piece piece2(*this,20.f,20.f,20.f);
-    piece1.setPosition(70,80,50);
-    piece2.PositionTo(piece1,Piece::POS_Z);
+    Fuselage * fuselage = new Fuselage(*this,Volume(110.f,60.f,90.f),Volume(100.f,50.f,80.f));
+    Piece * piece2 = new Piece(*this,*fuselage,Volume(20.f,20.f,20.f),POS_Z);
+    selected = piece2;
 }
 
 /*****************************************************************************/
@@ -48,11 +47,19 @@ void Scene::setLight()
     spotLight->setSpotlightRange(Ogre::Degree(35), Ogre::Degree(50));
 }
 
-ManualObject * Scene::createPavet(float weight, float heigth, float depth,const char * name)
+/*****************************************************************************/
+void Scene::moveSelectedPiece(float x,float y,float z)
 {
-    weight/=2;
-    heigth/=2;
-    depth/=2;
+    if(selected)
+        selected->Move(x,y);
+}
+
+/*****************************************************************************/
+ManualObject * Scene::createPavet(Volume volume,const char * name)
+{
+    volume.w/=2;
+    volume.h/=2;
+    volume.d/=2;
     ManualObject* manual;
     if(name == nullptr)
         manual = sceneManager->createManualObject();
@@ -61,38 +68,45 @@ ManualObject * Scene::createPavet(float weight, float heigth, float depth,const 
     /*Devant*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
     manual->colour(1,0,0,0.5);
-    manual->position(-weight, -heigth, -depth);
-    manual->position( weight, -heigth, -depth);
-    manual->position( weight,  heigth, -depth);
-    manual->position(-weight,  heigth, -depth);
-    manual->position(-weight, -heigth, -depth);
+    manual->position(-volume.w, -volume.h, -volume.d);
+    manual->position( volume.w, -volume.h, -volume.d);
+    manual->position( volume.w,  volume.h, -volume.d);
+    manual->position(-volume.w,  volume.h, -volume.d);
+    manual->position(-volume.w, -volume.h, -volume.d);
     manual->end();
     /*Derriere*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
     manual->colour(1,0,0,0.5);
-    manual->position(-weight, -heigth, depth);
-    manual->position( weight, -heigth, depth);
-    manual->position( weight,  heigth, depth);
-    manual->position(-weight,  heigth, depth);
-    manual->position(-weight, -heigth, depth);
+    manual->position(-volume.w, -volume.h, volume.d);
+    manual->position( volume.w, -volume.h, volume.d);
+    manual->position( volume.w,  volume.h, volume.d);
+    manual->position(-volume.w,  volume.h, volume.d);
+    manual->position(-volume.w, -volume.h, volume.d);
     manual->end();
     /*Droite*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
     manual->colour(1,0,0,0.5);
-    manual->position(weight, -heigth, -depth);
-    manual->position(weight, -heigth, depth);
-    manual->position(weight,  heigth, depth);
-    manual->position(weight,  heigth, -depth);
-    manual->position(weight, -heigth, -depth);
+    manual->position(volume.w, -volume.h, -volume.d);
+    manual->position(volume.w, -volume.h, volume.d);
+    manual->position(volume.w,  volume.h, volume.d);
+    manual->position(volume.w,  volume.h, -volume.d);
+    manual->position(volume.w, -volume.h, -volume.d);
     manual->end();
     /*Gauche*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
     manual->colour(1,0,0,0.5);
-    manual->position(-weight, -heigth, -depth);
-    manual->position(-weight, -heigth, depth);
-    manual->position(-weight,  heigth, depth);
-    manual->position(-weight,  heigth, -depth);
-    manual->position(-weight, -heigth, -depth);
+    manual->position(-volume.w, -volume.h, -volume.d);
+    manual->position(-volume.w, -volume.h, volume.d);
+    manual->position(-volume.w,  volume.h, volume.d);
+    manual->position(-volume.w,  volume.h, -volume.d);
+    manual->position(-volume.w, -volume.h, -volume.d);
     manual->end();
     return manual;
+}
+
+bool Scene::isPieceSelected()
+{
+    if(selected)
+        return true;
+    return false;
 }

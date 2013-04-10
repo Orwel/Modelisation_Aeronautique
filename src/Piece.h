@@ -2,42 +2,39 @@
 #define PIECE_H
 
 #include "Scene.h"
+#include "Volume.h"
+
+class Fuselage;
 
 class Piece
 {
 public:
-    enum Relative
-    {
-        POS_X,
-        POS_Y,
-        POS_Z,
-        NEG_X,
-        NEG_Y,
-        NEG_Z
-    };
-
-public:
-    Piece(Scene &_scene,float _weight,float _heigth,float _depth,bool _fuselage=false);
+    Piece(Scene& _scene,Fuselage& _fuselage,Volume _volume,Relative _stickFace);
     virtual ~Piece();
-
-    void setPosition(float x,float y,float z);
 
     float getPositionFace(Relative face);
 
-    void PositionTo(Piece &piece,Relative face);
+    void setPosition(float x,float y,float z);
 
-    void Magnetism(Piece &piece,Relative face);
+    Ogre::Vector3 getPosition();
 
-    void DontLeaveFuselage(Piece &fuselage);
+    void Move(float axe1,float axe2);
+
+    void PositionTo(Relative face);
+
+    void MagnetismFuselage();
+    void MagnetismFuselage(Relative face);
+
+    void DontLeaveFuselage();
 
 private:
+    /** La scene contenant les objets a manipuler */
     Scene &             scene;
+    Fuselage &          fuselage;
     Ogre::SceneNode *   node;
     Ogre::ManualObject* manualObject;
-    float               weight;
-    float               heigth;
-    float               depth;
-    bool                fuselage;
+    Volume              volume;
+    Relative            stickFace;
 };
 
 #endif // PIECE_H
