@@ -95,3 +95,7 @@ void OrbitCamera::setZooming(bool zooming)
     this->zooming = zooming;
 }
 
+void OrbitCamera::setTarget(Ogre::SceneNode * target)
+{
+    targetNode = target;
+}

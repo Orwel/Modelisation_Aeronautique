@@ -5,7 +5,7 @@
 using namespace Ogre;
 
 /*****************************************************************************/
-Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr)
+Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr),gravityCenter(*this)
 {
     setLight();
 
@@ -55,7 +55,7 @@ void Scene::moveSelectedPiece(float x,float y,float z)
 }
 
 /*****************************************************************************/
-ManualObject * Scene::createPavet(Volume volume,const char * name)
+ManualObject * Scene::createPavet(Volume volume, Ogre::ColourValue colour,const char * name)
 {
     volume.w/=2;
     volume.h/=2;
@@ -67,7 +67,7 @@ ManualObject * Scene::createPavet(Volume volume,const char * name)
         manual = sceneManager->createManualObject(name);
     /*Devant*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
-    manual->colour(1,0,0,0.5);
+    manual->colour(colour);
     manual->position(-volume.w, -volume.h, -volume.d);
     manual->position( volume.w, -volume.h, -volume.d);
     manual->position( volume.w,  volume.h, -volume.d);
@@ -76,7 +76,7 @@ ManualObject * Scene::createPavet(Volume volume,const char * name)
     manual->end();
     /*Derriere*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
-    manual->colour(1,0,0,0.5);
+    manual->colour(colour);
     manual->position(-volume.w, -volume.h, volume.d);
     manual->position( volume.w, -volume.h, volume.d);
     manual->position( volume.w,  volume.h, volume.d);
@@ -85,7 +85,7 @@ ManualObject * Scene::createPavet(Volume volume,const char * name)
     manual->end();
     /*Droite*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
-    manual->colour(1,0,0,0.5);
+    manual->colour(colour);
     manual->position(volume.w, -volume.h, -volume.d);
     manual->position(volume.w, -volume.h, volume.d);
     manual->position(volume.w,  volume.h, volume.d);
@@ -94,7 +94,7 @@ ManualObject * Scene::createPavet(Volume volume,const char * name)
     manual->end();
     /*Gauche*/
     manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
-    manual->colour(1,0,0,0.5);
+    manual->colour(colour);
     manual->position(-volume.w, -volume.h, -volume.d);
     manual->position(-volume.w, -volume.h, volume.d);
     manual->position(-volume.w,  volume.h, volume.d);
@@ -117,4 +117,9 @@ void Scene::setMagnetism(Relative face)
 {
     if(selected)
         selected->PositionTo(face);
+}
+
+void Scene::CalculateGravityCenter()
+{
+    // Hey hay hyy
 }

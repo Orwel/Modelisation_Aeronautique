@@ -4,6 +4,7 @@
 #include <Ogre.h>
 #include "PieceManager.h"
 #include "Volume.h"
+#include "GravityCenter.h"
 
 class Piece;
 
@@ -23,11 +24,14 @@ public:
     void moveSelectedPiece(float x,float y,float z);
     /** Return true if piece is selected */
     bool isPieceSelected();
-
+    /** Change le magnetism de la piece selectionne */
     void setMagnetism(Relative face);
 
+    /** Calcule et place le centre de gravite du modele */
+    void CalculateGravityCenter();
+
     /** Create with ManualObject */
-    Ogre::ManualObject * createPavet(Volume volume, const char * name=nullptr);
+    Ogre::ManualObject * createPavet(Volume volume, Ogre::ColourValue colour, const char * name=nullptr);
 
 private:
     /** Lumieres */
@@ -42,6 +46,8 @@ public:
     Ogre::SceneNode* nPattern;
     /** Piece selectionnee */
     Piece * selected;
+    /** Centre de gravite du modele */
+    GravityCenter gravityCenter;
 };
 
 #endif // SCENE_H

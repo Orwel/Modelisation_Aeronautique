@@ -16,7 +16,8 @@ public:
     void ClearPiece();
 
 protected:
-    std::list<Piece*> pieces; ///< list of piece
+    typedef std::list<Piece*> ListPiecePtr;
+    ListPiecePtr pieces; ///< list of piece
 
     friend class Piece;
 };

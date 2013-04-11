@@ -3,6 +3,8 @@
 
 #include <Ogre.h>
 
+typedef std::vector<Ogre::Vector3> arrayPoints;
+
 enum Relative
 {
     POS_X,
@@ -12,6 +14,7 @@ enum Relative
     NEG_Y,
     NEG_Z
 };
+
 
 class Volume
 {
@@ -25,6 +28,8 @@ public:
 
     float getPositionFace(Relative face);
     float getPositionFace(Ogre::Vector3 pos,Relative face);
+    void addArrayPoint(arrayPoints points);
+
 public:
 
     float w;        /** Weight */

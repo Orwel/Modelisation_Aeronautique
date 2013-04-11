@@ -5,15 +5,16 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Scene& _scene,Fuselage& _fuselage,Volume _volume,Relative _stickFace):
-    scene(_scene),fuselage(_fuselage),volume(_volume),stickFace(_stickFace)
+    scene(_scene),fuselage(_fuselage),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
+    gravityCenter(scene,node),volume(_volume),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
-    manualObject = scene.createPavet(volume);
-    node = scene.sceneManager->getRootSceneNode()->createChildSceneNode();
+    manualObject = scene.createPavet(volume,Ogre::ColourValue(0,0,1.f));
     node->attachObject(manualObject);
-
     MagnetismFuselage();
     DontLeaveFuselage();
+
+    volume.addArrayPoint(points);
 }
 
 /*****************************************************************************/
@@ -113,4 +114,19 @@ void Piece::DontLeaveFuselage()
         MagnetismFuselage(POS_Z);
     else if(getPositionFace(NEG_Z) < fuselage.getPositionFace(NEG_Z))
         MagnetismFuselage(NEG_Z);
+}
+
+void Piece::CalculateGravityCenter()
+{
+    arrayPoints::iterator it;
+    for(it=points.begin();it!=points.end();it++)
+    {
+        Ogre::Vector3 point = *it;
+    }
+    gravityCenter.setPosition(Vector3::ZERO);
+}
+
+Ogre::Vector3 Piece::getGravityCenter()
+{
+    return gravityCenter.getPosition();
 }

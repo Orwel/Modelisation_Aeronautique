@@ -1,4 +1,5 @@
 #include "InputListener.h"
+#include "Piece.h"
 
 /*****************************************************************************/
 InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWindow* _window,OrbitCamera* _orbitCamera):
@@ -146,6 +147,9 @@ bool InputListener::keyPressed (const KeyEvent &e)
         break;
     case OIS::KC_M:
         scene->setMagnetism(NEG_Z);
+        break;
+    case OIS::KC_B:
+        orbitCamera->setTarget(scene->selected->node);
         break;
     default:
         break;

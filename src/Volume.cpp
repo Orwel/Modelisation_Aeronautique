@@ -44,3 +44,17 @@ float Volume::getPositionFace(Ogre::Vector3 pos,Relative face)
     }
     return 0.f;
 }
+
+/*****************************************************************************/
+void Volume::addArrayPoint(arrayPoints points);
+{
+    points.push_back(Vector3(volume.getPositionFace(POS_X),volume.getPositionFace(POS_Y),volume.getPositionFace(POS_Z)));
+    points.push_back(Vector3(volume.getPositionFace(NEG_X),volume.getPositionFace(POS_Y),volume.getPositionFace(POS_Z)));
+    points.push_back(Vector3(volume.getPositionFace(POS_X),volume.getPositionFace(POS_Y),volume.getPositionFace(NEG_Z)));
+    points.push_back(Vector3(volume.getPositionFace(NEG_X),volume.getPositionFace(POS_Y),volume.getPositionFace(NEG_Z)));
+
+    points.push_back(Vector3(volume.getPositionFace(POS_X),volume.getPositionFace(NEG_Y),volume.getPositionFace(POS_Z)));
+    points.push_back(Vector3(volume.getPositionFace(POS_X),volume.getPositionFace(NEG_Y),volume.getPositionFace(NEG_Z)));
+    points.push_back(Vector3(volume.getPositionFace(NEG_X),volume.getPositionFace(NEG_Y),volume.getPositionFace(POS_Z)));
+    points.push_back(Vector3(volume.getPositionFace(NEG_X),volume.getPositionFace(NEG_Y),volume.getPositionFace(NEG_Z)));
+}
