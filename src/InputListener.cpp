@@ -129,6 +129,24 @@ bool InputListener::keyPressed (const KeyEvent &e)
     case OIS::KC_W:
         zooningOrbitalCamera = !zooningOrbitalCamera;
         break;
+    case OIS::KC_I:
+        scene->setMagnetism(POS_X);
+        break;
+    case OIS::KC_O:
+        scene->setMagnetism(NEG_X);
+        break;
+    case OIS::KC_P:
+        scene->setMagnetism(POS_Y);
+        break;
+    case OIS::KC_K:
+        scene->setMagnetism(NEG_Y);
+        break;
+    case OIS::KC_L:
+        scene->setMagnetism(POS_Z);
+        break;
+    case OIS::KC_M:
+        scene->setMagnetism(NEG_Z);
+        break;
     default:
         break;
     }

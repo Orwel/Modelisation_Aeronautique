@@ -23,8 +23,8 @@ public:
     Volume(float weight,float heigth,float depth);
     virtual ~Volume();
 
+    float getPositionFace(Relative face);
     float getPositionFace(Ogre::Vector3 pos,Relative face);
-
 public:
 
     float w;        /** Weight */

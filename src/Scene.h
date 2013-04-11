@@ -24,6 +24,8 @@ public:
     /** Return true if piece is selected */
     bool isPieceSelected();
 
+    void setMagnetism(Relative face);
+
     /** Create with ManualObject */
     Ogre::ManualObject * createPavet(Volume volume, const char * name=nullptr);
 

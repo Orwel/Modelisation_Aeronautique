@@ -104,9 +104,17 @@ ManualObject * Scene::createPavet(Volume volume,const char * name)
     return manual;
 }
 
+/*****************************************************************************/
 bool Scene::isPieceSelected()
 {
     if(selected)
         return true;
     return false;
+}
+
+/*****************************************************************************/
+void Scene::setMagnetism(Relative face)
+{
+    if(selected)
+        selected->PositionTo(face);
 }

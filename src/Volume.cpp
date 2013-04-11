@@ -19,6 +19,12 @@ Volume::~Volume()
 }
 
 /*****************************************************************************/
+float Volume::getPositionFace(Relative face)
+{
+    return getPositionFace(Ogre::Vector3(0.f,0.f,0.f),face);
+}
+
+/*****************************************************************************/
 float Volume::getPositionFace(Ogre::Vector3 pos,Relative face)
 {
     switch (face)
