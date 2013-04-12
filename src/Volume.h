@@ -1,10 +1,17 @@
 #ifndef VOLUME_H
 #define VOLUME_H
 
+////////////////////////////////////////////////////////////
+// Headers
+////////////////////////////////////////////////////////////
 #include <Ogre.h>
 
 typedef std::vector<Ogre::Vector3> arrayPoints;
 
+/////////////////////////////////////////////////
+/// \brief Define six face on rectangular parallelepiped
+///
+/////////////////////////////////////////////////
 enum Relative
 {
     POS_X,
@@ -15,26 +22,66 @@ enum Relative
     NEG_Z
 };
 
-
+/////////////////////////////////////////////////
+/// \brief Define rectangular parallelepiped
+///
+/////////////////////////////////////////////////
 class Volume
 {
 public:
-
-
-public:
+    ////////////////////////////////////////////////////////////
+    /// \brief Default constructor
+    ///
+    ////////////////////////////////////////////////////////////
     Volume();
+
+    /////////////////////////////////////////////////
+    /// \brief Constructorc from values
+    ///
+    /// \param weight
+    /// \param heigth
+    /// \param depth
+    ///
+    /////////////////////////////////////////////////
     Volume(float weight,float heigth,float depth);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Destructor
+    ///
+    ////////////////////////////////////////////////////////////
     virtual ~Volume();
 
+    /////////////////////////////////////////////////
+    /// \brief Return position of the face
+    ///
+    /// \param face
+    /// \return position of face
+    ///
+    /////////////////////////////////////////////////
     float getPositionFace(Relative face);
+
+    /////////////////////////////////////////////////
+    /// \brief Return position of the face with offset
+    ///
+    /// \param pos  offset from position of rectangular parallelepiped
+    /// \param face
+    /// \return position of face
+    ///
+    /////////////////////////////////////////////////
     float getPositionFace(Ogre::Vector3 pos,Relative face);
+
+    /////////////////////////////////////////////////
+    /// \brief Add some points in array to define rectangular parallelepiped
+    ///
+    /// \param points array of point
+    ///
+    /////////////////////////////////////////////////
     void addArrayPoint(arrayPoints points);
 
 public:
-
-    float w;        /** Weight */
-    float h;        /** Heigth */
-    float d;        /** Depth */
+    float w;        ///< Weight
+    float h;        ///< Heigth
+    float d;        ///< Depth
 
 };
 
