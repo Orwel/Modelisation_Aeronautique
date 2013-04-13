@@ -122,11 +122,14 @@ void Piece::DontLeaveFuselage()
 void Piece::CalculateGravityCenter()
 {
     arrayPoints::iterator it;
+    Ogre::Vector3 bary= Ogre::Vector3::ZERO;
     for(it=points.begin();it!=points.end();it++)
     {
         Ogre::Vector3 point = *it;
+        bary += point;
     }
-    gravityCenter.setPosition(Vector3::ZERO);
+    bary = bary / points.size();
+    gravityCenter.setPosition(bary);
 }
 
 Ogre::Vector3 Piece::getGravityCenter()

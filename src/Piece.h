@@ -112,6 +112,14 @@ public:
     /////////////////////////////////////////////////
     Ogre::Vector3 getGravityCenter();
 
+    /////////////////////////////////////////////////
+    /// \brief Retourne la mass de la piece
+    ///
+    /// \return La mass de la piece
+    ///
+    /////////////////////////////////////////////////
+    inline float getMass(){return mass;}
+
 private:
     Scene &             scene;              ///< Ref to scene
     Fuselage &          fuselage;           ///< Ref to parent fuselage

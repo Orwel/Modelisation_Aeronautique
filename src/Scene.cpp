@@ -15,6 +15,9 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
     Fuselage * fuselage = new Fuselage(*this,Volume(110.f,60.f,90.f),Volume(100.f,50.f,80.f));
     Piece * piece2 = new Piece(*this,*fuselage,Volume(20.f,20.f,20.f),POS_Z);
     selected = piece2;
+    std::cout<<"step Begin"<<std::endl;
+    //fuselage->CalculateGravityCenter();
+    std::cout<<"step End"<<std::endl;
 }
 
 /*****************************************************************************/
