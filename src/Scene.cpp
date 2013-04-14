@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Piece.h"
 #include "Fuselage.h"
+#include "LoaderXML.h"
 
 using namespace Ogre;
 
@@ -12,18 +13,43 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
 {
     setLight();
 
-    Fuselage * fuselage = new Fuselage(*this,Volume(110.f,60.f,90.f),Volume(100.f,50.f,80.f));
-    Piece * piece2 = new Piece(*this,*fuselage,Volume(20.f,20.f,20.f),POS_Z);
-    selected = piece2;
-    std::cout<<"step Begin"<<std::endl;
-    //fuselage->CalculateGravityCenter();
-    std::cout<<"step End"<<std::endl;
+    LoaderXML::LoadModel(*this,"Model1.xml");
+    //Fuselage * fuselage = new Fuselage(*this,3,Volume(110.f,60.f,90.f),5);
+    //Piece * piece2 = new Piece(*this,*fuselage,Volume(20.f,20.f,20.f),POS_Z);
+    //selected = piece2;
+    CalculateGravityCenter();
 }
 
 /*****************************************************************************/
 Scene::~Scene()
 {
-    //dtor
+
+}
+
+/*****************************************************************************/
+void Scene::AddFuselage(Fuselage *fuselage)
+{
+    sections.push_back(FuselagePtr(fuselage));
+}
+
+/*****************************************************************************/
+void Scene::DeleteFuselage(Fuselage *fuselage)
+{
+    ListFuselagePtr::iterator it;
+    for(it = sections.begin() ; it!=sections.end() ; it++)
+    {
+        if(it->get()== fuselage)
+        {
+            sections.erase(it);
+            return;
+        }
+    }
+}
+
+/*****************************************************************************/
+void Scene::ClearFuselages()
+{
+    sections.clear();
 }
 
 /*****************************************************************************/
@@ -127,5 +153,21 @@ void Scene::setMagnetism(Relative face)
 
 void Scene::CalculateGravityCenter()
 {
-    // Hey hay hyy
+    Ogre::Vector3 bary = Ogre::Vector3::ZERO;
+    float massTotal=0;
+
+    /* Calcul des pieces du fuselage */
+    ListFuselagePtr::iterator it;
+    for(it = sections.begin() ; it!=sections.end() ; it++)
+    {
+        Fuselage& section = *(*it);
+        bary+= section.getGravityCenter() * section.getMass();
+        massTotal += section.getMass();
+    }
+
+    if(massTotal>0)
+        bary = bary / massTotal;
+    else
+        bary = Ogre::Vector3::ZERO;
+    gravityCenter.setPosition(bary);
 }

@@ -7,12 +7,12 @@
 using namespace Ogre;
 
 /*****************************************************************************/
-Piece::Piece(Scene& _scene,Fuselage& _fuselage,Volume _volume,Relative _stickFace):
-    scene(_scene),fuselage(_fuselage),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
-    gravityCenter(scene,node),volume(_volume),stickFace(_stickFace)
+Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
+    scene(_fuselage.scene),fuselage(_fuselage),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
+    gravityCenter(scene,node),volume(),stickFace(_stickFace),mass(_mass)
 {
     fuselage.AddPiece(this);
-    manualObject = scene.createPavet(volume,Ogre::ColourValue(0,0,1.f));
+    manualObject = scene.createPavet(volume,Ogre::ColourValue::Blue);
     node->attachObject(manualObject);
     MagnetismFuselage();
     DontLeaveFuselage();
@@ -121,14 +121,7 @@ void Piece::DontLeaveFuselage()
 
 void Piece::CalculateGravityCenter()
 {
-    arrayPoints::iterator it;
-    Ogre::Vector3 bary= Ogre::Vector3::ZERO;
-    for(it=points.begin();it!=points.end();it++)
-    {
-        Ogre::Vector3 point = *it;
-        bary += point;
-    }
-    bary = bary / points.size();
+    Ogre::Vector3 bary = GravityCenter::averagePoints(points);
     gravityCenter.setPosition(bary);
 }
 

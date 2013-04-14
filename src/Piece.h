@@ -23,7 +23,7 @@ public:
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    Piece(Scene& _scene,Fuselage& _fuselage,Volume _volume,Relative _stickFace);
+    Piece(Fuselage& _fuselage,float mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace);
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
@@ -130,7 +130,7 @@ private:
     Volume              volume;             ///< Volume of piece
     Relative            stickFace;          ///< Select face what magnetism the piece
 
-    arrayPoints         points;             ///< Shape of piece
+    ArrayPoints         points;             ///< Shape of piece
 
     friend InputListener;
 };

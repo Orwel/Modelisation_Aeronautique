@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////
 #include <Ogre.h>
 
-typedef std::vector<Ogre::Vector3> arrayPoints;
+typedef std::vector<Ogre::Vector3> ArrayPoints;
 
 /////////////////////////////////////////////////
 /// \brief Define six face on rectangular parallelepiped
@@ -45,6 +45,14 @@ public:
     /////////////////////////////////////////////////
     Volume(float weight,float heigth,float depth);
 
+    /////////////////////////////////////////////////
+    /// \brief Constructorc to create box from array points
+    ///
+    /// \param points define shape for volume box this shape
+    ///
+    /////////////////////////////////////////////////
+    Volume(ArrayPoints& points);
+
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
     ///
@@ -76,7 +84,7 @@ public:
     /// \param points array of point
     ///
     /////////////////////////////////////////////////
-    void addArrayPoint(arrayPoints points);
+    void addArrayPoint(ArrayPoints& points);
 
 public:
     float w;        ///< Weight

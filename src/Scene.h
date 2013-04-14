@@ -5,11 +5,15 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <Ogre.h>
-#include "PieceManager.h"
+#include <Memory>
+#include <List>
 #include "Volume.h"
 #include "GravityCenter.h"
 
+class Fuselage;
 class Piece;
+typedef std::unique_ptr<Fuselage> FuselagePtr;
+typedef std::vector<FuselagePtr> ListFuselagePtr;
 
 /**
 *   Cet objet manipule l'ensemble des objets contenu dans la scene
@@ -22,6 +26,9 @@ public:
     /** Destructor */
     ~Scene();
 
+    void AddFuselage(Fuselage *fuselage);
+    void DeleteFuselage(Fuselage *fuselage);
+    void ClearFuselages();
 
     /** Move selected piece */
     void moveSelectedPiece(float x,float y,float z);
@@ -47,6 +54,8 @@ public:
     Ogre::SceneNode* nCenter;
     /** Noeud parent des elements du modele */
     Ogre::SceneNode* nPattern;
+    /** Listes des sections du fuselage */
+    ListFuselagePtr sections;
     /** Piece selectionnee */
     Piece * selected;
     /** Centre de gravite du modele */

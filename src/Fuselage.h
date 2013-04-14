@@ -27,7 +27,7 @@ public:
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    Fuselage(Scene &_scene,Volume _total,Volume _volume);
+    Fuselage(Scene &_scene,float mass,Volume _total,float thickness);
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
@@ -79,7 +79,7 @@ public:
     GravityCenter       gravityCenter;          ///< Gravity center of fuselage
     Volume              total;                  ///< Volume total of fuselage
     Volume              volume;                 ///< Volume of container
-    arrayPoints         points;                 ///< Array of points to calculate gravity center
+    ArrayPoints         points;                 ///< Array of points to calculate gravity center
     float               mass;                   ///< Mass of fuselage
     float               massTotal;              ///< Mass of fuselage
 };

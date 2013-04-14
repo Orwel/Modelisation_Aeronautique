@@ -12,7 +12,6 @@ GravityCenter::GravityCenter(Scene &_scene,Ogre::SceneNode * parent):scene(_scen
     else
         node = scene.sceneManager->getRootSceneNode()->createChildSceneNode();
     node->attachObject(manualObject);
-
 }
 
 GravityCenter::~GravityCenter()
@@ -28,7 +27,7 @@ void GravityCenter::setParentSceneNode(Ogre::SceneNode * parent)
 
 void GravityCenter::CreateGravityObject()
 {
-    manualObject = scene.createPavet(Volume(0.5,0.5,0.5),Ogre::ColourValue(0,1.f,0));
+    manualObject = scene.createPavet(Volume(0.5,0.5,0.5),Ogre::ColourValue::Green);
 }
 
 Ogre::Vector3 GravityCenter::getPosition()
@@ -39,4 +38,20 @@ Ogre::Vector3 GravityCenter::getPosition()
 void GravityCenter::setPosition(Ogre::Vector3 position)
 {
     node->setPosition(position);
+}
+
+Ogre::Vector3 GravityCenter::averagePoints(ArrayPoints points)
+{
+        Ogre::Vector3 bary = Ogre::Vector3::ZERO;
+        if(points.size() > 0)
+        {
+            ArrayPoints::iterator it;
+            for(it=points.begin();it!=points.end();it++)
+            {
+                Ogre::Vector3 point = *it;
+                bary += point;
+            }
+            bary = bary / points.size();
+        }
+        return bary;
 }
