@@ -37,6 +37,5 @@ Release
 .project
 .cproject
 .settings/*
-*.xml
 *.7z
 *.cfg

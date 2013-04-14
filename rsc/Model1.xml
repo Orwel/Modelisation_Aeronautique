@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ModelisationFactory>
+	<Model name="Model1">
+		<Section mass="10"  x="12" y="10" z="20" w="100" h="120" d="80" thickness="20">
+			<PlacePiece x="10" y="10" z="20" stickFace="pos_x">
+				<Piece name="Piece1" mass="100">
+					<Polygon>
+						<Vertex x="20" y="20"/>
+						<Vertex x="0" y="20"/>
+						<Vertex x="0" y="0"/>
+					</Polygon>
+					<Offset x="60" y="50" z="10"/>
+				</Piece>
+			</PlacePiece>
+		</Section>
+	</Model>
+</ModelisationFactory>

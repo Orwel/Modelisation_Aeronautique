@@ -9,15 +9,28 @@ using namespace Ogre;
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
     scene(_fuselage.scene),fuselage(_fuselage),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
-    gravityCenter(scene,node),volume(),stickFace(_stickFace),mass(_mass)
+    gravityCenter(scene,node),stickFace(_stickFace),mass(_mass)
 {
     fuselage.AddPiece(this);
+
+    //Create point to piece
+    offset /= 2.f;
+
+    for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
+    {
+        points.push_back(Ogre::Vector3(*it+offset));
+    }
+    for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
+        points.push_back(Ogre::Vector3(*it-offset));
+
+    //Create Box
+    volume = Volume(points);
     manualObject = scene.createPavet(volume,Ogre::ColourValue::Blue);
     node->attachObject(manualObject);
+
+
     MagnetismFuselage();
     DontLeaveFuselage();
-
-    volume.addArrayPoint(points);
 }
 
 /*****************************************************************************/

@@ -42,10 +42,10 @@ void LoaderXML::LoadModel(Scene &scene,const std::string &patch)
     else if(std::string(element->Name())=="Model")
     {
         std::string name = getStringAttribute(element,"name");
-        for(   ; element != nullptr ; element = element->NextSiblingElement())
+        for(XMLElement* sectionXML = element->FirstChildElement() ; element != nullptr ; element = element->NextSiblingElement())
         {
-            if(std::string(element->Name())=="Section")
-                LoadSection(element,scene);
+            if(std::string(sectionXML->Name())=="Section")
+                LoadSection(sectionXML,scene);
             else
                 FatalError("LoaderXML::LoadModel => Child of Model is not section in "+patch_file);
         }
@@ -86,17 +86,21 @@ void LoadPiece(XMLElement *placePiece,Fuselage &fuselage)
     XMLElement* pieceXML = placePiece->FirstChildElement();
     if(pieceXML==nullptr)
         FatalError("LoaderXML::LoadPiece => PlacePiece dont have child");
-    XMLElement* polygonXML = pieceXML->FirstChildElement();
+    XMLElement* polygonXML = pieceXML->FirstChildElement("Polygon");
     if(pieceXML==nullptr)
-        FatalError("LoaderXML::LoadPiece => Piece dont have child ");
+        FatalError("LoaderXML::LoadPiece => Piece dont have child Polygon");
+    XMLElement* offsetXML = pieceXML->FirstChildElement("Offset");
+    if(offsetXML==nullptr)
+        FatalError("LoaderXML::LoadPiece => Piece dont have child Offset");
 
     float mass;
     Ogre::Vector3 position,offset;
     ArrayPoints polygon;
     Relative stickFace;
-    position.x = getFloatAttribute(placePiece,"x");
-    position.y = getFloatAttribute(placePiece,"y");
-    position.z = getFloatAttribute(placePiece,"z");
+    position.x = getFloatAttribute(offsetXML,"x");
+    position.y = getFloatAttribute(offsetXML,"y");
+    position.z = getFloatAttribute(offsetXML,"z");
+
     if(getStringAttribute(placePiece,"stickFace")=="pos_x")
         stickFace = POS_X;
     else if(getStringAttribute(placePiece,"stickFace")=="neg_x")
@@ -110,6 +114,10 @@ void LoadPiece(XMLElement *placePiece,Fuselage &fuselage)
     else if(getStringAttribute(placePiece,"stickFace")=="neg_z")
         stickFace = NEG_Z;
 
+    offset.x = getFloatAttribute(offsetXML,"x");
+    offset.y = getFloatAttribute(offsetXML,"y");
+    offset.z = getFloatAttribute(offsetXML,"z");
+
     mass = getFloatAttribute(pieceXML,"mass");
     for(XMLElement* vertexXML = polygonXML->FirstChildElement();vertexXML!=nullptr;vertexXML = vertexXML->NextSiblingElement())
     {
@@ -118,13 +126,8 @@ void LoadPiece(XMLElement *placePiece,Fuselage &fuselage)
             Ogre::Vector3 point;
             point.x = getFloatAttribute(vertexXML,"x");
             point.y = getFloatAttribute(vertexXML,"y");
+            point.z = 0;
             polygon.push_back(point);
-        }
-        else if(std::string(vertexXML->Name())=="Offset")
-        {
-            offset.x = getFloatAttribute(vertexXML,"x");
-            offset.y = getFloatAttribute(vertexXML,"y");
-            offset.z = getFloatAttribute(vertexXML,"z");
         }
         else
         {
