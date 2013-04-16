@@ -12,11 +12,7 @@ using namespace Ogre;
 Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr),gravityCenter(*this)
 {
     setLight();
-
     LoaderXML::LoadModel(*this,"Model1.xml");
-    //Fuselage * fuselage = new Fuselage(*this,3,Volume(110.f,60.f,90.f),5);
-    //Piece * piece2 = new Piece(*this,*fuselage,Volume(20.f,20.f,20.f),POS_Z);
-    //selected = piece2;
     CalculateGravityCenter();
 }
 

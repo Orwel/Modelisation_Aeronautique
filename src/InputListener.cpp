@@ -6,7 +6,7 @@
 
 /*****************************************************************************/
 InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWindow* _window,OrbitCamera* _orbitCamera):
-    scene(_scene),sceneManager(_sceneManager),windows(_window),modeInput(NONE),orbitCamera(_orbitCamera)
+    scene(_scene),sceneManager(_sceneManager),windows(_window),orbitCamera(_orbitCamera),modeInput(NONE)
 {
     startOIS();
     mContinuer = true;
@@ -152,7 +152,7 @@ bool InputListener::keyPressed (const KeyEvent &e)
         scene->setMagnetism(NEG_Z);
         break;
     case OIS::KC_B:
-        orbitCamera->setTarget(scene->selected->node);
+        //orbitCamera->setTarget(scene->selected->node);
         break;
     default:
         break;

@@ -4,8 +4,8 @@
 #include "Base.h"
 
 /*****************************************************************************/
-Base::Base(Scene& _scene):scene(scene),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
-    nodeBox(node->createChildSceneNode()),nodeObject(node->createChildSceneNode())
+Base::Base(Scene& _scene):scene(_scene),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
+        nodeBox(node->createChildSceneNode()),nodeObject(node->createChildSceneNode())
 {
 
 }

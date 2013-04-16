@@ -35,6 +35,7 @@ void LoaderXML::LoadModel(Scene &scene,const std::string &patch)
     if(element==nullptr)
         FatalError("LoaderXML::LoadModel => Root is not ModelisationFactory in "+patch_file);
     element = element->FirstChildElement();
+
     if(element == nullptr)
     {
         FatalError("LoaderXML::LoadModel => No child in "+patch_file);
@@ -78,7 +79,6 @@ void LoadSection(XMLElement *sectionXML,Scene &scene)
         if(std::string(sectionXML->Name())=="PlacePiece")
             LoadPiece(sectionXML,*fuselage);
     }
-
 }
 
 void LoadPiece(XMLElement *placePiece,Fuselage &fuselage)
@@ -119,6 +119,7 @@ void LoadPiece(XMLElement *placePiece,Fuselage &fuselage)
     offset.z = getFloatAttribute(offsetXML,"z");
 
     mass = getFloatAttribute(pieceXML,"mass");
+
     for(XMLElement* vertexXML = polygonXML->FirstChildElement();vertexXML!=nullptr;vertexXML = vertexXML->NextSiblingElement())
     {
         if(std::string(vertexXML->Name())=="Vertex")

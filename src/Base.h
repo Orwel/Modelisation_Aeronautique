@@ -5,7 +5,6 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include "Scene.h"
-#include "Volume.h"
 
 class Base
 {
@@ -33,10 +32,10 @@ public:
 
 
 public:
-    Scene &             scene;
-    Ogre::SceneNode *   node;
-    Ogre::SceneNode *   nodeBox;
-    Ogre::SceneNode *   nodeObject;
+    Scene &             scene;          ///< Ref to scene
+    Ogre::SceneNode *   node;           ///< Main node
+    Ogre::SceneNode *   nodeBox;        ///< Box' node
+    Ogre::SceneNode *   nodeObject;     ///< Object' node
 };
 
 #endif // BASE_H

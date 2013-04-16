@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include "Scene.h"
+#include "Base.h"
 #include "Volume.h"
 #include "GravityCenter.h"
 
@@ -16,7 +16,7 @@ class InputListener;
 ///
 ///
 /////////////////////////////////////////////////
-class Piece
+class Piece : public Base
 {
 public:
     ////////////////////////////////////////////////////////////
@@ -40,25 +40,6 @@ public:
     ///
     /////////////////////////////////////////////////
     float getPositionFace(Relative face);
-
-
-    /////////////////////////////////////////////////
-    /// \brief Set position to piece
-    ///
-    /// \param x
-    /// \param y
-    /// \param z
-    ///
-    /////////////////////////////////////////////////
-    void setPosition(float x,float y,float z);
-
-    /////////////////////////////////////////////////
-    /// \brief Return position of piece
-    ///
-    /// \return position of piece
-    ///
-    /////////////////////////////////////////////////
-    Ogre::Vector3 getPosition();
 
     /////////////////////////////////////////////////
     /// \brief Move position of piece
@@ -121,10 +102,9 @@ public:
     inline float getMass(){return mass;}
 
 private:
-    Scene &             scene;              ///< Ref to scene
-    Fuselage &          fuselage;           ///< Ref to parent fuselage
-    Ogre::SceneNode *   node;               ///< Main node of piece
-    Ogre::ManualObject* manualObject;       ///< Display object to fuselage's volume
+    Fuselage &          fuselage;           ///< Ref to parent fuselage manualBox
+    Ogre::ManualObject* manualBox;          ///< Display object to piece's box
+    Ogre::ManualObject* manualObject;       ///< Display object to piece's shape
     GravityCenter       gravityCenter;      ///< Gravity center of piece
     float               mass;               ///< Mass of fuselage
     Volume              volume;             ///< Volume of piece

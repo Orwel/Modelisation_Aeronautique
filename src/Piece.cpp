@@ -8,8 +8,7 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
-    scene(_fuselage.scene),fuselage(_fuselage),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
-    gravityCenter(scene,node),stickFace(_stickFace),mass(_mass)
+    Base(_fuselage.scene),fuselage(_fuselage),gravityCenter(scene,node),stickFace(_stickFace),mass(_mass)
 {
     fuselage.AddPiece(this);
 
@@ -23,9 +22,11 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
 
     //Create Box
     volume = Volume(points);
-    //manualObject = scene.createPavet(volume,Ogre::ColourValue::Blue);
+    manualBox = scene.createPavet(volume,Ogre::ColourValue::Blue);
+    nodeBox->attachObject(manualBox);
+    //Create shape
     manualObject = scene.createPolygon3D(points,Ogre::ColourValue::Blue);
-    node->attachObject(manualObject);
+    nodeObject->attachObject(manualObject);
 
 
     MagnetismFuselage();
@@ -93,16 +94,6 @@ void Piece::MagnetismFuselage(Relative face)
         break;
     }
     node->setPosition(pos);
-}
-
-void Piece::setPosition(float x,float y,float z)
-{
-    node->setPosition(x,y,z);
-}
-
-Ogre::Vector3 Piece::getPosition()
-{
-    return node->getPosition();
 }
 
 float Piece::getPositionFace(Relative face)
