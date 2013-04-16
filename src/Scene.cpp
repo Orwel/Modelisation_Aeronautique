@@ -136,6 +136,58 @@ ManualObject * Scene::createPavet(Volume volume, Ogre::ColourValue colour,const 
     return manual;
 }
 
+Ogre::ManualObject * Scene::createPolygon3D(ArrayPoints &polygone, Ogre::ColourValue colour,const char * name)
+{
+    unsigned int halfSize = polygone.size()/2;
+    ManualObject* manual;
+    if(name == nullptr)
+        manual = sceneManager->createManualObject();
+    else
+        manual = sceneManager->createManualObject(name);
+    /** Face 1 */
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(colour);
+    for(unsigned int i=0; i<halfSize; i++)
+    {
+        manual->position(polygone[i]);
+    }
+    manual->position(polygone[0]);
+    manual->end();
+    /** Face 2 */
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(colour);
+    for(unsigned int i=halfSize; i<polygone.size(); i++)
+    {
+        manual->position(polygone[i]);
+    }
+    manual->position(polygone[halfSize]);
+    manual->end();
+    /** Face what link face1 and face2 */
+    manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+    manual->colour(colour);
+    manual->position(polygone[0]);
+    manual->position(polygone[halfSize-1]);
+    manual->position(polygone[polygone.size()-1]);
+    manual->position(polygone[halfSize]);
+    manual->position(polygone[0]);
+    manual->end();
+
+    for(unsigned i = 0; i < halfSize-1; i++)
+    {
+        manual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+        manual->colour(colour);
+        manual->position(polygone[i]);
+        manual->position(polygone[i+1]);
+        manual->position(polygone[i+halfSize+1]);
+        manual->position(polygone[i+halfSize]);
+        manual->position(polygone[i]);
+        manual->end();
+    }
+
+
+    return manual;
+}
+
 /*****************************************************************************/
 bool Scene::isPieceSelected()
 {

@@ -42,6 +42,7 @@ public:
 
     /** Create with ManualObject */
     Ogre::ManualObject * createPavet(Volume volume, Ogre::ColourValue colour, const char * name=nullptr);
+    Ogre::ManualObject * createPolygon3D(ArrayPoints &polygone,Ogre::ColourValue colour, const char * name=nullptr);
 
 private:
     /** Lumieres */

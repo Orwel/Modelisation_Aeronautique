@@ -17,15 +17,14 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
     offset /= 2.f;
 
     for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
-    {
         points.push_back(Ogre::Vector3(*it+offset));
-    }
     for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
         points.push_back(Ogre::Vector3(*it-offset));
 
     //Create Box
     volume = Volume(points);
-    manualObject = scene.createPavet(volume,Ogre::ColourValue::Blue);
+    //manualObject = scene.createPavet(volume,Ogre::ColourValue::Blue);
+    manualObject = scene.createPolygon3D(points,Ogre::ColourValue::Blue);
     node->attachObject(manualObject);
 
 
