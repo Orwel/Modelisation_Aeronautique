@@ -10,14 +10,33 @@
 class Base
 {
 public:
-    Base(Scene& _scene,Volume _volume);
+    Base(Scene& _scene);
     ~Base();
+
+    /////////////////////////////////////////////////
+    /// \brief Set position to piece
+    ///
+    /// \param x
+    /// \param y
+    /// \param z
+    ///
+    /////////////////////////////////////////////////
+    void setPosition(float x,float y,float z);
+
+    /////////////////////////////////////////////////
+    /// \brief Return position of piece
+    ///
+    /// \return position of piece
+    ///
+    /////////////////////////////////////////////////
+    Ogre::Vector3 getPosition();
+
 
 public:
     Scene &             scene;
     Ogre::SceneNode *   node;
-    Ogre::ManualObject* manualObject;
-    Volume              volume;
+    Ogre::SceneNode *   nodeBox;
+    Ogre::SceneNode *   nodeObject;
 };
 
 #endif // BASE_H

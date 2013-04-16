@@ -131,12 +131,14 @@ void Piece::DontLeaveFuselage()
         MagnetismFuselage(NEG_Z);
 }
 
+/*****************************************************************************/
 void Piece::CalculateGravityCenter()
 {
     Ogre::Vector3 bary = GravityCenter::averagePoints(points);
     gravityCenter.setPosition(bary);
 }
 
+/*****************************************************************************/
 Ogre::Vector3 Piece::getGravityCenter()
 {
     return gravityCenter.getPosition();
