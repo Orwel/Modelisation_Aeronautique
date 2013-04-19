@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ModelisationFactory>
 	<Piece name="Piece1" mass="100">
-		<polygon>
-			<vertex x="1" y="-1"/>
-			<vertex x="1" y="-2"/>
-			<vertex x="4" y="-2"/>
-		</polygon>
-		<offset x="12" y="5" z="10" />
+		<Polygon>
+			<Vertex x="20" y="20"/>
+			<Vertex x="0" y="20"/>
+			<Vertex x="0" y="0"/>
+			<Vertex x="10" y="-50"/>
+		</Polygon>
+		<Offset x="10" y="10" z="20"/>
 	</Piece>
 </ModelisationFactory>
