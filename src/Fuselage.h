@@ -4,6 +4,7 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
+#include "Base.h"
 #include "Scene.h"
 #include "Volume.h"
 #include "GravityCenter.h"
@@ -20,7 +21,7 @@ typedef std::vector<PiecePtr> ListPiecePtr;
 /// Fuselage calculate it gravity center from it pieces
 ///
 /////////////////////////////////////////////////
-class Fuselage
+class Fuselage : public Base
 {
 public:
     ////////////////////////////////////////////////////////////
@@ -72,8 +73,6 @@ public:
     inline float getMass(){return massTotal;}
 
 public:
-    Scene &             scene;                  ///< Ref to scene
-    Ogre::SceneNode *   node;                   ///< Main node of fuselage
     Ogre::ManualObject* manualObject;           ///< Display object to fuselage's volume
     ListPiecePtr        pieces;
     GravityCenter       gravityCenter;          ///< Gravity center of fuselage

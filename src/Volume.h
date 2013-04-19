@@ -86,6 +86,8 @@ public:
     /////////////////////////////////////////////////
     void addArrayPoint(ArrayPoints& points);
 
+    static void MinMaxFromPoints(ArrayPoints& points,Ogre::Vector3& min,Ogre::Vector3& max);
+
 public:
     float w;        ///< Weight
     float h;        ///< Heigth

@@ -5,13 +5,12 @@
 #include "Piece.h"
 
 /*****************************************************************************/
-Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):scene(_scene),
-    node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),gravityCenter(scene,node),
+Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene),gravityCenter(scene,node),
     total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),mass(_mass),massTotal(1)
 {
     scene.AddFuselage(this);
     manualObject = scene.createPavet(volume,Ogre::ColourValue::Red);
-    node->attachObject(manualObject);
+    nodeBox->attachObject(manualObject);
     volume.addArrayPoint(points);
 }
 
@@ -25,7 +24,6 @@ Fuselage::~Fuselage()
 void Fuselage::AddPiece(Piece *piece)
 {
     pieces.push_back(PiecePtr(piece));
-    //massTotal += piece->getMass();
 }
 
 /*****************************************************************************/

@@ -8,26 +8,29 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
-    Base(_fuselage.scene),fuselage(_fuselage),gravityCenter(scene,node),stickFace(_stickFace),mass(_mass)
+    Base(_fuselage.scene),fuselage(_fuselage),gravityCenter(scene,node),mass(_mass),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
 
     //Create point to piece
+    Ogre::Vector3 min,max,offpos;
+    Volume::MinMaxFromPoints(polygone,min,max);
     offset /= 2.f;
+    offpos = -(min+max)/2.f;
 
     for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
-        points.push_back(Ogre::Vector3(*it+offset));
+        points.push_back(Ogre::Vector3(*it+offpos+offset));
     for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
-        points.push_back(Ogre::Vector3(*it-offset));
+        points.push_back(Ogre::Vector3(*it+offpos-offset));
 
     //Create Box
     volume = Volume(points);
-    manualBox = scene.createPavet(volume,Ogre::ColourValue::Blue);
+    std::cout<<"Iciiiiiii  "<<volume.w<<"  "<<volume.h<<"  "<<volume.d<<std::endl;
+    manualBox = scene.createPavet(volume,Ogre::ColourValue::White);
     nodeBox->attachObject(manualBox);
     //Create shape
     manualObject = scene.createPolygon3D(points,Ogre::ColourValue::Blue);
     nodeObject->attachObject(manualObject);
-
 
     MagnetismFuselage();
     DontLeaveFuselage();

@@ -23,6 +23,12 @@ void Base::setPosition(float x,float y,float z)
 }
 
 /*****************************************************************************/
+void Base::setPosition(Ogre::Vector3 position)
+{
+    node->setPosition(position);
+}
+
+/*****************************************************************************/
 Ogre::Vector3 Base::getPosition()
 {
     return node->getPosition();
