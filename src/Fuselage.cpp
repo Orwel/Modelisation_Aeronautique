@@ -3,14 +3,14 @@
 ////////////////////////////////////////////////////////////
 #include "Fuselage.h"
 #include "Piece.h"
+#include "DisplayObject.h"
 
 /*****************************************************************************/
 Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene),gravityCenter(scene,node),
     total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),mass(_mass),massTotal(1)
 {
     scene.AddFuselage(this);
-    manualObject = scene.createPavet(volume,Ogre::ColourValue::Red);
-    nodeBox->attachObject(manualObject);
+    box.BecomePavet(volume,Ogre::ColourValue::Red);
     volume.addArrayPoint(points);
 }
 

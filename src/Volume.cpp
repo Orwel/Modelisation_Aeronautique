@@ -43,6 +43,8 @@ float Volume::getPositionFace(Ogre::Vector3 pos,Relative face)
 {
     switch (face)
     {
+    case NONE:
+        break;
     case POS_X:
         return w/2 + pos.x;
     case NEG_X:

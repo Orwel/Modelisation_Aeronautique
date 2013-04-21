@@ -5,14 +5,14 @@
 
 /*****************************************************************************/
 Base::Base(Scene& _scene):scene(_scene),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
-        nodeBox(node->createChildSceneNode()),nodeObject(node->createChildSceneNode())
+        box(scene.sceneManager,node),object(scene.sceneManager,node)
 {
 
 }
 
 /*****************************************************************************/
 Base::Base(Scene& _scene,Ogre::SceneNode *parent):scene(_scene),node(parent->createChildSceneNode()),
-        nodeBox(node->createChildSceneNode()),nodeObject(node->createChildSceneNode())
+        box(scene.sceneManager,node),object(scene.sceneManager,node)
 {
 
 }
@@ -20,7 +20,7 @@ Base::Base(Scene& _scene,Ogre::SceneNode *parent):scene(_scene),node(parent->cre
 /*****************************************************************************/
 Base::~Base()
 {
-
+    scene.sceneManager->destroySceneNode(node);
 }
 
 /*****************************************************************************/

@@ -5,16 +5,6 @@
 
 class Scene;
 
-class LoaderXML
-{
-public:
-    LoaderXML();
-    ~LoaderXML();
-
-    static void LoadModel(Scene &scene,const std::string &patch);
-
-private:
-    const std::string directory;
-};
+void LoadModel(Scene &scene,const std::string &patch);
 
 #endif // LOADERXML_H

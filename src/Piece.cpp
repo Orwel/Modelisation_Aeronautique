@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////
 #include "Piece.h"
 #include "Fuselage.h"
+#include "DisplayObject.h"
 
 using namespace Ogre;
 
@@ -25,11 +26,9 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
 
     //Create Box
     volume = Volume(points);
-    manualBox = scene.createPavet(volume,Ogre::ColourValue::White);
-    nodeBox->attachObject(manualBox);
+    box.BecomePavet(volume,Ogre::ColourValue::White);
     //Create shape
-    manualObject = scene.createPolygon3D(points,Ogre::ColourValue::Blue);
-    nodeObject->attachObject(manualObject);
+    object.BecomePolygon3D(points,Ogre::ColourValue::Blue);
 
     MagnetismFuselage();
     DontLeaveFuselage();

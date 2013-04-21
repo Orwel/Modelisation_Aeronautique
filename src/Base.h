@@ -5,12 +5,27 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include "Scene.h"
+#include "DisplayObject.h"
 
 class Base
 {
 public:
+    ////////////////////////////////////////////////////////////
+    /// \brief Default constructor
+    ///
+    ////////////////////////////////////////////////////////////
     Base(Scene& _scene);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Default constructor with scene node parent
+    ///
+    ////////////////////////////////////////////////////////////
     Base(Scene& _scene,Ogre::SceneNode *parent);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Destructor
+    ///
+    ////////////////////////////////////////////////////////////
     ~Base();
 
     /////////////////////////////////////////////////
@@ -45,8 +60,8 @@ public:
 public:
     Scene &             scene;          ///< Ref to scene
     Ogre::SceneNode *   node;           ///< Main node
-    Ogre::SceneNode *   nodeBox;        ///< Box' node
-    Ogre::SceneNode *   nodeObject;     ///< Object' node
+    DisplayObject       box;            ///< Box
+    DisplayObject       object;         ///< Displayed object
 };
 
 #endif // BASE_H

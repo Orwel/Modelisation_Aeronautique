@@ -9,6 +9,7 @@
 #include <List>
 #include "Volume.h"
 #include "GravityCenter.h"
+#include "DisplayObject.h"
 
 class Fuselage;
 class Piece;
@@ -40,10 +41,6 @@ public:
     /** Calcule et place le centre de gravite du modele */
     void CalculateGravityCenter();
 
-    /** Create with ManualObject */
-    Ogre::ManualObject * createPavet(Volume volume, Ogre::ColourValue colour, const char * name=nullptr);
-    Ogre::ManualObject * createPolygon3D(ArrayPoints &polygone,Ogre::ColourValue colour, const char * name=nullptr);
-
 private:
     /** Lumieres */
     void setLight();
@@ -61,6 +58,8 @@ public:
     Piece * selected;
     /** Centre de gravite du modele */
     GravityCenter gravityCenter;
+    /** Zone aim to gravity center */
+    DisplayObject gravityBalance;
 };
 
 #endif // SCENE_H

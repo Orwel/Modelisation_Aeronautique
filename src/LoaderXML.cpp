@@ -12,16 +12,6 @@ void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage);
 Piece* LoadPiece(XMLElement *element,Fuselage &Fuselage,Relative stickFace);
 
 
-LoaderXML::LoaderXML():directory("rsc/")
-{
-
-}
-
-LoaderXML::~LoaderXML()
-{
-
-}
-
 /*****************************************************************************/
 XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 {
@@ -47,7 +37,7 @@ XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 }
 
 /*****************************************************************************/
-void LoaderXML::LoadModel(Scene &scene,const std::string &patch)
+void LoadModel(Scene &scene,const std::string &patch)
 {
     XMLDocument doc;
     XMLElement* modelXML = LoadDocument(doc,patch);
@@ -185,4 +175,3 @@ Piece* LoadPiece(XMLElement *pieceXML,Fuselage &fuselage,Relative stickFace)
     }
     return new Piece(fuselage,mass,polygon,offset,stickFace);
 }
-

@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////
 #include "GravityCenter.h"
 #include "Scene.h"
+#include "DisplayObject.h"
 
 GravityCenter::GravityCenter(Scene &_scene,Ogre::SceneNode * parent):scene(_scene)
 {
@@ -27,7 +28,7 @@ void GravityCenter::setParentSceneNode(Ogre::SceneNode * parent)
 
 void GravityCenter::CreateGravityObject()
 {
-    manualObject = scene.createPavet(Volume(0.5,0.5,0.5),Ogre::ColourValue::Green);
+    manualObject = DisplayObject::createPavet(scene.sceneManager,Volume(0.5,0.5,0.5),Ogre::ColourValue::Green);
 }
 
 Ogre::Vector3 GravityCenter::getPosition()
