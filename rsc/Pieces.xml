@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ModelisationFactory>
-	<Piece name="Piece1" mass="100">
+	<Piece name="Piece1" mass="5">
 		<Polygon>
-			<Vertex x="20" y="20"/>
-			<Vertex x="0" y="20"/>
-			<Vertex x="0" y="0"/>
-			<Vertex x="10" y="-50"/>
+			<Vertex x="10" y="10"/>
+			<Vertex x="30" y="20"/>
+			<Vertex x="20" y="0"/>
+			<Vertex x="-10" y="-50"/>
 		</Polygon>
-		<Offset x="10" y="10" z="20"/>
+		<Offset x="10" y="5" z="5"/>
+	</Piece>
+	<Piece name="Moteur Ionique" mass="10">
+		<Polygon>
+			<Vertex x="-10" y="20"/>
+			<Vertex x="10" y="20"/>
+			<Vertex x="20" y="0"/>
+			<Vertex x="10" y="-20"/>
+			<Vertex x="-10" y="-20"/>
+			<Vertex x="-20	" y="0"/>
+		</Polygon>
+		<Offset x="0" y="0" z="15"/>
+	</Piece>
+	<Piece name="Chicane" mass="15">
+		<Polygon>
+			<Vertex x="0" y="0"/>
+			<Vertex x="20" y="20"/>
+			<Vertex x="40" y="0"/>
+			<Vertex x="60" y="0"/>
+			<Vertex x="60" y="50"/>
+			<Vertex x="50" y="20"/>
+			<Vertex x="40" y="30"/>
+			<Vertex x="30" y="30"/>
+			<Vertex x="10" y="40"/>
+		</Polygon>
+		<Offset x="0" y="0" z="15"/>
 	</Piece>
 </ModelisationFactory>

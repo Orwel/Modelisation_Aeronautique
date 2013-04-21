@@ -2,17 +2,16 @@
 
 <ModelisationFactory>
 	<Model name="Model1">
-		<Section mass="10"  x="12" y="10" z="20" w="100" h="120" d="80" thickness="20">
+		<Section mass="10"  x="0" y="0" z="0" w="300" h="100" d="700" thickness="50">
 		
 			<PlacePiece x="10" y="10" z="20" stickFace="pos_x">
-				<Piece name="Piece1" mass="100">
+				<Piece name="Piece1" mass="6">
 					<Polygon>
-						<Vertex x="20" y="20"/>
-						<Vertex x="0" y="20"/>
+						<Vertex x="5" y="5"/>
+						<Vertex x="0" y="5"/>
 						<Vertex x="0" y="0"/>
-						<Vertex x="10" y="-50"/>
 					</Polygon>
-					<Offset x="10" y="10" z="20"/>
+					<Offset x="5" y="5" z="5"/>
 				</Piece>
 			</PlacePiece>
 			
@@ -20,6 +19,21 @@
 				<LoadPiece file="Pieces.xml" name="Piece1"/>
 			</PlacePiece>
 			
+			<PlacePiece x="10" y="10" z="20" stickFace="neg_z">
+				<LoadPiece file="Pieces.xml" name="Moteur Ionique"/>
+			</PlacePiece>
+		</Section>
+		
+		<Section mass="10"  x="400" y="0" z="0" w="500" h="100" d="200" thickness="10">
+			<PlacePiece x="10" y="10" z="20" stickFace="neg_z">
+				<LoadPiece file="Pieces.xml" name="Moteur Ionique"/>
+			</PlacePiece>
+		</Section>
+		
+		<Section mass="10"  x="-400" y="0" z="0" w="500" h="100" d="200" thickness="10">
+			<PlacePiece x="10" y="10" z="20" stickFace="neg_z">
+				<LoadPiece file="Pieces.xml" name="Chicane"/>
+			</PlacePiece>
 		</Section>
 	</Model>
 </ModelisationFactory>
