@@ -53,6 +53,12 @@ float Fuselage::getPositionFace(Relative face)
 }
 
 /*****************************************************************************/
+float Fuselage::getPositionFaceToPiece(Relative face)
+{
+    return volume.getPositionFace(face);
+}
+
+/*****************************************************************************/
 void Fuselage::CalculateGravityCenter()
 {
     Ogre::Vector3 bary = Ogre::Vector3::ZERO;

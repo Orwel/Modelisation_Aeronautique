@@ -115,20 +115,12 @@ void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage)
     position.y = getFloatAttribute(placePiece,"y");
     position.z = getFloatAttribute(placePiece,"z");
 
-    if(getStringAttribute(placePiece,"stickFace")=="pos_x")
-        stickFace = POS_X;
-    else if(getStringAttribute(placePiece,"stickFace")=="neg_x")
-        stickFace = NEG_X;
-    else if(getStringAttribute(placePiece,"stickFace")=="pos_y")
-        stickFace = POS_Y;
-    else if(getStringAttribute(placePiece,"stickFace")=="neg_y")
-        stickFace = NEG_Y;
-    else if(getStringAttribute(placePiece,"stickFace")=="pos_z")
-        stickFace = POS_Z;
-    else if(getStringAttribute(placePiece,"stickFace")=="neg_z")
-        stickFace = NEG_Z;
 
-    Piece* piece;
+    std::string str_stickFace = getStringAttribute(placePiece,"stickFace");
+    if(!Volume::getRelatif(str_stickFace,stickFace))
+        FatalError("LoaderXML::LoadPlacePiece => attribut stickFace have fail value :"+str_stickFace);
+
+    Piece* piece = nullptr;
     if(std::string(pieceXML->Name())=="Piece")
         piece = LoadPiece(pieceXML,fuselage,stickFace);
     else if(std::string(pieceXML->Name())=="LoadPiece")
@@ -138,21 +130,25 @@ void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage)
 
         XMLDocument doc;
         pieceXML = LoadDocument(doc,file);
-        std::cout<<"pieceXML name = "<<pieceXML->Name()<<std::endl;
-        if(std::string(pieceXML->Name())=="Piece")
+        while(pieceXML!=nullptr)
         {
-            std::cout<<"dazdazdazdazdazdazdadazdaz"<<std::endl;
-            piece = LoadPiece(pieceXML,fuselage,stickFace);
+            if(std::string(pieceXML->Name())=="Piece" && getStringAttribute(pieceXML,"name")==name)
+            {
+                piece = LoadPiece(pieceXML,fuselage,stickFace);
+                break;
+            }
+            pieceXML = pieceXML->NextSiblingElement();
         }
-        else
+        //If piece is not found
+        if(piece == nullptr)
         {
-            FatalError("LoaderXML::LoadPlacePiece => LoadPiece fail from file "+file);
+            FatalError("LoaderXML::LoadPlacePiece => LoadPiece fail from file and name"+file+"  "+name);
         }
 
     }
     else
         FatalError("LoaderXML::LoadPlacePiece => PlacePiece have unknow child "+std::string(pieceXML->Name()));
-    //piece->setPosition(position);
+    piece->setPosition(position);
 }
 
 /*****************************************************************************/

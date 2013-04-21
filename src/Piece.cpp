@@ -8,7 +8,7 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
-    Base(_fuselage.scene),fuselage(_fuselage),gravityCenter(scene,node),mass(_mass),stickFace(_stickFace)
+    Base(_fuselage.scene,_fuselage.node),fuselage(_fuselage),gravityCenter(scene,node),mass(_mass),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
 
@@ -25,7 +25,6 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
 
     //Create Box
     volume = Volume(points);
-    std::cout<<"Iciiiiiii  "<<volume.w<<"  "<<volume.h<<"  "<<volume.d<<std::endl;
     manualBox = scene.createPavet(volume,Ogre::ColourValue::White);
     nodeBox->attachObject(manualBox);
     //Create shape
@@ -58,6 +57,14 @@ void Piece::Move(float axe1,float axe2)
 }
 
 /*****************************************************************************/
+void Piece::setPosition(Ogre::Vector3 position)
+{
+    Base::setPosition(position);
+    MagnetismFuselage();
+    DontLeaveFuselage();
+}
+
+/*****************************************************************************/
 void Piece::PositionTo(Relative face)
 {
     stickFace = face;
@@ -77,23 +84,25 @@ void Piece::MagnetismFuselage(Relative face)
     Vector3 pos = node->getPosition();
     switch (face)
     {
+    case NONE:
+        break;
     case POS_X:
-        pos.x = -(volume.w/2) + fuselage.getPositionFace(face);
+        pos.x = -(volume.w/2) + fuselage.getPositionFaceToPiece(face);
         break;
     case NEG_X:
-        pos.x = volume.w/2 + fuselage.getPositionFace(face);
+        pos.x = volume.w/2 + fuselage.getPositionFaceToPiece(face);
         break;
     case POS_Y:
-        pos.y = -(volume.h/2) + fuselage.getPositionFace(face);
+        pos.y = -(volume.h/2) + fuselage.getPositionFaceToPiece(face);
         break;
     case NEG_Y:
-        pos.y = volume.h/2 + fuselage.getPositionFace(face);
+        pos.y = volume.h/2 + fuselage.getPositionFaceToPiece(face);
         break;
     case POS_Z:
-        pos.z = -(volume.d/2) + fuselage.getPositionFace(face);
+        pos.z = -(volume.d/2) + fuselage.getPositionFaceToPiece(face);
         break;
     case NEG_Z:
-        pos.z = volume.d/2 + fuselage.getPositionFace(face);
+        pos.z = volume.d/2 + fuselage.getPositionFaceToPiece(face);
         break;
     }
     node->setPosition(pos);
@@ -107,21 +116,19 @@ float Piece::getPositionFace(Relative face)
 /*****************************************************************************/
 void Piece::DontLeaveFuselage()
 {
-    fuselage.getPositionFace(POS_X);
-    getPositionFace(POS_X);
-    if(getPositionFace(POS_X) > fuselage.getPositionFace(POS_X))
+    if(getPositionFace(POS_X) > fuselage.getPositionFaceToPiece(POS_X))
         MagnetismFuselage(POS_X);
-    else if(getPositionFace(NEG_X) < fuselage.getPositionFace(NEG_X))
+    else if(getPositionFace(NEG_X) < fuselage.getPositionFaceToPiece(NEG_X))
         MagnetismFuselage(NEG_X);
 
-    if(getPositionFace(POS_Y) > fuselage.getPositionFace(POS_Y))
+    if(getPositionFace(POS_Y) > fuselage.getPositionFaceToPiece(POS_Y))
         MagnetismFuselage(POS_Y);
-    else if(getPositionFace(NEG_Y) < fuselage.getPositionFace(NEG_Y))
+    else if(getPositionFace(NEG_Y) < fuselage.getPositionFaceToPiece(NEG_Y))
         MagnetismFuselage(NEG_Y);
 
-    if(getPositionFace(POS_Z) > fuselage.getPositionFace(POS_Z))
+    if(getPositionFace(POS_Z) > fuselage.getPositionFaceToPiece(POS_Z))
         MagnetismFuselage(POS_Z);
-    else if(getPositionFace(NEG_Z) < fuselage.getPositionFace(NEG_Z))
+    else if(getPositionFace(NEG_Z) < fuselage.getPositionFaceToPiece(NEG_Z))
         MagnetismFuselage(NEG_Z);
 }
 

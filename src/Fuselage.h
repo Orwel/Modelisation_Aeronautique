@@ -41,13 +41,22 @@ public:
     void ClearPieces();
 
     /////////////////////////////////////////////////
-    /// \brief
+    /// \brief Retourne la possition d'une des faces de la section du fuselage
     ///
     /// \param face Indique la face qui va retourner sa position
     /// \return Position de la face sur l'axe indiquer par la face
     ///
     /////////////////////////////////////////////////
     float getPositionFace(Relative face);
+
+    /////////////////////////////////////////////////
+    /// \brief Retourne la possition d'une des faces de la section du fuselage
+    ///
+    /// \param face Indique la face qui va retourner sa position
+    /// \return Position de la face sur l'axe indiquer par la face
+    ///
+    /////////////////////////////////////////////////
+    float getPositionFaceToPiece(Relative face);
 
     /////////////////////////////////////////////////
     /// \brief Calcule le centre de gravité du fuselage

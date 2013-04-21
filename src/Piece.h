@@ -59,6 +59,14 @@ public:
     void PositionTo(Relative face);
 
     /////////////////////////////////////////////////
+    /// \brief set new position and magnetisme to fuselage
+    ///
+    /// \param position new position before aply magnetisme
+    ///
+    /////////////////////////////////////////////////
+    void setPosition(Ogre::Vector3 position);
+
+    /////////////////////////////////////////////////
     /// \brief Stick piece on fuselage's face select by PositionTo
     ///
     /////////////////////////////////////////////////

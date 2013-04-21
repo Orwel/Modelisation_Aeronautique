@@ -104,3 +104,44 @@ void Volume::MinMaxFromPoints(ArrayPoints& points,Ogre::Vector3& min,Ogre::Vecto
         max = Ogre::Vector3::ZERO;
     }
 }
+
+/*****************************************************************************/
+bool Volume::getRelatif(std::string str,Relative &relative)
+{
+    if(str=="none")
+    {
+        relative = NONE;
+        return true;
+    }
+    else if(str=="pos_x")
+    {
+       relative = POS_X;
+       return true;
+    }
+    else if(str=="neg_x")
+    {
+        relative = NEG_X;
+        return true;
+    }
+    else if(str=="pos_y")
+    {
+        relative = POS_Y;
+        return true;
+    }
+    else if(str=="neg_y")
+    {
+        relative = NEG_Y;
+        return true;
+    }
+    else if(str=="pos_z")
+    {
+        relative = POS_Z;
+        return true;
+    }
+    else if(str=="neg_z")
+    {
+        relative = NEG_Z;
+        return true;
+    }
+    return false;
+}

@@ -11,6 +11,13 @@ Base::Base(Scene& _scene):scene(_scene),node(scene.sceneManager->getRootSceneNod
 }
 
 /*****************************************************************************/
+Base::Base(Scene& _scene,Ogre::SceneNode *parent):scene(_scene),node(parent->createChildSceneNode()),
+        nodeBox(node->createChildSceneNode()),nodeObject(node->createChildSceneNode())
+{
+
+}
+
+/*****************************************************************************/
 Base::~Base()
 {
 

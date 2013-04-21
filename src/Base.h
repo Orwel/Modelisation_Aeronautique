@@ -10,6 +10,7 @@ class Base
 {
 public:
     Base(Scene& _scene);
+    Base(Scene& _scene,Ogre::SceneNode *parent);
     ~Base();
 
     /////////////////////////////////////////////////

@@ -14,6 +14,7 @@ typedef std::vector<Ogre::Vector3> ArrayPoints;
 /////////////////////////////////////////////////
 enum Relative
 {
+    NONE,
     POS_X,
     POS_Y,
     POS_Z,
@@ -87,6 +88,8 @@ public:
     void addArrayPoint(ArrayPoints& points);
 
     static void MinMaxFromPoints(ArrayPoints& points,Ogre::Vector3& min,Ogre::Vector3& max);
+
+    static bool getRelatif(std::string str,Relative &relative);
 
 public:
     float w;        ///< Weight
