@@ -5,6 +5,7 @@
 #include "Piece.h"
 #include "Fuselage.h"
 #include "LoaderXML.h"
+#include "ColourConstant.h"
 
 using namespace Ogre;
 
@@ -14,7 +15,7 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
 {
     setLight();
     LoadModel(*this,"Model1.xml");
-    gravityBalance.BecomePavet(Volume(10,10,10),Ogre::ColourValue::White);
+    gravityBalance.BecomePavet(Volume(10,10,10),ColourConstant::balanceGravity);
     CalculateGravityCenter();
 }
 

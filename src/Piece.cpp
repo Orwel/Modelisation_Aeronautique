@@ -4,6 +4,7 @@
 #include "Piece.h"
 #include "Fuselage.h"
 #include "DisplayObject.h"
+#include "ColourConstant.h"
 
 using namespace Ogre;
 
@@ -26,9 +27,9 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
 
     //Create Box
     volume = Volume(points);
-    box.BecomePavet(volume,Ogre::ColourValue::White);
+    box.BecomePavet(volume,ColourConstant::pieceBox);
     //Create shape
-    object.BecomePolygon3D(points,Ogre::ColourValue::Blue);
+    object.BecomePolygon3D(points,ColourConstant::piece);
 
     MagnetismFuselage();
     DontLeaveFuselage();

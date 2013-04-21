@@ -111,8 +111,6 @@ public:
 
 private:
     Fuselage &          fuselage;           ///< Ref to parent fuselage manualBox
-    Ogre::ManualObject* manualBox;          ///< Display object to piece's box
-    Ogre::ManualObject* manualObject;       ///< Display object to piece's shape
     GravityCenter       gravityCenter;      ///< Gravity center of piece
     float               mass;               ///< Mass of fuselage
     Volume              volume;             ///< Volume of piece

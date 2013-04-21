@@ -13,6 +13,7 @@ public:
     DisplayObject(Ogre::SceneManager *sceneManager);
     DisplayObject(Ogre::SceneManager *sceneManager,Ogre::SceneNode *parent);
 
+    /** Become display object */
     void BecomePavet(Volume volume, Ogre::ColourValue colour);
     void BecomePolygon3D(ArrayPoints &polygone,Ogre::ColourValue colour);
 

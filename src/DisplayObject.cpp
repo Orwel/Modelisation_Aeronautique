@@ -33,7 +33,7 @@ void DisplayObject::BecomePolygon3D(ArrayPoints &polygone,Ogre::ColourValue colo
 {
     if(manualObject)
         sceneManager->destroyManualObject(manualObject);
-    manualObject = createPavet(sceneManager,polygone,colour);
+    manualObject = createPolygon3D(sceneManager,polygone,colour);
     node->attachObject(manualObject);
 }
 
