@@ -25,7 +25,6 @@ LoaderXML::~LoaderXML()
 /*****************************************************************************/
 XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 {
-    std::cout<<"LoadDocument begin path = "<<patch<<std::endl;
     std::string directory("../../rsc/");
     std::string patch_file = directory+patch;
     ;
@@ -44,8 +43,6 @@ XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
     {
         FatalError("LoaderXML::LoadModel => No child in "+patch_file);
     }
-    std::cout<<"Element name = "<<element->Name()<<std::endl;
-    std::cout<<"LoadDocument end path = "<<patch<<std::endl;
     return element;
 }
 
@@ -53,17 +50,26 @@ XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 void LoaderXML::LoadModel(Scene &scene,const std::string &patch)
 {
     XMLDocument doc;
-    XMLElement* element = LoadDocument(doc,patch);
+    XMLElement* modelXML = LoadDocument(doc,patch);
 
-    if(element == nullptr)
+    if(modelXML == nullptr)
     {
         FatalError("LoaderXML::LoadModel => No child in "+patch);
     }
-    else if(std::string(element->Name())=="Model")
+    else if(std::string(modelXML->Name())=="Model")
     {
-        std::string name = getStringAttribute(element,"name");
-        for(XMLElement* sectionXML = element->FirstChildElement() ; element != nullptr ; element = element->NextSiblingElement())
+        std::string nameModel = getStringAttribute(modelXML,"name");
+        for(XMLElement* sectionXML = modelXML->FirstChildElement() ; sectionXML != nullptr ; sectionXML = sectionXML->NextSiblingElement())
         {
+            std::cout<<std::endl;
+            std::cout<<std::endl;
+            std::cout<<std::endl;
+            std::cout<<"dqsdfsdhgfdsfhgdshgfdsqfhgsdfsfsfdqsfdsqdqs"<<std::endl;
+            std::cout<<"dqsdfsdhgfdsfhgdshgfdsqfhgsdfsfsfdqsfdsqdqs"<<std::endl;
+            std::cout<<"dqsdfsdhgfdsfhgdshgfdsqfhgsdfsfsfdqsfdsqdqs"<<std::endl;
+            std::cout<<std::endl;
+            std::cout<<std::endl;
+            std::cout<<std::endl;
             if(std::string(sectionXML->Name())=="Section")
                 LoadSection(sectionXML,scene);
             else
