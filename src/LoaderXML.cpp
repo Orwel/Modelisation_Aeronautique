@@ -61,15 +61,6 @@ void LoaderXML::LoadModel(Scene &scene,const std::string &patch)
         std::string nameModel = getStringAttribute(modelXML,"name");
         for(XMLElement* sectionXML = modelXML->FirstChildElement() ; sectionXML != nullptr ; sectionXML = sectionXML->NextSiblingElement())
         {
-            std::cout<<std::endl;
-            std::cout<<std::endl;
-            std::cout<<std::endl;
-            std::cout<<"dqsdfsdhgfdsfhgdshgfdsqfhgsdfsfsfdqsfdsqdqs"<<std::endl;
-            std::cout<<"dqsdfsdhgfdsfhgdshgfdsqfhgsdfsfsfdqsfdsqdqs"<<std::endl;
-            std::cout<<"dqsdfsdhgfdsfhgdshgfdsqfhgsdfsfsfdqsfdsqdqs"<<std::endl;
-            std::cout<<std::endl;
-            std::cout<<std::endl;
-            std::cout<<std::endl;
             if(std::string(sectionXML->Name())=="Section")
                 LoadSection(sectionXML,scene);
             else
