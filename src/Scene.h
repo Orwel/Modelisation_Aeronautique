@@ -40,6 +40,8 @@ public:
     /** Calcule et place le centre de gravite du modele */
     void CalculateGravityCenter();
 
+    void DisplayGravityCenterAllEntity();
+
 private:
     /** Lumieres */
     void setLight();

@@ -92,6 +92,8 @@ public:
     /////////////////////////////////////////////////
     void CalculateGravityCenter();
 
+    void Display();
+
 private:
     Fuselage &          fuselage;           ///< Ref to parent fuselage manualBox
     Volume              volume;             ///< Volume of piece

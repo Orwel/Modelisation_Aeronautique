@@ -10,7 +10,7 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
-    Base(_fuselage.scene,_fuselage.node,mass),fuselage(_fuselage),stickFace(_stickFace)
+    Base(_fuselage.scene,_fuselage.node,_mass),fuselage(_fuselage),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
 
@@ -139,4 +139,10 @@ void Piece::CalculateGravityCenter()
 {
     Ogre::Vector3 bary = Volume::averagePoints(points);
     gravityCenter.setPosition(bary);
+}
+
+/*****************************************************************************/
+void Piece::Display()
+{
+    std::cout<<"Gravity center "<<getGravityCenter()<<"  Position "<<getPosition()<<"   Mass "<<mass<<std::endl;
 }

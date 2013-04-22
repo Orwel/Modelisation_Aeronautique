@@ -7,7 +7,7 @@
 #include "ColourConstant.h"
 
 /*****************************************************************************/
-Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene,mass),
+Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene,_mass),
     total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),massTotal(1)
 {
     scene.AddFuselage(this);
@@ -71,6 +71,7 @@ void Fuselage::CalculateGravityCenter()
     for(it = pieces.begin() ; it!=pieces.end() ; it++)
     {
         Piece& piece = *(*it);
+        piece.CalculateGravityCenter();
         bary+= piece.getGravityCenterMorePosition() * piece.getMass();
         massTotal += piece.getMass();
     }
