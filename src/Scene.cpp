@@ -10,11 +10,12 @@
 using namespace Ogre;
 
 /*****************************************************************************/
-Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr),gravityCenter(*this),
+Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr),gravityCenter(sceneManager),
     gravityBalance(sceneManager)
 {
     setLight();
-    LoadModel(*this,"Model1.xml");
+    LoadModel(*this,"Model2.xml");
+    gravityCenter.BecomePavet(Volume(0.5,0.5,0.5),ColourConstant::gravityCenterModel);
     gravityBalance.BecomePavet(Volume(10,10,10),ColourConstant::balanceGravity);
     CalculateGravityCenter();
 }
@@ -110,7 +111,8 @@ void Scene::CalculateGravityCenter()
     for(it = sections.begin() ; it!=sections.end() ; it++)
     {
         Fuselage& section = *(*it);
-        bary+= section.getGravityCenter() * section.getMass();
+        section.CalculateGravityCenter();
+        bary+= section.getGravityCenterMorePosition() * section.getMass();
         massTotal += section.getMass();
     }
 
@@ -119,4 +121,21 @@ void Scene::CalculateGravityCenter()
     else
         bary = Ogre::Vector3::ZERO;
     gravityCenter.setPosition(bary);
+}
+
+void Scene::DisplayGravityCenterAllEntity()
+{
+    std::cout<<"DisplayGravityCenterAllEntity"<<std::endl;
+    int countSection=0;
+    for(ListFuselagePtr::iterator itF = sections.begin();itF != sections.end();itF++)
+    {
+        int countPiece=0;
+        for(ListPiecePtr::iterator itP = (*itF)->pieces.begin();itP != (*itF)->pieces.end();itP++)
+        {
+            std::cout<<"Piece "<<++countPiece<<std::endl;
+            (*itP)->Display();
+        }
+        std::cout<<"Section "<<++countSection<<" : "<<(*itF)->getGravityCenter()<<std::endl;
+    }
+    std::cout<<"Model : "<<gravityCenter.getPosition()<<std::endl;
 }

@@ -7,11 +7,12 @@
 #include "ColourConstant.h"
 
 /*****************************************************************************/
-Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene),gravityCenter(scene,node),
-    total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),mass(_mass),massTotal(1)
+Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene,_mass),
+    total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),massTotal(1)
 {
     scene.AddFuselage(this);
     box.BecomePavet(volume,ColourConstant::fuselageBox);
+    CreateGravityObject();
     volume.addArrayPoint(points);
 }
 
@@ -70,12 +71,13 @@ void Fuselage::CalculateGravityCenter()
     for(it = pieces.begin() ; it!=pieces.end() ; it++)
     {
         Piece& piece = *(*it);
-        bary+= piece.getGravityCenter() * piece.getMass();
+        piece.CalculateGravityCenter();
+        bary+= piece.getGravityCenterMorePosition() * piece.getMass();
         massTotal += piece.getMass();
     }
 
     /* Calcul de la section du fuselage */
-    Ogre::Vector3 baryF = GravityCenter::averagePoints(points);
+    Ogre::Vector3 baryF = Volume::averagePoints(points);
     bary += baryF * this->mass;
     massTotal += this->mass;
 
@@ -84,10 +86,4 @@ void Fuselage::CalculateGravityCenter()
     else
         bary = Ogre::Vector3::ZERO;
     gravityCenter.setPosition(bary);
-}
-
-/*****************************************************************************/
-Ogre::Vector3 Fuselage::getGravityCenter()
-{
-    return gravityCenter.getPosition();
 }

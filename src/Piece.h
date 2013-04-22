@@ -6,7 +6,6 @@
 ////////////////////////////////////////////////////////////
 #include "Base.h"
 #include "Volume.h"
-#include "GravityCenter.h"
 
 class Fuselage;
 class InputListener;
@@ -93,29 +92,12 @@ public:
     /////////////////////////////////////////////////
     void CalculateGravityCenter();
 
-    /////////////////////////////////////////////////
-    /// \brief Retourne la position du centre de gravite
-    ///
-    /// \return La position du centre de gravite
-    ///
-    /////////////////////////////////////////////////
-    Ogre::Vector3 getGravityCenter();
-
-    /////////////////////////////////////////////////
-    /// \brief Retourne la mass de la piece
-    ///
-    /// \return La mass de la piece
-    ///
-    /////////////////////////////////////////////////
-    inline float getMass(){return mass;}
+    void Display();
 
 private:
     Fuselage &          fuselage;           ///< Ref to parent fuselage manualBox
-    GravityCenter       gravityCenter;      ///< Gravity center of piece
-    float               mass;               ///< Mass of fuselage
     Volume              volume;             ///< Volume of piece
     Relative            stickFace;          ///< Select face what magnetism the piece
-
     ArrayPoints         points;             ///< Shape of piece
 
     friend InputListener;

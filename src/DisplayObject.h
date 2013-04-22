@@ -13,6 +13,9 @@ public:
     DisplayObject(Ogre::SceneManager *sceneManager);
     DisplayObject(Ogre::SceneManager *sceneManager,Ogre::SceneNode *parent);
 
+    void setPosition(Ogre::Vector3 position);
+    Ogre::Vector3 getPosition();
+
     /** Become display object */
     void BecomePavet(Volume volume, Ogre::ColourValue colour);
     void BecomePolygon3D(ArrayPoints &polygone,Ogre::ColourValue colour);

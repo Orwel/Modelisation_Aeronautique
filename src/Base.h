@@ -14,13 +14,13 @@ public:
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    Base(Scene& _scene);
+    Base(Scene& _scene,float _mass = 1.f);
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor with scene node parent
     ///
     ////////////////////////////////////////////////////////////
-    Base(Scene& _scene,Ogre::SceneNode *parent);
+    Base(Scene& _scene,Ogre::SceneNode *parent,float _mass = 1.f);
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
@@ -56,12 +56,43 @@ public:
     /////////////////////////////////////////////////
     Ogre::Vector3 getPosition();
 
+    /////////////////////////////////////////////////
+    /// \brief Retourne la position du centre de gravite
+    ///
+    /// \return La position du centre de gravite
+    ///
+    /////////////////////////////////////////////////
+    Ogre::Vector3 getGravityCenter();
+
+        /////////////////////////////////////////////////
+    /// \brief Retourne la position du centre de gravite plus la position du noeud
+    ///
+    /// \return la position du centre de gravite plus la position du noeud
+    ///
+    /////////////////////////////////////////////////
+    Ogre::Vector3 getGravityCenterMorePosition();
+
+    /////////////////////////////////////////////////
+    /// \brief Créer les objets à afficher pour representer le centre de gravite
+    ///
+    /////////////////////////////////////////////////
+    void CreateGravityObject();
+
+    /////////////////////////////////////////////////
+    /// \brief Return mass
+    ///
+    /// \return mass value
+    ///
+    /////////////////////////////////////////////////
+    inline float getMass(){return mass;}
 
 public:
     Scene &             scene;          ///< Ref to scene
     Ogre::SceneNode *   node;           ///< Main node
     DisplayObject       box;            ///< Box
     DisplayObject       object;         ///< Displayed object
+    DisplayObject       gravityCenter;  ///< Gravity center of piece
+    float               mass;           ///< Mass of object
 };
 
 #endif // BASE_H

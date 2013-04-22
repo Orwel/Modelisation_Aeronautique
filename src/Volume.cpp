@@ -108,6 +108,23 @@ void Volume::MinMaxFromPoints(ArrayPoints& points,Ogre::Vector3& min,Ogre::Vecto
 }
 
 /*****************************************************************************/
+Ogre::Vector3 Volume::averagePoints(ArrayPoints points)
+{
+        Ogre::Vector3 bary = Ogre::Vector3::ZERO;
+        if(points.size() > 0)
+        {
+            ArrayPoints::iterator it;
+            for(it=points.begin();it!=points.end();it++)
+            {
+                Ogre::Vector3 point = *it;
+                bary += point;
+            }
+            bary = bary / points.size();
+        }
+        return bary;
+}
+
+/*****************************************************************************/
 bool Volume::getRelatif(std::string str,Relative &relative)
 {
     if(str=="none")

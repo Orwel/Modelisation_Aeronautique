@@ -154,6 +154,9 @@ bool InputListener::keyPressed (const KeyEvent &e)
     case OIS::KC_B:
         scene->ClearFuselages();
         break;
+    case OIS::KC_N:
+        scene->DisplayGravityCenterAllEntity();
+        break;
     default:
         break;
     }

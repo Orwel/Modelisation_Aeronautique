@@ -10,7 +10,7 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
-    Base(_fuselage.scene,_fuselage.node),fuselage(_fuselage),gravityCenter(scene,node),mass(_mass),stickFace(_stickFace)
+    Base(_fuselage.scene,_fuselage.node,_mass),fuselage(_fuselage),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
 
@@ -30,6 +30,8 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
     box.BecomePavet(volume,ColourConstant::pieceBox);
     //Create shape
     object.BecomePolygon3D(points,ColourConstant::piece);
+    //Create Gravity center
+    CreateGravityObject();
 
     MagnetismFuselage();
     DontLeaveFuselage();
@@ -135,12 +137,12 @@ void Piece::DontLeaveFuselage()
 /*****************************************************************************/
 void Piece::CalculateGravityCenter()
 {
-    Ogre::Vector3 bary = GravityCenter::averagePoints(points);
+    Ogre::Vector3 bary = Volume::averagePoints(points);
     gravityCenter.setPosition(bary);
 }
 
 /*****************************************************************************/
-Ogre::Vector3 Piece::getGravityCenter()
+void Piece::Display()
 {
-    return gravityCenter.getPosition();
+    std::cout<<"Gravity center "<<getGravityCenter()<<"  Position "<<getPosition()<<"   Mass "<<mass<<std::endl;
 }
