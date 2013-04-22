@@ -20,6 +20,18 @@ DisplayObject::DisplayObject(SceneManager *_sceneManager,SceneNode *parent):scen
 }
 
 /*****************************************************************************/
+void DisplayObject::setPosition(Ogre::Vector3 position)
+{
+    node->setPosition(position);
+}
+
+/*****************************************************************************/
+Ogre::Vector3 DisplayObject::getPosition()
+{
+    return node->getPosition();
+}
+
+/*****************************************************************************/
 void DisplayObject::BecomePavet(Volume volume, Ogre::ColourValue colour)
 {
     if(manualObject)
@@ -36,7 +48,6 @@ void DisplayObject::BecomePolygon3D(ArrayPoints &polygone,Ogre::ColourValue colo
     manualObject = createPolygon3D(sceneManager,polygone,colour);
     node->attachObject(manualObject);
 }
-
 
 /*****************************************************************************/
 ManualObject * DisplayObject::createPavet(SceneManager *sceneManager,Volume volume, ColourValue colour,const char * name)

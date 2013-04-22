@@ -56,12 +56,19 @@ public:
     /////////////////////////////////////////////////
     Ogre::Vector3 getPosition();
 
+    /////////////////////////////////////////////////
+    /// \brief Créer les objets à afficher pour representer le centre de gravite
+    ///
+    /////////////////////////////////////////////////
+    void CreateGravityObject();
+
 
 public:
     Scene &             scene;          ///< Ref to scene
     Ogre::SceneNode *   node;           ///< Main node
     DisplayObject       box;            ///< Box
     DisplayObject       object;         ///< Displayed object
+    DisplayObject       gravityCenter;  ///< Gravity center of piece
 };
 
 #endif // BASE_H

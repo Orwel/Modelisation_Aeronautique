@@ -7,7 +7,6 @@
 #include "Base.h"
 #include "Scene.h"
 #include "Volume.h"
-#include "GravityCenter.h"
 
 #include <Memory>
 #include <List>
@@ -83,8 +82,7 @@ public:
 
 public:
     Ogre::ManualObject* manualObject;           ///< Display object to fuselage's volume
-    ListPiecePtr        pieces;
-    GravityCenter       gravityCenter;          ///< Gravity center of fuselage
+    ListPiecePtr        pieces;                 ///w List piece in this section of fuselage
     Volume              total;                  ///< Volume total of fuselage
     Volume              volume;                 ///< Volume of container
     ArrayPoints         points;                 ///< Array of points to calculate gravity center

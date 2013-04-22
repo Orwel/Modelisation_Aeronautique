@@ -7,11 +7,12 @@
 #include "ColourConstant.h"
 
 /*****************************************************************************/
-Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene),gravityCenter(scene,node),
+Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene),
     total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),mass(_mass),massTotal(1)
 {
     scene.AddFuselage(this);
     box.BecomePavet(volume,ColourConstant::fuselageBox);
+    CreateGravityObject();
     volume.addArrayPoint(points);
 }
 
@@ -75,7 +76,7 @@ void Fuselage::CalculateGravityCenter()
     }
 
     /* Calcul de la section du fuselage */
-    Ogre::Vector3 baryF = GravityCenter::averagePoints(points);
+    Ogre::Vector3 baryF = Volume::averagePoints(points);
     bary += baryF * this->mass;
     massTotal += this->mass;
 

@@ -10,7 +10,7 @@
 using namespace Ogre;
 
 /*****************************************************************************/
-Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr),gravityCenter(*this),
+Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),selected(nullptr),gravityCenter(sceneManager),
     gravityBalance(sceneManager)
 {
     setLight();

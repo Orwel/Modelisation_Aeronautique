@@ -8,7 +8,6 @@
 #include <Memory>
 #include <List>
 #include "Volume.h"
-#include "GravityCenter.h"
 #include "DisplayObject.h"
 
 class Fuselage;
@@ -57,7 +56,7 @@ public:
     /** Piece selectionnee */
     Piece * selected;
     /** Centre de gravite du modele */
-    GravityCenter gravityCenter;
+    DisplayObject gravityCenter;
     /** Zone aim to gravity center */
     DisplayObject gravityBalance;
 };

@@ -87,8 +87,36 @@ public:
     /////////////////////////////////////////////////
     void addArrayPoint(ArrayPoints& points);
 
+
+    /////////////////////////////////////////////////
+    /// \brief Find min and max for each axis
+    /// min.x and min.y can not provide same point
+    ///
+    /// \param  points array points
+    /// \param  min ref to min value who will be return
+    /// \param  max ref to max value who will be return
+    ///
+    /////////////////////////////////////////////////
     static void MinMaxFromPoints(ArrayPoints& points,Ogre::Vector3& min,Ogre::Vector3& max);
 
+    /////////////////////////////////////////////////
+    /// \brief return average point
+    ///
+    /// \param  points array points to make average
+    /// \return average point
+    ///
+    /////////////////////////////////////////////////
+    static Ogre::Vector3 averagePoints(ArrayPoints points);
+
+
+    /////////////////////////////////////////////////
+    /// \brief get relatif from string name
+    ///
+    /// \param str  string name of relatif
+    /// \param relative orresponding string name
+    /// \return true if name exist, else false
+    ///
+    /////////////////////////////////////////////////
     static bool getRelatif(std::string str,Relative &relative);
 
 public:

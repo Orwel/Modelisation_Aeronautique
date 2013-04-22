@@ -6,7 +6,6 @@
 ////////////////////////////////////////////////////////////
 #include "Base.h"
 #include "Volume.h"
-#include "GravityCenter.h"
 
 class Fuselage;
 class InputListener;
@@ -111,11 +110,9 @@ public:
 
 private:
     Fuselage &          fuselage;           ///< Ref to parent fuselage manualBox
-    GravityCenter       gravityCenter;      ///< Gravity center of piece
     float               mass;               ///< Mass of fuselage
     Volume              volume;             ///< Volume of piece
     Relative            stickFace;          ///< Select face what magnetism the piece
-
     ArrayPoints         points;             ///< Shape of piece
 
     friend InputListener;
