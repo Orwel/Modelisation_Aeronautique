@@ -64,13 +64,21 @@ public:
     /////////////////////////////////////////////////
     Ogre::Vector3 getGravityCenter();
 
-        /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
     /// \brief Retourne la position du centre de gravite plus la position du noeud
     ///
     /// \return la position du centre de gravite plus la position du noeud
     ///
     /////////////////////////////////////////////////
     Ogre::Vector3 getGravityCenterMorePosition();
+
+    /////////////////////////////////////////////////
+    /// \brief set if box is display or no
+    ///
+    /// \param box true if box is displayed
+    ///
+    /////////////////////////////////////////////////
+    void setVisibleBox(bool visible);
 
     /////////////////////////////////////////////////
     /// \brief Créer les objets à afficher pour representer le centre de gravite

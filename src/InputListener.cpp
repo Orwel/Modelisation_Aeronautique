@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////////
 #include "InputListener.h"
 #include "Piece.h"
+#include "LoaderXML.h"
 
 /*****************************************************************************/
 InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWindow* _window,OrbitCamera* _orbitCamera):
@@ -153,9 +154,23 @@ bool InputListener::keyPressed (const KeyEvent &e)
         break;
     case OIS::KC_B:
         scene->ClearFuselages();
+        scene->CalculateGravityCenter();
         break;
     case OIS::KC_N:
         scene->DisplayGravityCenterAllEntity();
+        break;
+    case OIS::KC_V:
+        scene->setVisiblePiecesBox(false);
+        break;
+    case OIS::KC_1:
+        scene->ClearFuselages();
+        LoadModel(*scene,"Model1.xml");
+        scene->CalculateGravityCenter();
+        break;
+    case OIS::KC_2:
+        scene->ClearFuselages();
+        LoadModel(*scene,"Model2.xml");
+        scene->CalculateGravityCenter();
         break;
     default:
         break;

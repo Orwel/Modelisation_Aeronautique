@@ -42,6 +42,12 @@ Ogre::Vector3 Base::getPosition()
 }
 
 /*****************************************************************************/
+void Base::setVisibleBox(bool visible)
+{
+     box.node->setVisible(visible);
+}
+
+/*****************************************************************************/
 Ogre::Vector3 Base::getGravityCenter()
 {
     return gravityCenter.getPosition();

@@ -101,6 +101,19 @@ void Scene::setMagnetism(Relative face)
         selected->PositionTo(face);
 }
 
+/*****************************************************************************/
+void Scene::setVisiblePiecesBox(bool visible)
+{
+    for(ListFuselagePtr::iterator itF = sections.begin();itF != sections.end();itF++)
+    {
+        for(ListPiecePtr::iterator itP = (*itF)->pieces.begin();itP != (*itF)->pieces.end();itP++)
+        {
+            (*itP)->setVisibleBox(visible);
+        }
+    }
+}
+
+/*****************************************************************************/
 void Scene::CalculateGravityCenter()
 {
     Ogre::Vector3 bary = Ogre::Vector3::ZERO;
@@ -123,6 +136,7 @@ void Scene::CalculateGravityCenter()
     gravityCenter.setPosition(bary);
 }
 
+/*****************************************************************************/
 void Scene::DisplayGravityCenterAllEntity()
 {
     std::cout<<"DisplayGravityCenterAllEntity"<<std::endl;

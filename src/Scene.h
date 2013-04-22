@@ -37,6 +37,8 @@ public:
     /** Change le magnetism de la piece selectionne */
     void setMagnetism(Relative face);
 
+    void setVisiblePiecesBox(bool visible);
+
     /** Calcule et place le centre de gravite du modele */
     void CalculateGravityCenter();
 
