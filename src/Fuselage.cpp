@@ -7,8 +7,8 @@
 #include "ColourConstant.h"
 
 /*****************************************************************************/
-Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene),
-    total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),mass(_mass),massTotal(1)
+Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene,mass),
+    total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),massTotal(1)
 {
     scene.AddFuselage(this);
     box.BecomePavet(volume,ColourConstant::fuselageBox);
@@ -71,7 +71,7 @@ void Fuselage::CalculateGravityCenter()
     for(it = pieces.begin() ; it!=pieces.end() ; it++)
     {
         Piece& piece = *(*it);
-        bary+= piece.getGravityCenter() * piece.getMass();
+        bary+= piece.getGravityCenterMorePosition() * piece.getMass();
         massTotal += piece.getMass();
     }
 
@@ -85,10 +85,4 @@ void Fuselage::CalculateGravityCenter()
     else
         bary = Ogre::Vector3::ZERO;
     gravityCenter.setPosition(bary);
-}
-
-/*****************************************************************************/
-Ogre::Vector3 Fuselage::getGravityCenter()
-{
-    return gravityCenter.getPosition();
 }

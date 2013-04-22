@@ -35,6 +35,7 @@ public:
     ////////////////////////////////////////////////////////////
     virtual ~Fuselage();
 
+    /** Manager list of piece */
     void AddPiece(Piece *piece);
     void DeletePiece(Piece *piece);
     void ClearPieces();
@@ -65,17 +66,9 @@ public:
     void CalculateGravityCenter();
 
     /////////////////////////////////////////////////
-    /// \brief Retourne la position du centre de gravite
+    /// \brief Retourne la mass du fuselage plus celle des piéces dedans
     ///
-    /// \return La position du centre de gravite
-    ///
-    /////////////////////////////////////////////////
-    Ogre::Vector3 getGravityCenter();
-
-    /////////////////////////////////////////////////
-    /// \brief Retourne la mass de la piece
-    ///
-    /// \return La mass de la piece
+    /// \return la mass total du fuselage
     ///
     /////////////////////////////////////////////////
     inline float getMass(){return massTotal;}
@@ -86,7 +79,6 @@ public:
     Volume              total;                  ///< Volume total of fuselage
     Volume              volume;                 ///< Volume of container
     ArrayPoints         points;                 ///< Array of points to calculate gravity center
-    float               mass;                   ///< Mass of fuselage
     float               massTotal;              ///< Mass of fuselage
 };
 

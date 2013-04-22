@@ -14,7 +14,7 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
     gravityBalance(sceneManager)
 {
     setLight();
-    LoadModel(*this,"Model1.xml");
+    LoadModel(*this,"Model2.xml");
     gravityBalance.BecomePavet(Volume(10,10,10),ColourConstant::balanceGravity);
     CalculateGravityCenter();
 }
@@ -110,7 +110,7 @@ void Scene::CalculateGravityCenter()
     for(it = sections.begin() ; it!=sections.end() ; it++)
     {
         Fuselage& section = *(*it);
-        bary+= section.getGravityCenter() * section.getMass();
+        bary+= section.getGravityCenterMorePosition() * section.getMass();
         massTotal += section.getMass();
     }
 
