@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ogrewidget.h"
+#include "appwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,7 @@ public:
 private:
     Ui::MainWindow *ui;
     OgreWidget *myOgre;
+    AppWidget *myApp;
 
 
 private slots:

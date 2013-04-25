@@ -4,6 +4,9 @@
 #include <QtGui>
 #include <Ogre.h>
 #include <QtGui/QX11Info>
+#include "OrbitCamera.h"
+#include "InputListener.h"
+#include "Scene.h"
 
 class OgreWidget : public QWidget
 {
@@ -53,6 +56,7 @@ private:
 
     QPoint oldPos;
     Ogre::SceneNode *selectedNode;
+
 };
 
 #endif //OGREWIDGET_H

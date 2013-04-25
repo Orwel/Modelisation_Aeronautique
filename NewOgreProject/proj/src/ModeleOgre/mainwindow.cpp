@@ -21,8 +21,10 @@ void MainWindow::initWindow()
         QVBoxLayout *vbox = new QVBoxLayout();
         QHBoxLayout *hbox = new QHBoxLayout();
 
-        myOgre = new OgreWidget();
-        Mainbox->addWidget( myOgre,0,0,6,6);
+        //myOgre = new OgreWidget();
+        //Mainbox->addWidget( myOgre,0,0,6,6);
+        myApp = new AppWidget();
+        Mainbox->addWidget( myApp,0,0,6,6);
 
         QLabel* GravCenter = new QLabel("Centre de gravite :");
         QLabel* Poids = new QLabel("Poids total :");
