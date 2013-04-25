@@ -430,7 +430,7 @@ void AppWidget::initMyScene ()
     emit cameraPositionChanged(camPos);
 
     ogreViewport = mWindow->addViewport(camera);
-    ogreViewport->setBackgroundColour(Ogre::ColourValue(0,0,255));
+    ogreViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
     camera->setAspectRatio(Ogre::Real(width()) / Ogre::Real(height()));
 
     setupNLoadResources();
