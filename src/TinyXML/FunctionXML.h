@@ -1,7 +1,10 @@
+#ifndef FUNCTIONXML_H
+#define FUNCTIONXML_H
+
 #include "tinyxml2.h"
 #include <iostream>
 ////////////////////////////////////////////////////////////
-void FatalError(std::string msg)
+inline void FatalError(std::string msg)
 {
     std::cerr<<"Error: "<<msg<<std::endl;
     exit(EXIT_FAILURE);
@@ -59,3 +62,5 @@ inline std::string getStringAttribute(const tinyxml2::XMLElement *element,const 
     }
     return std::string(str);
 }
+
+#endif // FUNCTIONXML_H

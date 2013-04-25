@@ -5,6 +5,7 @@
 #include "Piece.h"
 #include "Fuselage.h"
 #include "LoaderXML.h"
+#include "SaverXML.h"
 #include "ColourConstant.h"
 
 using namespace Ogre;
@@ -18,6 +19,7 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
     gravityCenter.BecomePavet(Volume(0.5,0.5,0.5),ColourConstant::gravityCenterModel);
     gravityBalance.BecomePavet(Volume(10,10,10),ColourConstant::balanceGravity);
     CalculateGravityCenter();
+    SaveModel(*this,"sqdfgdsq.xml");
 }
 
 /*****************************************************************************/

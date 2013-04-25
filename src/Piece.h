@@ -22,7 +22,7 @@ public:
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    Piece(Fuselage& _fuselage,float mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace);
+    Piece(Fuselage& _fuselage,float mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace,Ogre::Vector3 position);
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
@@ -39,6 +39,15 @@ public:
     ///
     /////////////////////////////////////////////////
     float getPositionFace(Relative face);
+
+    /////////////////////////////////////////////////
+    /// \brief
+    ///
+    /// \param face Indique la face qui va retourner sa position
+    /// \return Position de la face sur l'axe indiquer par la face
+    ///
+    /////////////////////////////////////////////////
+    Relative getStickFace(){return stickFace;}
 
     /////////////////////////////////////////////////
     /// \brief Move position of piece
@@ -85,6 +94,8 @@ public:
     /////////////////////////////////////////////////
     void DontLeaveFuselage();
 
+    void CorrectCollission();
+
     /////////////////////////////////////////////////
     /// \brief Calcule le centre de gravité de la piece
     /// Le calcul utilise les points comme reference
@@ -92,7 +103,16 @@ public:
     /////////////////////////////////////////////////
     void CalculateGravityCenter();
 
+    /////////////////////////////////////////////////
+    /// \brief Display some information on piece in console
+    ///
+    /////////////////////////////////////////////////
     void Display();
+
+public:
+    ///Save information
+    std::string file;
+    std::string name;
 
 private:
     Fuselage &          fuselage;           ///< Ref to parent fuselage manualBox

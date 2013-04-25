@@ -3,17 +3,6 @@
 <ModelisationFactory>
 	<Model name="Model1">
 		<Section mass="10"  x="0" y="0" z="0" w="300" h="100" d="700" thickness="50">
-		
-			<PlacePiece x="10" y="10" z="20" stickFace="pos_x">
-				<Piece name="Piece1" mass="6">
-					<Polygon>
-						<Vertex x="5" y="5"/>
-						<Vertex x="0" y="5"/>
-						<Vertex x="0" y="0"/>
-					</Polygon>
-					<Offset x="5" y="5" z="5"/>
-				</Piece>
-			</PlacePiece>
 			
 			<PlacePiece x="10" y="10" z="20" stickFace="pos_y">
 				<LoadPiece file="Pieces.xml" name="Piece1"/>

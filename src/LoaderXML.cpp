@@ -9,7 +9,7 @@ using namespace tinyxml2;
 XMLElement* LoadDocument(XMLDocument& doc,std::string file);
 void LoadSection(XMLElement *element,Scene &scene);
 void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage);
-Piece* LoadPiece(XMLElement *element,Fuselage &Fuselage,Relative stickFace);
+Piece* LoadPiece(XMLElement *element,Fuselage &Fuselage,Relative stickFace,Ogre::Vector3 position);
 
 
 /*****************************************************************************/
@@ -17,7 +17,7 @@ XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 {
     std::string directory("../../rsc/");
     std::string patch_file = directory+patch;
-    ;
+
     int result = doc.LoadFile(patch_file.c_str());
     if(result!=XML_NO_ERROR)
     {
@@ -48,7 +48,7 @@ void LoadModel(Scene &scene,const std::string &patch)
     }
     else if(std::string(modelXML->Name())=="Model")
     {
-        std::string nameModel = getStringAttribute(modelXML,"name");
+        scene.name = getStringAttribute(modelXML,"name");
         for(XMLElement* sectionXML = modelXML->FirstChildElement() ; sectionXML != nullptr ; sectionXML = sectionXML->NextSiblingElement())
         {
             if(std::string(sectionXML->Name())=="Section")
@@ -107,11 +107,10 @@ void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage)
     if(!Volume::getRelatif(str_stickFace,stickFace))
         FatalError("LoaderXML::LoadPlacePiece => attribut stickFace have fail value :"+str_stickFace);
 
-    Piece* piece = nullptr;
-    if(std::string(pieceXML->Name())=="Piece")
-        piece = LoadPiece(pieceXML,fuselage,stickFace);
-    else if(std::string(pieceXML->Name())=="LoadPiece")
+
+    if(std::string(pieceXML->Name())=="LoadPiece")
     {
+        Piece* piece = nullptr;
         std::string file = getStringAttribute(pieceXML,"file");
         std::string name = getStringAttribute(pieceXML,"name");
 
@@ -121,7 +120,7 @@ void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage)
         {
             if(std::string(pieceXML->Name())=="Piece" && getStringAttribute(pieceXML,"name")==name)
             {
-                piece = LoadPiece(pieceXML,fuselage,stickFace);
+                piece = LoadPiece(pieceXML,fuselage,stickFace,position);
                 break;
             }
             pieceXML = pieceXML->NextSiblingElement();
@@ -131,15 +130,15 @@ void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage)
         {
             FatalError("LoaderXML::LoadPlacePiece => LoadPiece fail from file and name"+file+"  "+name);
         }
-
+        piece->file = file;
+        piece->name = name;
     }
     else
         FatalError("LoaderXML::LoadPlacePiece => PlacePiece have unknow child "+std::string(pieceXML->Name()));
-    piece->setPosition(position);
 }
 
 /*****************************************************************************/
-Piece* LoadPiece(XMLElement *pieceXML,Fuselage &fuselage,Relative stickFace)
+Piece* LoadPiece(XMLElement *pieceXML,Fuselage &fuselage,Relative stickFace,Ogre::Vector3 position)
 {
     XMLElement* polygonXML = pieceXML->FirstChildElement("Polygon");
     if(polygonXML==nullptr)
@@ -173,5 +172,5 @@ Piece* LoadPiece(XMLElement *pieceXML,Fuselage &fuselage,Relative stickFace)
             FatalError("LoaderXML::LoadPiece => Piece have unknow child "+std::string(vertexXML->Name()));
         }
     }
-    return new Piece(fuselage,mass,polygon,offset,stickFace);
+    return new Piece(fuselage,mass,polygon,offset,stickFace,position);
 }

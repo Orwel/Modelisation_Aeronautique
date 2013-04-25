@@ -60,6 +60,12 @@ public:
     ////////////////////////////////////////////////////////////
     virtual ~Volume();
 
+    ////////////////////////////////////////////////////////////
+    /// \brief All attributs divide by 2
+    ///
+    ////////////////////////////////////////////////////////////
+    void half();
+
     /////////////////////////////////////////////////
     /// \brief Return position of the face
     ///
@@ -118,6 +124,19 @@ public:
     ///
     /////////////////////////////////////////////////
     static bool getRelatif(std::string str,Relative &relative);
+
+    /////////////////////////////////////////////////
+    /// \brief get relatif from string name
+    ///
+    /// \param str  string name of relatif
+    /// \param relative orresponding string name
+    /// \return true if name exist, else false
+    ///
+    /////////////////////////////////////////////////
+    static std::string getStringFromRelatif(Relative relative);
+
+    static bool boxCollide(Volume box1,Ogre::Vector3 pos1,Volume box2,Ogre::Vector3 pos2);
+    static bool boxCollide(Volume box1,Ogre::Vector3 pos1,Volume box2,Ogre::Vector3 pos2,Ogre::Vector3 &intersection);
 
 public:
     float w;        ///< Weight

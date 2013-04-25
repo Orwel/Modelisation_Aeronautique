@@ -63,6 +63,8 @@ public:
     DisplayObject gravityCenter;
     /** Zone aim to gravity center */
     DisplayObject gravityBalance;
+
+    std::string name;
 };
 
 #endif // SCENE_H

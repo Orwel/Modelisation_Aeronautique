@@ -9,7 +9,7 @@
 using namespace Ogre;
 
 /*****************************************************************************/
-Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace):
+Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace,Ogre::Vector3 position):
     Base(_fuselage.scene,_fuselage.node,_mass),fuselage(_fuselage),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
@@ -33,8 +33,8 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
     //Create Gravity center
     CreateGravityObject();
 
-    MagnetismFuselage();
-    DontLeaveFuselage();
+    setPosition(position);
+    CorrectCollission();
 }
 
 /*****************************************************************************/
@@ -132,6 +132,30 @@ void Piece::DontLeaveFuselage()
         MagnetismFuselage(POS_Z);
     else if(getPositionFace(NEG_Z) < fuselage.getPositionFaceToPiece(NEG_Z))
         MagnetismFuselage(NEG_Z);
+}
+
+/*****************************************************************************/
+void Piece::CorrectCollission()
+{
+    Ogre::Vector3 intersection;
+    bool make = false;
+    for(const auto &piece:fuselage.pieces)
+    {
+        make |= Volume::boxCollide(volume,getPosition(),piece->volume,piece->getPosition(),intersection);
+    }
+
+    if(make)
+    {
+        Ogre::Vector3 absIntersection(std::abs(intersection.x),std::abs(intersection.y),std::abs(intersection.z));
+        if(absIntersection.x>absIntersection.y && absIntersection.x>absIntersection.z)
+            intersection = Ogre::Vector3(intersection.x,0,0);
+        else if(absIntersection.y>absIntersection.x && absIntersection.y>absIntersection.z)
+            intersection = Ogre::Vector3(0,intersection.y,0);
+        else if(absIntersection.z>absIntersection.x && absIntersection.z>absIntersection.y)
+            intersection = Ogre::Vector3(0,0,intersection.z);
+        node->translate(intersection);
+        DontLeaveFuselage();
+    }
 }
 
 /*****************************************************************************/

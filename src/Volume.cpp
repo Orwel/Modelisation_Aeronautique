@@ -32,6 +32,13 @@ Volume::~Volume()
     //dtor
 }
 
+void Volume::half()
+{
+    w/=2;
+    h/=2;
+    d/=2;
+}
+
 /*****************************************************************************/
 float Volume::getPositionFace(Relative face)
 {
@@ -163,4 +170,60 @@ bool Volume::getRelatif(std::string str,Relative &relative)
         return true;
     }
     return false;
+}
+
+/*****************************************************************************/
+std::string Volume::getStringFromRelatif(Relative relative)
+{
+    switch(relative)
+    {
+    case NONE :
+        return std::string("none");
+    case POS_X :
+        return std::string("pos_x");
+    case POS_Y :
+        return std::string("pos_y");
+    case POS_Z :
+        return std::string("pos_z");
+    case NEG_X :
+        return std::string("neg_x");
+    case NEG_Y :
+        return std::string("neg_y");
+    case NEG_Z :
+        return std::string("neg_z");
+    }
+    return std::string();
+}
+
+/*****************************************************************************/
+bool Volume::boxCollide(Volume box1,Ogre::Vector3 pos1,Volume box2,Ogre::Vector3 pos2)
+{
+    Ogre::Vector3 tmp;
+    return boxCollide(box1,pos1,box2,pos2,tmp);
+}
+
+/*****************************************************************************/
+bool Volume::boxCollide(Volume box1,Ogre::Vector3 pos1,Volume box2,Ogre::Vector3 pos2,Ogre::Vector3 &intersection)
+{
+    box1.half();
+    box2.half();
+    Ogre::Vector3 min,max;
+
+    max.x   = std::max(pos1.x-box1.w,pos2.x-box2.w);
+    max.y   = std::max(pos1.y-box1.h,pos2.y-box2.h);
+    max.z   = std::max(pos1.z-box1.d,pos2.z-box2.d);
+    min.x   = std::max(pos1.x+box1.w,pos2.x+box2.w);
+    min.y   = std::max(pos1.y+box1.h,pos2.y+box2.h);
+    min.z   = std::max(pos1.z+box1.d,pos2.z+box2.d);
+
+    if((min.x>max.x)&&(min.y>max.y)&&(min.z>max.z))
+    {
+        intersection = max-min;
+        return true;
+    }
+    else
+    {
+        intersection = Ogre::Vector3::ZERO;
+        return false;
+    }
 }
