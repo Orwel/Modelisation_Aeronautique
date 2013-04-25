@@ -28,6 +28,7 @@ public:
 private:
     /** Initialise la scene */
     void initScene ();
+    void initMyScene();
 
 public slots:
     void setBackgroundColor(QColor c);

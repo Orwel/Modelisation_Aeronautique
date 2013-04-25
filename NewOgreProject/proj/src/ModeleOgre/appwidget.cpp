@@ -36,7 +36,7 @@ AppWidget::~AppWidget()
 }
 
 /*****************************************************************************/
-bool AppWidget::Initialize ()
+/*bool AppWidget::Initialize ()
 {
 #ifdef _DEBUG
     Ogre::String pluginFile = "plugins_d.cfg";
@@ -77,8 +77,9 @@ bool AppWidget::Initialize ()
 
     return true;
 }
-
+*/
 /*****************************************************************************/
+/*
 void AppWidget::initScene ()
 {
     // on crée la fenêtre
@@ -110,7 +111,7 @@ void AppWidget::initScene ()
 
     scene = new Scene(mSceneMgr);
 }
-
+*/
 /*****************************************************************************/
 
 void AppWidget::setBackgroundColor(QColor c)
@@ -171,7 +172,7 @@ void AppWidget::keyPressEvent(QKeyEvent *e)
 
 void AppWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
-    if(e->buttons().testFlag(Qt::LeftButton))
+    /*if(e->buttons().testFlag(Qt::LeftButton))
     {
         Ogre::Real x = e->pos().x() / (float)width();
         Ogre::Real y = e->pos().y() / (float)height();
@@ -203,14 +204,14 @@ void AppWidget::mouseDoubleClickEvent(QMouseEvent *e)
     else
     {
         e->ignore();
-    }
+    }*/
 }
 
 /*****************************************************************************/
 
 void AppWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    if(e->buttons().testFlag(Qt::LeftButton) && oldPos != invalidMousePoint)
+    /*if(e->buttons().testFlag(Qt::LeftButton) && oldPos != invalidMousePoint)
     {
         const QPoint &pos = e->pos();
         Ogre::Real deltaX = pos.x() - oldPos.x();
@@ -232,7 +233,7 @@ void AppWidget::mouseMoveEvent(QMouseEvent *e)
     else
     {
         e->ignore();
-    }
+    }*/
 }
 
 /*****************************************************************************/
@@ -327,7 +328,8 @@ void AppWidget::showEvent(QShowEvent *e)
     if(!mRoot)
     {
         //initOgreSystem();
-        Initialize();
+        //Initialize();
+        initMyScene();
     }
 
     QWidget::showEvent(e);
@@ -337,7 +339,7 @@ void AppWidget::showEvent(QShowEvent *e)
 
 void AppWidget::wheelEvent(QWheelEvent *e)
 {
-    Ogre::Vector3 zTranslation(0,0, -e->delta() / 60);
+    /*Ogre::Vector3 zTranslation(0,0, -e->delta() / 60);
 
     if(e->modifiers().testFlag(Qt::ControlModifier))
     {
@@ -347,7 +349,7 @@ void AppWidget::wheelEvent(QWheelEvent *e)
     const Ogre::Vector3 &actualCamPos = camera->getPosition();
     setCameraPosition(actualCamPos + zTranslation);
 
-    e->accept();
+    e->accept();*/
 }
 
 /*****************************************************************************/
@@ -390,45 +392,91 @@ void AppWidget::initOgreSystem()
     camera->setAspectRatio(Ogre::Real(width()) / Ogre::Real(height()));
 
         setupNLoadResources();
-        createScene();
+        //createScene();
+        initScene();
 }
 */
 /*****************************************************************************/
 
+void AppWidget::initMyScene ()
+{
+    mRoot = new Ogre::Root();
+
+    Ogre::RenderSystem *renderSystem = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+    mRoot->setRenderSystem(renderSystem);
+    mRoot->initialise(false);
+
+    mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
+    mSceneMgr->setAmbientLight(ColourValue(1.0f, 1.0f, 1.0f));
+
+    Ogre::NameValuePairList viewConfig;
+    Ogre::String widgetHandle;
+
+    QWidget *q_parent = dynamic_cast <QWidget *> (parent());
+    QX11Info xInfo = x11Info();
+
+    widgetHandle = Ogre::StringConverter::toString ((unsigned long)xInfo.display()) +
+        ":" + Ogre::StringConverter::toString ((unsigned int)xInfo.screen()) +
+        ":" + Ogre::StringConverter::toString ((unsigned long)q_parent->winId());
+
+    viewConfig["externalWindowHandle"] = widgetHandle;
+    mWindow = mRoot->createRenderWindow("Ogre rendering window",
+                width(), height(), false, &viewConfig);
+
+    camera = mSceneMgr->createCamera("myCamera");
+    Ogre::Vector3 camPos(0, 50,150);
+        camera->setPosition(camPos);
+        camera->lookAt(0,50,0);
+    emit cameraPositionChanged(camPos);
+
+    ogreViewport = mWindow->addViewport(camera);
+    ogreViewport->setBackgroundColour(Ogre::ColourValue(0,0,255));
+    camera->setAspectRatio(Ogre::Real(width()) / Ogre::Real(height()));
+
+    setupNLoadResources();
+    inputListener = new InputListener(scene,mSceneMgr,mWindow,orbitalCamera);
+    mRoot->addFrameListener(inputListener);
+
+    scene = new Scene(mSceneMgr);
+}
+
+/*****************************************************************************/
+
 void AppWidget::setupNLoadResources()
 {
-        // Load resource paths from config file
-        Ogre::ConfigFile cf;
-        cf.load("resources.cfg");
 
-        // Go through all sections & settings in the file
-        Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+    // Load resource paths from config file
+    Ogre::ConfigFile cf;
+    cf.load("resources.cfg");
 
-        Ogre::String secName, typeName, archName;
-        while (seci.hasMoreElements())
-        {
-                secName = seci.peekNextKey();
-                Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
-                Ogre::ConfigFile::SettingsMultiMap::iterator i;
-                for (i = settings->begin(); i != settings->end(); ++i)
-                {
-                        typeName = i->first;
-                        archName = i->second;
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-                        // OS X does not set the working directory relative to the app,
-                        // In order to make things portable on OS X we need to provide
-                        // the loading with it's own bundle path location
-                        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                                Ogre::String(macBundlePath() + "/" + archName), typeName, secName);
-#else
-                        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                                archName, typeName, secName);
-#endif
-                }
-        }
+    // Go through all sections & settings in the file
+    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
 
-        // Initialise, parse scripts etc
-        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+    Ogre::String secName, typeName, archName;
+    while (seci.hasMoreElements())
+    {
+            secName = seci.peekNextKey();
+            Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+            Ogre::ConfigFile::SettingsMultiMap::iterator i;
+            for (i = settings->begin(); i != settings->end(); ++i)
+            {
+                    typeName = i->first;
+                    archName = i->second;
+    #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+                    // OS X does not set the working directory relative to the app,
+                    // In order to make things portable on OS X we need to provide
+                    // the loading with it's own bundle path location
+                    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+                            Ogre::String(macBundlePath() + "/" + archName), typeName, secName);
+    #else
+                    Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+                            archName, typeName, secName);
+    #endif
+            }
+    }
+
+    // Initialise, parse scripts etc
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 /*****************************************************************************/
