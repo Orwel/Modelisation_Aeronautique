@@ -28,7 +28,7 @@ void InputListener::startOIS ()
     size_t windowHnd = 0;
     std::ostringstream windowHndStr;
     LogManager::getSingletonPtr()->logMessage("*** Step 1 ***");
-    windows->getCustomAttribute("GLXWINDOW", &windowHnd);
+    windows->getCustomAttribute("GXLWINDOW", &windowHnd);
     LogManager::getSingletonPtr()->logMessage("*** Step 3 ***");
     windowHndStr << windowHnd;
     LogManager::getSingletonPtr()->logMessage("*** Step 4 ***");
@@ -100,6 +100,7 @@ bool InputListener::mousePressed (const MouseEvent &arg, MouseButtonID id)
 {
     if (id == OIS::MB_Right)
     {
+        LogManager::getSingletonPtr()->logMessage("*** test ***");
         modeInput = MODE_CAMERA;
         orbitCamera->setOrbiting(!zooningOrbitalCamera);
         orbitCamera->setZooming(zooningOrbitalCamera);

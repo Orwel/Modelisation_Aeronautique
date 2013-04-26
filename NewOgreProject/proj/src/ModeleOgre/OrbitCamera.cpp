@@ -58,6 +58,11 @@ void OrbitCamera::updateMovement(const OIS::MouseEvent &evt)
 
 }
 
+void OrbitCamera::updateMove(QMouseEvent *evt)
+{
+
+}
+
 void OrbitCamera::updateOrbitingMovement(float x_rel,float y_rel,float z_rel)
 {
     Ogre::Real dist = (this->camera->getPosition() - this->targetNode->_getDerivedPosition()).length();

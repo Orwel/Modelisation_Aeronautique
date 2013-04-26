@@ -129,7 +129,10 @@ void AppWidget::setBackgroundColor(QColor c)
 void AppWidget::setCameraPosition(const Ogre::Vector3 &pos)
 {
     camera->setPosition(pos);
-    camera->lookAt(0,50,0);
+    //if(!zooningOrbitalCamera)
+        camera->lookAt(0,0,0);
+    //else
+      //  camera->setOrientation(oldOrientation);
     update();
     emit cameraPositionChanged(pos);
 }
@@ -138,14 +141,14 @@ void AppWidget::setCameraPosition(const Ogre::Vector3 &pos)
 
 void AppWidget::keyPressEvent(QKeyEvent *e)
 {
-        static QMap<int, Ogre::Vector3> keyCoordModificationMapping;
+        /*static QMap<int, Ogre::Vector3> keyCoordModificationMapping;
         static bool mappingInitialised = false;
 
         if(!mappingInitialised)
         {
-                keyCoordModificationMapping[Qt::Key_W] 		  = Ogre::Vector3( 0, 0,-5);
+                keyCoordModificationMapping[Qt::Key_Z] 		  = Ogre::Vector3( 0, 0,-5);
                 keyCoordModificationMapping[Qt::Key_S] 		  = Ogre::Vector3( 0, 0, 5);
-                keyCoordModificationMapping[Qt::Key_A] 		  = Ogre::Vector3(-5, 0, 0);
+                keyCoordModificationMapping[Qt::Key_Q] 		  = Ogre::Vector3(-5, 0, 0);
                 keyCoordModificationMapping[Qt::Key_D] 		  = Ogre::Vector3( 5, 0, 0);
                 keyCoordModificationMapping[Qt::Key_PageUp]   = Ogre::Vector3( 0, 5, 0);
                 keyCoordModificationMapping[Qt::Key_PageDown] = Ogre::Vector3( 0,-5, 0);
@@ -165,7 +168,44 @@ void AppWidget::keyPressEvent(QKeyEvent *e)
     else
     {
         e->ignore();
+    }*/
+    switch (e->key())
+    {
+    case Qt::Key_Escape:
+        //mContinuer = false;
+        break;
+    case Qt::Key_W:
+        zooningOrbitalCamera = !zooningOrbitalCamera;
+        //oldOrientation = camera->getOrientation();
+        break;
+    case Qt::Key_U:
+        scene->setMagnetism(POS_X);
+        break;
+    case Qt::Key_J:
+        scene->setMagnetism(NEG_X);
+        break;
+    case Qt::Key_I:
+        scene->setMagnetism(POS_Y);
+        break;
+    case Qt::Key_K:
+        scene->setMagnetism(NEG_Y);
+        break;
+    case Qt::Key_O:
+        scene->setMagnetism(POS_Z);
+        break;
+    case Qt::Key_L:
+        scene->setMagnetism(NEG_Z);
+        break;
+    case Qt::Key_B:
+        scene->ClearFuselages();
+        break;
+    case Qt::Key_N:
+        scene->DisplayGravityCenterAllEntity();
+        break;
+    default:
+        break;
     }
+    e->accept();
 }
 
 /*****************************************************************************/
@@ -211,7 +251,19 @@ void AppWidget::mouseDoubleClickEvent(QMouseEvent *e)
 
 void AppWidget::mouseMoveEvent(QMouseEvent *e)
 {
-    /*if(e->buttons().testFlag(Qt::LeftButton) && oldPos != invalidMousePoint)
+    /*switch(modeInput)
+    {
+    case NONE:
+        break;
+    case MODE_CAMERA:
+        orbitalCamera->updateMove(e);
+        break;
+    case MODE_MOVE_PIECE:
+        //scene->moveSelectedPiece(e->,e->state.Y.rel,e->state.Z.rel);
+        break;
+    }
+    e->accept();*/
+    if(e->buttons().testFlag(Qt::LeftButton) && oldPos != invalidMousePoint)
     {
         const QPoint &pos = e->pos();
         Ogre::Real deltaX = pos.x() - oldPos.x();
@@ -223,6 +275,7 @@ void AppWidget::mouseMoveEvent(QMouseEvent *e)
             deltaY *= turboModifier;
         }
 
+        //Ogre::Real dist = Ogre::Math::Sqrt(Ogre::Math::Pow(nCamera->getPosition().x,2) +  Ogre::Math::Pow(nCamera->getPosition().y,2) + Ogre::Math::Pow(nCamera->getPosition().z,2));
         Ogre::Vector3 camTranslation(deltaX, deltaY, 0);
         const Ogre::Vector3 &actualCamPos = camera->getPosition();
         setCameraPosition(actualCamPos + camTranslation);
@@ -233,6 +286,23 @@ void AppWidget::mouseMoveEvent(QMouseEvent *e)
     else
     {
         e->ignore();
+    }
+}
+
+
+void AppWidget::mouseMove(OIS::MouseEvent &e)
+{
+   /* LogManager::getSingletonPtr()->logMessage("cocu");
+    switch(modeInput)
+    {
+    case NONE:
+        break;
+    case MODE_CAMERA:
+        orbitalCamera->updateMovement(e);
+        break;
+    case MODE_MOVE_PIECE:
+        scene->moveSelectedPiece(e.state.X.rel,e.state.Y.rel,e.state.Z.rel);
+        break;
     }*/
 }
 
@@ -243,6 +313,9 @@ void AppWidget::mousePressEvent(QMouseEvent *e)
     if(e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = e->pos();
+        modeInput = MODE_CAMERA;
+        orbitalCamera->setOrbiting(!zooningOrbitalCamera);
+        orbitalCamera->setZooming(zooningOrbitalCamera);
         e->accept();
     }
     else
@@ -258,6 +331,14 @@ void AppWidget::mouseReleaseEvent(QMouseEvent *e)
     if(!e->buttons().testFlag(Qt::LeftButton))
     {
         oldPos = QPoint(invalidMousePoint);
+        if(scene->isPieceSelected())
+        {
+            modeInput = MODE_MOVE_PIECE;
+        }
+        else
+            modeInput = NONE;
+        orbitalCamera->setOrbiting(false);
+        orbitalCamera->setZooming(false);
         e->accept();
     }
     else
@@ -339,7 +420,7 @@ void AppWidget::showEvent(QShowEvent *e)
 
 void AppWidget::wheelEvent(QWheelEvent *e)
 {
-    /*Ogre::Vector3 zTranslation(0,0, -e->delta() / 60);
+    Ogre::Vector3 zTranslation(0,0, -e->delta() / 20);
 
     if(e->modifiers().testFlag(Qt::ControlModifier))
     {
@@ -349,7 +430,7 @@ void AppWidget::wheelEvent(QWheelEvent *e)
     const Ogre::Vector3 &actualCamPos = camera->getPosition();
     setCameraPosition(actualCamPos + zTranslation);
 
-    e->accept();*/
+    e->accept();
 }
 
 /*****************************************************************************/
@@ -401,6 +482,8 @@ void AppWidget::initOgreSystem()
 void AppWidget::initMyScene ()
 {
     mRoot = new Ogre::Root();
+    zooningOrbitalCamera = false;
+    LogManager::getSingletonPtr()->logMessage("*** Step 0 ***");
 
     Ogre::RenderSystem *renderSystem = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
     mRoot->setRenderSystem(renderSystem);
@@ -423,19 +506,31 @@ void AppWidget::initMyScene ()
     mWindow = mRoot->createRenderWindow("Ogre rendering window",
                 width(), height(), false, &viewConfig);
 
-    camera = mSceneMgr->createCamera("myCamera");
+    /*camera = mSceneMgr->createCamera("myCamera");
     Ogre::Vector3 camPos(0, 50,150);
         camera->setPosition(camPos);
         camera->lookAt(0,50,0);
-    emit cameraPositionChanged(camPos);
+    emit cameraPositionChanged(camPos);*/
+
+    nCamera = mSceneMgr->getRootSceneNode()->createChildSceneNode("camera");
+    orbitalCamera = new OrbitCamera(mSceneMgr,nCamera);
+    camera = orbitalCamera->getCamera();
+    if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
+    {
+        camera->setFarClipDistance(0);   // enable infinite far clip distance if we can
+    }
+    else
+    {
+        camera->setFarClipDistance(2000);
+    }
 
     ogreViewport = mWindow->addViewport(camera);
     ogreViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
     camera->setAspectRatio(Ogre::Real(width()) / Ogre::Real(height()));
 
     setupNLoadResources();
-    inputListener = new InputListener(scene,mSceneMgr,mWindow,orbitalCamera);
-    mRoot->addFrameListener(inputListener);
+    //inputListener = new InputListener(scene,mSceneMgr,mWindow,orbitalCamera);
+    //mRoot->addFrameListener(inputListener);
 
     scene = new Scene(mSceneMgr);
 }
@@ -477,17 +572,5 @@ void AppWidget::setupNLoadResources()
 
     // Initialise, parse scripts etc
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-}
-
-/*****************************************************************************/
-
-void AppWidget::createScene()
-{
-        mSceneMgr->setAmbientLight(Ogre::ColourValue(1,1,1));
-
-        /*Ogre::Entity *robotEntity = mSceneMgr->createEntity("Robot" ,"models/robot.mesh");
-        Ogre::SceneNode *robotNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("RobotNode");
-        robotNode->attachObject(robotEntity);
-        robotNode->yaw(Ogre::Radian(Ogre::Degree(-90)));*/
 }
 

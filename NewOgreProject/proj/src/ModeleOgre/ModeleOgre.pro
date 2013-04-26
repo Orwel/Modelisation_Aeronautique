@@ -22,7 +22,6 @@ QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ogrewidget.cpp \
     Volume.cpp \
     Scene.cpp \
     Piece.cpp \
@@ -37,7 +36,6 @@ SOURCES += main.cpp\
     TinyXML/tinyxml2.cpp
 
 HEADERS  += mainwindow.h \
-    ogrewidget.h \
     Volume.h \
     Scene.h \
     OrbitCamera.h \

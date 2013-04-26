@@ -38,16 +38,25 @@ signals:
     void cameraPositionChanged(const Ogre::Vector3 &pos);
 
 protected:
+
+    // KeyListener
     virtual void keyPressEvent(QKeyEvent *e);
-    virtual void moveEvent(QMoveEvent *e);
+    //virtual bool keyReleased (const KeyEvent &e);
+
+    // MouseListener
     virtual void mouseDoubleClickEvent(QMouseEvent *e);
     virtual void mouseMoveEvent(QMouseEvent *e);
     virtual void mousePressEvent(QMouseEvent *e);
     virtual void mouseReleaseEvent(QMouseEvent *e);
+    virtual void wheelEvent(QWheelEvent *e);
+    virtual void mouseMove(OIS::MouseEvent &e);
+
+    //windowListener
     virtual void paintEvent(QPaintEvent *e);
     virtual void resizeEvent(QResizeEvent *e);
     virtual void showEvent(QShowEvent *e);
-    virtual void wheelEvent(QWheelEvent *e);
+    virtual void moveEvent(QMoveEvent *e);
+
 
 private:
     void initOgreSystem();
@@ -75,9 +84,22 @@ private:
     SceneNode* nCamera;
     /** Le gestionnaire d'input */
     InputListener* inputListener;
-
+    /** Le viewPort */
     Ogre::Viewport *ogreViewport;
 
+    enum ModeInput
+    {
+        NONE,
+        MODE_CAMERA,            /** Mode déplacer la caméra */
+        MODE_MOVE_PIECE         /** Mode déplacer la piéce sélectionnée */
+    };
+
+    /** Mode de fonctionnement des inputs */
+    ModeInput modeInput;
+    /** Zooning true, move false */
+    bool zooningOrbitalCamera;
+
+    /** Ancienne position de la souris*/
     QPoint oldPos;
     
 };

@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "ogrewidget.h"
 #include "appwidget.h"
 
 namespace Ui {
@@ -19,12 +18,24 @@ public:
     
 private:
     Ui::MainWindow *ui;
-    OgreWidget *myOgre;
     AppWidget *myApp;
+
+    QLabel *GravTot;
+    QLabel *PoidsTot;
+    QLabel *GravPiece;
+    QLabel *PoidsPiece;
+    QLabel *Distant;
 
 
 private slots:
     void initWindow();
+
+    void on_actionQuitter_triggered();
+
+public:
+    void PrintTot(char *myGrav , char *myPoids );
+    void PrintPiece(char *myGrav , char *myPoids );
+    void PrintDist(char *myDist);
 
 
 };

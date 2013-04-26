@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////////////////
 #include <Ogre.h>
 #include <OISMouse.h>
+#include <QtGui>
 
 class OrbitCamera
 {
@@ -22,6 +23,7 @@ public:
     OrbitCamera(Ogre::SceneManager *sceneMgr, Ogre::SceneNode *target);
     ~OrbitCamera();
     void updateMovement(const OIS::MouseEvent &evt);
+    void updateMove(QMouseEvent *evt);
     void updateOrbitingMovement(float x_rel,float y_rel,float z_rel);
     void updateOrbitingMovement(float rel);
 

@@ -18,62 +18,90 @@ MainWindow::~MainWindow()
 void MainWindow::initWindow()
 {
     QGridLayout* Mainbox = new QGridLayout();
-        QVBoxLayout *vbox = new QVBoxLayout();
-        QHBoxLayout *hbox = new QHBoxLayout();
+    QVBoxLayout *vbox = new QVBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout();
 
-        //myOgre = new OgreWidget();
-        //Mainbox->addWidget( myOgre,0,0,6,6);
-        myApp = new AppWidget();
-        Mainbox->addWidget( myApp,0,0,6,6);
+    /** Partie Widget*/
+    myApp = new AppWidget();
+    Mainbox->addWidget( myApp,0,0,6,6);
 
-        QLabel* GravCenter = new QLabel("Centre de gravite :");
-        QLabel* Poids = new QLabel("Poids total :");
-        QLabel* GravLine = new QLabel("");
-        QLabel* PoidsLine = new QLabel("");
 
-        hbox->addWidget(GravCenter);
-        hbox->addWidget(GravLine);
-        hbox->addWidget(Poids);
-        hbox->addWidget(PoidsLine);
+    /** Partie Centre et Poids Global*/
+    QLabel* GravCenter = new QLabel("Centre de gravite :");
+    QLabel* Poids = new QLabel("Poids total :");
+    GravTot = new QLabel("");
+    PoidsTot = new QLabel("");
 
-        Mainbox->addLayout( hbox , 7 , 0 , 1, 6);
+    hbox->addWidget(GravCenter);
+    hbox->addWidget(GravTot);
+    hbox->addWidget(Poids);
+    hbox->addWidget(PoidsTot);
 
-        GravLine->setText("(0,0,0)");
+    Mainbox->addLayout( hbox , 7 , 0 , 1, 6);
 
-        QLabel* piece1 = new QLabel("En attente ");
-        QLabel* piece2 = new QLabel("de solution");
+    /** Partie Centre et Poids de la pièce actuelle*/
+    QLabel* piece1 = new QLabel("Piece en");
+    QLabel* piece2 = new QLabel("cours :");
 
-        QHBoxLayout *ligne1 = new QHBoxLayout();
-        QHBoxLayout *ligne2 = new QHBoxLayout();
-        QLabel* pieceCenter = new QLabel("Centre : ");
-        QLabel* piCenRes = new QLabel("");
-        QLabel* piecePoids = new QLabel("Poids : ");
-        QLabel* piPoRes = new QLabel("");
-        ligne1->addWidget(pieceCenter);ligne1->addWidget(piCenRes);
-        ligne2->addWidget(piecePoids);ligne2->addWidget(piPoRes);
+    QHBoxLayout *ligne1 = new QHBoxLayout();
+    QHBoxLayout *ligne2 = new QHBoxLayout();
+    QLabel* pieceCenter = new QLabel("Centre : ");
+    GravPiece = new QLabel("");
+    QLabel* piecePoids = new QLabel("Poids : ");
+    PoidsPiece = new QLabel("");
+    ligne1->addWidget(pieceCenter);ligne1->addWidget(GravPiece);
+    ligne2->addWidget(piecePoids);ligne2->addWidget(PoidsPiece);
 
-        QPushButton* distanceButton = new QPushButton("distance to");
+    /** Partie Distance*/
+    QPushButton* distanceButton = new QPushButton("distance to");
 
-        QHBoxLayout *ligne3 = new QHBoxLayout();
-        QLabel* distance = new QLabel("Distance : ");
-        QLabel* disValue = new QLabel("");
-        ligne3->addWidget(distance);ligne3->addWidget(disValue);
+    QHBoxLayout *ligne3 = new QHBoxLayout();
+    QLabel* distance = new QLabel("Distance : ");
+    Distant = new QLabel("");
+    ligne3->addWidget(distance);ligne3->addWidget(Distant);
 
-        QLabel* vide0 = new QLabel(" ");
-        QLabel* vide1 = new QLabel(" ");
-        QLabel* vide2 = new QLabel(" ");
-        QLabel* vide3 = new QLabel(" ");
-        QLabel* vide4 = new QLabel(" ");
+    vbox->addWidget(piece1);vbox->addWidget(piece2);
+    //vbox->addWidget(vide0);vbox->addWidget(vide1);vbox->addWidget(vide2);
+    vbox->addWidget(new QLabel(" "));vbox->addWidget(new QLabel(" "));
+    vbox->addLayout(ligne1);vbox->addLayout(ligne2);
+    //vbox->addWidget(vide4);
+    vbox->addWidget(new QLabel(" "));
+    vbox->addWidget(new QLabel(" "));
+    vbox->addWidget(distanceButton);vbox->addLayout(ligne3);
+    //vbox->addWidget(vide3);
+    vbox->addWidget(new QLabel(" "));
 
-        vbox->addWidget(piece1);vbox->addWidget(piece2);
-        vbox->addWidget(vide0);vbox->addWidget(vide1);vbox->addWidget(vide2);
-        vbox->addLayout(ligne1);vbox->addLayout(ligne2);
-        vbox->addWidget(vide4);
-        vbox->addWidget(distanceButton);vbox->addLayout(ligne3);
-        vbox->addWidget(vide3);
+    Mainbox ->addLayout( vbox , 0 ,8 ,6,2);
 
-        Mainbox ->addLayout( vbox , 0 ,8 ,6,2);
+    centralWidget()->setLayout( Mainbox );
+}
 
-        centralWidget()->setLayout( Mainbox );
+/*****************************************************************************/
 
+void MainWindow::PrintTot(char *myGrav , char *myPoids )
+{
+    GravTot->setText(myGrav);
+    PoidsTot->setText(myPoids);
+}
+
+/*****************************************************************************/
+
+void MainWindow::PrintPiece(char *myGrav , char *myPoids )
+{
+    GravPiece->setText(myGrav);
+    PoidsPiece->setText(myPoids);
+}
+
+/*****************************************************************************/
+
+void MainWindow::PrintDist(char *dist)
+{
+    Distant->setText(dist);
+}
+
+/*****************************************************************************/
+
+void MainWindow::on_actionQuitter_triggered()
+{
+    this->close();
 }
