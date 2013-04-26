@@ -47,7 +47,10 @@ public:
     /// \return Position de la face sur l'axe indiquer par la face
     ///
     /////////////////////////////////////////////////
-    Relative getStickFace(){return stickFace;}
+    Relative getStickFace()
+    {
+        return stickFace;
+    }
 
     /////////////////////////////////////////////////
     /// \brief Move position of piece

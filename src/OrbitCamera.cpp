@@ -102,3 +102,8 @@ void OrbitCamera::setTarget(Ogre::SceneNode * target)
 {
     targetNode = target;
 }
+
+Ogre::Ray OrbitCamera::getRay()
+{
+    return Ogre::Ray(camera->getPosition(),camera->getDirection());
+}

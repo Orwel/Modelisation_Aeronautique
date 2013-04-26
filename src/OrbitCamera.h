@@ -33,6 +33,9 @@ public:
     bool getZooming(void);
     void setZooming(bool zooming);
 
+
+    Ogre::Ray getRay();
+
 };
 
 #endif // __ORBITCAMERA_H__

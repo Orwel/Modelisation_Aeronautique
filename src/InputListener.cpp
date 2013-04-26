@@ -2,7 +2,9 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include "InputListener.h"
+#include "Fuselage.h"
 #include "Piece.h"
+#include "Picking.h"
 #include "LoaderXML.h"
 
 /*****************************************************************************/
@@ -104,6 +106,20 @@ bool InputListener::mousePressed (const MouseEvent &arg, MouseButtonID id)
         modeInput = MODE_CAMERA;
         orbitCamera->setOrbiting(!zooningOrbitalCamera);
         orbitCamera->setZooming(zooningOrbitalCamera);
+    }
+    else if(id == OIS::MB_Left)
+    {
+        Fuselage* piece = Picking::PickSection(*scene,sceneManager,orbitCamera->getRay());
+        if(piece)
+        {
+            std::cout<<"FIND COOL"<<std::endl;
+            piece->setVisibleBox(false);
+        }
+        else
+        {
+            std::cout<<"NOT COOL"<<std::endl;
+        }
+
     }
     return true;
 }

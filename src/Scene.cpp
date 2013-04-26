@@ -106,9 +106,9 @@ void Scene::setMagnetism(Relative face)
 /*****************************************************************************/
 void Scene::setVisiblePiecesBox(bool visible)
 {
-    for(ListFuselagePtr::iterator itF = sections.begin();itF != sections.end();itF++)
+    for(ListFuselagePtr::iterator itF = sections.begin(); itF != sections.end(); itF++)
     {
-        for(ListPiecePtr::iterator itP = (*itF)->pieces.begin();itP != (*itF)->pieces.end();itP++)
+        for(ListPiecePtr::iterator itP = (*itF)->pieces.begin(); itP != (*itF)->pieces.end(); itP++)
         {
             (*itP)->setVisibleBox(visible);
         }
@@ -143,10 +143,10 @@ void Scene::DisplayGravityCenterAllEntity()
 {
     std::cout<<"DisplayGravityCenterAllEntity"<<std::endl;
     int countSection=0;
-    for(ListFuselagePtr::iterator itF = sections.begin();itF != sections.end();itF++)
+    for(ListFuselagePtr::iterator itF = sections.begin(); itF != sections.end(); itF++)
     {
         int countPiece=0;
-        for(ListPiecePtr::iterator itP = (*itF)->pieces.begin();itP != (*itF)->pieces.end();itP++)
+        for(ListPiecePtr::iterator itP = (*itF)->pieces.begin(); itP != (*itF)->pieces.end(); itP++)
         {
             std::cout<<"Piece "<<++countPiece<<std::endl;
             (*itP)->Display();

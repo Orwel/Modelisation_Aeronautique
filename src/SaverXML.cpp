@@ -16,10 +16,10 @@ void SaveModel(Scene &scene,const std::string &patch)
     std::string patch_file = directory+patch;
 
     XMLDocument doc;
-	XMLElement* root,*modelXML;
-	// <?xml version="1.0" standalone="yes"?>
- 	XMLDeclaration* decl = doc.NewDeclaration();
- 	doc.LinkEndChild(decl);
+    XMLElement* root,*modelXML;
+    // <?xml version="1.0" standalone="yes"?>
+    XMLDeclaration* decl = doc.NewDeclaration();
+    doc.LinkEndChild(decl);
 
     root = doc.NewElement("ModelisationFactory");
     doc.LinkEndChild(root);
@@ -33,7 +33,7 @@ void SaveModel(Scene &scene,const std::string &patch)
         PrintSection(doc,modelXML,*section.get());
     }
 
-	doc.SaveFile(patch_file.c_str());
+    doc.SaveFile(patch_file.c_str());
 }
 
 /*****************************************************************************/

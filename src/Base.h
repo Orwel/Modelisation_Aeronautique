@@ -45,7 +45,7 @@ public:
     /////////////////////////////////////////////////
     void setPosition(float x,float y,float z);
 
-        /////////////////////////////////////////////////
+    /////////////////////////////////////////////////
     /// \brief Set position to piece
     ///
     /// \param x
@@ -99,7 +99,10 @@ public:
     /// \return mass value
     ///
     /////////////////////////////////////////////////
-    inline float getMass(){return mass;}
+    inline float getMass()
+    {
+        return mass;
+    }
 
 public:
     Scene &             scene;          ///< Ref to scene

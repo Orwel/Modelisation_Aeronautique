@@ -20,9 +20,9 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
     offset /= 2.f;
     offpos = -(min+max)/2.f;
 
-    for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
+    for(ArrayPoints::iterator it = polygone.begin(); it != polygone.end(); it++)
         points.push_back(Ogre::Vector3(*it+offpos+offset));
-    for(ArrayPoints::iterator it = polygone.begin();it != polygone.end();it++)
+    for(ArrayPoints::iterator it = polygone.begin(); it != polygone.end(); it++)
         points.push_back(Ogre::Vector3(*it+offpos-offset));
 
     //Create Box

@@ -71,7 +71,10 @@ public:
     /// \return la mass total du fuselage
     ///
     /////////////////////////////////////////////////
-    inline float getMass(){return massTotal;}
+    inline float getMass()
+    {
+        return massTotal;
+    }
 
 public:
     Ogre::ManualObject* manualObject;           ///< Display object to fuselage's volume
