@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ogrewidget.h'
 **
-** Created: Wed Apr 24 17:04:40 2013
+** Created: Thu Apr 25 16:45:18 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.4)
 **
 ** WARNING! All changes made in this file will be lost!

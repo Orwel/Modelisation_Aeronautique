@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
+    <width>595</width>
     <height>487</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>567</width>
+     <width>595</width>
      <height>25</height>
     </rect>
    </property>
@@ -42,28 +42,36 @@
     <addaction name="actionAjouter"/>
     <addaction name="actionAjouter_2"/>
     <addaction name="actionSauvegarder_2"/>
+    <addaction name="actionSauvegarder_Biblio"/>
    </widget>
    <widget class="QMenu" name="menuBiblioth_que">
     <property name="title">
      <string>Bibliothèque</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuCam_ra">
-    <property name="title">
-     <string>Camèra</string>
-    </property>
-    <addaction name="actionTop"/>
-    <addaction name="actionBottom"/>
-   </widget>
    <widget class="QMenu" name="menuA_propos">
     <property name="title">
      <string>A propos</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuFuselage">
+    <property name="title">
+     <string>Fuselage</string>
+    </property>
+    <addaction name="actionAjouter_Section"/>
+   </widget>
+   <widget class="QMenu" name="menuCam_ra_2">
+    <property name="title">
+     <string>Caméra</string>
+    </property>
+    <addaction name="actionTop_2"/>
+    <addaction name="actionBottom_2"/>
+   </widget>
    <addaction name="menuFichier"/>
+   <addaction name="menuFuselage"/>
    <addaction name="menuPi_ces"/>
    <addaction name="menuBiblioth_que"/>
-   <addaction name="menuCam_ra"/>
+   <addaction name="menuCam_ra_2"/>
    <addaction name="menuA_propos"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -113,6 +121,26 @@
   <action name="actionBottom">
    <property name="text">
     <string>Bottom</string>
+   </property>
+  </action>
+  <action name="actionAjouter_Section">
+   <property name="text">
+    <string>Ajouter Section</string>
+   </property>
+  </action>
+  <action name="actionTop_2">
+   <property name="text">
+    <string>Top</string>
+   </property>
+  </action>
+  <action name="actionBottom_2">
+   <property name="text">
+    <string>Bottom</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder_Biblio">
+   <property name="text">
+    <string>Sauvegarder (Biblio)</string>
    </property>
   </action>
  </widget>

@@ -61,14 +61,11 @@ void MainWindow::initWindow()
     ligne3->addWidget(distance);ligne3->addWidget(Distant);
 
     vbox->addWidget(piece1);vbox->addWidget(piece2);
-    //vbox->addWidget(vide0);vbox->addWidget(vide1);vbox->addWidget(vide2);
     vbox->addWidget(new QLabel(" "));vbox->addWidget(new QLabel(" "));
     vbox->addLayout(ligne1);vbox->addLayout(ligne2);
-    //vbox->addWidget(vide4);
     vbox->addWidget(new QLabel(" "));
     vbox->addWidget(new QLabel(" "));
     vbox->addWidget(distanceButton);vbox->addLayout(ligne3);
-    //vbox->addWidget(vide3);
     vbox->addWidget(new QLabel(" "));
 
     Mainbox ->addLayout( vbox , 0 ,8 ,6,2);

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'appwidget.h'
 **
-** Created: Wed Apr 24 17:04:50 2013
+** Created: Fri Apr 26 08:47:14 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.4)
 **
 ** WARNING! All changes made in this file will be lost!

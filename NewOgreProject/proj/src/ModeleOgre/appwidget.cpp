@@ -283,6 +283,24 @@ void AppWidget::mouseMoveEvent(QMouseEvent *e)
         oldPos = pos;
         e->accept();
     }
+    else if (e->buttons().testFlag(Qt::MiddleButton) && oldPos != invalidMousePoint)
+    {
+        const QPoint &pos = e->pos();
+        Ogre::Real deltaX = pos.x() - oldPos.x();
+
+
+        if(e->modifiers().testFlag(Qt::ControlModifier))
+        {
+            deltaX *= turboModifier;
+        }
+
+        Ogre::Vector3 camTranslation(0,0,deltaX);
+        const Ogre::Vector3 &actualCamPos = camera->getPosition();
+        setCameraPosition(actualCamPos + camTranslation);
+
+        oldPos = pos;
+        e->accept();
+    }
     else
     {
         e->ignore();
@@ -316,6 +334,11 @@ void AppWidget::mousePressEvent(QMouseEvent *e)
         modeInput = MODE_CAMERA;
         orbitalCamera->setOrbiting(!zooningOrbitalCamera);
         orbitalCamera->setZooming(zooningOrbitalCamera);
+        e->accept();
+    }
+    else if(e->buttons().testFlag(Qt::MiddleButton))
+    {
+        oldPos = e->pos();
         e->accept();
     }
     else

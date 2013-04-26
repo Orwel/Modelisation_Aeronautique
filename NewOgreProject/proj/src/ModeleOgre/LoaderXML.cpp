@@ -16,7 +16,7 @@ Piece* LoadPiece(XMLElement *element,Fuselage &Fuselage,Relative stickFace);
 XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 {
     std::string directory("../proj/rsc/");
-    std::string patch_file = directory+patch;
+    std::string patch_file = directory + patch;
 
     int result = doc.LoadFile(patch_file.c_str());
     if(result!=XML_NO_ERROR)
