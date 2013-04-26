@@ -64,6 +64,7 @@ public:
     /** Zone aim to gravity center */
     DisplayObject gravityBalance;
 
+    /** Model's name */
     std::string name;
 };
 

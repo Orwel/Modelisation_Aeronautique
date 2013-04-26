@@ -33,8 +33,8 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
     //Create Gravity center
     CreateGravityObject();
 
-    setPosition(position);
-    CorrectCollission();
+    Base::setPosition(position);
+    //CorrectCollission();
 }
 
 /*****************************************************************************/

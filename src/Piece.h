@@ -110,7 +110,7 @@ public:
     void Display();
 
 public:
-    ///Save information
+    ///Where is this piece in XML file
     std::string file;
     std::string name;
 
