@@ -4,17 +4,20 @@
 #include "Base.h"
 
 /*****************************************************************************/
-Base::Base(Scene& _scene,float _mass):scene(_scene),node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
-        box(scene.sceneManager,node),object(scene.sceneManager,node),gravityCenter(scene.sceneManager,node),mass(_mass)
+Base::Base(Scene& _scene,Type _type,float _mass):scene(_scene),
+        node(scene.sceneManager->getRootSceneNode()->createChildSceneNode()),
+        box(scene.sceneManager,node),object(scene.sceneManager,node),gravityCenter(scene.sceneManager,node),mass(_mass),
+        type(_type)
 {
-
+    node->setUserAny(Ogre::Any(this));
 }
 
 /*****************************************************************************/
-Base::Base(Scene& _scene,Ogre::SceneNode *parent,float _mass):scene(_scene),node(parent->createChildSceneNode()),
-        box(scene.sceneManager,node),object(scene.sceneManager,node),gravityCenter(scene.sceneManager,node),mass(_mass)
+Base::Base(Scene& _scene,Type _type,Ogre::SceneNode *parent,float _mass):scene(_scene),node(parent->createChildSceneNode()),
+        box(scene.sceneManager,node),object(scene.sceneManager,node),gravityCenter(scene.sceneManager,node),mass(_mass),
+        type(_type)
 {
-
+    node->setUserAny(Ogre::Any(this));
 }
 
 /*****************************************************************************/

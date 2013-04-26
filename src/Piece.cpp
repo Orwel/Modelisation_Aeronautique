@@ -10,7 +10,7 @@ using namespace Ogre;
 
 /*****************************************************************************/
 Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3 offset,Relative _stickFace,Ogre::Vector3 position):
-    Base(_fuselage.scene,_fuselage.node,_mass),fuselage(_fuselage),stickFace(_stickFace)
+    Base(_fuselage.scene,Base::PIECE,_fuselage.node,_mass),fuselage(_fuselage),stickFace(_stickFace)
 {
     fuselage.AddPiece(this);
 

@@ -10,17 +10,24 @@
 class Base
 {
 public:
+
+    enum Type
+    {
+        PIECE,
+        FUSELAGE
+    };
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    Base(Scene& _scene,float _mass = 1.f);
+    Base(Scene& _scene,Type type,float _mass = 1.f);
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor with scene node parent
     ///
     ////////////////////////////////////////////////////////////
-    Base(Scene& _scene,Ogre::SceneNode *parent,float _mass = 1.f);
+    Base(Scene& _scene,Type type,Ogre::SceneNode *parent,float _mass = 1.f);
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
@@ -101,6 +108,7 @@ public:
     DisplayObject       object;         ///< Displayed object
     DisplayObject       gravityCenter;  ///< Gravity center of piece
     float               mass;           ///< Mass of object
+    Type                type;
 };
 
 #endif // BASE_H

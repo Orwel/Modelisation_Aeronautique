@@ -7,7 +7,7 @@
 #include "ColourConstant.h"
 
 /*****************************************************************************/
-Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene,_mass),
+Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base(_scene,Base::FUSELAGE,_mass),
     total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),massTotal(1)
 {
     scene.AddFuselage(this);
