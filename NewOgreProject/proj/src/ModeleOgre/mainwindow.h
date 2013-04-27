@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "appwidget.h"
+#include "LoaderXML.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,6 +32,8 @@ private slots:
     void initWindow();
 
     void on_actionQuitter_triggered();
+
+    void on_actionCharger_triggered();
 
 public:
     void PrintTot(char *myGrav , char *myPoids );

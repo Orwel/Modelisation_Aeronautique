@@ -36,82 +36,12 @@ AppWidget::~AppWidget()
 }
 
 /*****************************************************************************/
-/*bool AppWidget::Initialize ()
+
+Scene * AppWidget::getScene()
 {
-#ifdef _DEBUG
-    Ogre::String pluginFile = "plugins_d.cfg";
-#else
-    Ogre::String pluginFile = "plugins.cfg";
-#endif
-
-    // on créée le noeud root de la scène
-    mRoot = OGRE_NEW
-        Root(pluginFile);
-    // on charge les objets
-    ConfigFile configFile;
-    configFile.load("resources.cfg");
-    ConfigFile::SectionIterator seci = configFile.getSectionIterator();
-    Ogre::String secName, typeName, archName;
-    while (seci.hasMoreElements())
-    {
-        secName = seci.peekNextKey();
-        ConfigFile::SettingsMultiMap *settings = seci.getNext();
-        ConfigFile::SettingsMultiMap::iterator i;
-        for (i = settings->begin(); i != settings->end(); ++i)
-        {
-            typeName = i->first;
-            archName = i->second;
-            ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
-        }
-    }
-    // récupération des config de l'utilisateur
-    if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
-    {
-        return false;
-    }
-
-
-    initScene();
-    inputListener = new InputListener(scene,mSceneMgr,mWindow,orbitalCamera);
-    mRoot->addFrameListener(inputListener);
-
-    return true;
+    return scene;
 }
-*/
-/*****************************************************************************/
-/*
-void AppWidget::initScene ()
-{
-    // on crée la fenêtre
-    mWindow = mRoot->initialise(true, "Short Story");
-    // on charge les ressources pour de vrai
-    TextureManager::getSingleton().setDefaultNumMipmaps(5);
-    ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    // on crée le scene manager
-    mSceneMgr = mRoot->createSceneManager("DefaultSceneManager", "Scene Manager");
-    mSceneMgr->setAmbientLight(ColourValue(1.0f, 1.0f, 1.0f));
-
-    // on crée la caméra
-    nCamera = mSceneMgr->getRootSceneNode()->createChildSceneNode("camera");
-    orbitalCamera = new OrbitCamera(mSceneMgr,nCamera);
-    camera = orbitalCamera->getCamera();
-    if (mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_INFINITE_FAR_PLANE))
-    {
-        camera->setFarClipDistance(0);   // enable infinite far clip distance if we can
-    }
-    else
-    {
-        camera->setFarClipDistance(2000);
-    }
-
-    Viewport* vp = mWindow->addViewport(camera);
-    vp->setBackgroundColour(ColourValue(0, 0, 0));
-    camera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
-
-    scene = new Scene(mSceneMgr);
-}
-*/
 /*****************************************************************************/
 
 void AppWidget::setBackgroundColor(QColor c)
@@ -141,34 +71,6 @@ void AppWidget::setCameraPosition(const Ogre::Vector3 &pos)
 
 void AppWidget::keyPressEvent(QKeyEvent *e)
 {
-        /*static QMap<int, Ogre::Vector3> keyCoordModificationMapping;
-        static bool mappingInitialised = false;
-
-        if(!mappingInitialised)
-        {
-                keyCoordModificationMapping[Qt::Key_Z] 		  = Ogre::Vector3( 0, 0,-5);
-                keyCoordModificationMapping[Qt::Key_S] 		  = Ogre::Vector3( 0, 0, 5);
-                keyCoordModificationMapping[Qt::Key_Q] 		  = Ogre::Vector3(-5, 0, 0);
-                keyCoordModificationMapping[Qt::Key_D] 		  = Ogre::Vector3( 5, 0, 0);
-                keyCoordModificationMapping[Qt::Key_PageUp]   = Ogre::Vector3( 0, 5, 0);
-                keyCoordModificationMapping[Qt::Key_PageDown] = Ogre::Vector3( 0,-5, 0);
-
-                mappingInitialised = true;
-        }
-
-        QMap<int, Ogre::Vector3>::iterator keyPressed =
-                keyCoordModificationMapping.find(e->key());
-        if(keyPressed != keyCoordModificationMapping.end() && camera)
-        {
-                const Ogre::Vector3 &actualCamPos = camera->getPosition();
-                setCameraPosition(actualCamPos + keyPressed.value());
-
-                e->accept();
-        }
-    else
-    {
-        e->ignore();
-    }*/
     switch (e->key())
     {
     case Qt::Key_Escape:
@@ -275,7 +177,6 @@ void AppWidget::mouseMoveEvent(QMouseEvent *e)
             deltaY *= turboModifier;
         }
 
-        //Ogre::Real dist = Ogre::Math::Sqrt(Ogre::Math::Pow(nCamera->getPosition().x,2) +  Ogre::Math::Pow(nCamera->getPosition().y,2) + Ogre::Math::Pow(nCamera->getPosition().z,2));
         Ogre::Vector3 camTranslation(deltaX, deltaY, 0);
         const Ogre::Vector3 &actualCamPos = camera->getPosition();
         setCameraPosition(actualCamPos + camTranslation);
@@ -310,7 +211,7 @@ void AppWidget::mouseMoveEvent(QMouseEvent *e)
 
 void AppWidget::mouseMove(OIS::MouseEvent &e)
 {
-   /* LogManager::getSingletonPtr()->logMessage("cocu");
+   /*
     switch(modeInput)
     {
     case NONE:
@@ -431,8 +332,6 @@ void AppWidget::showEvent(QShowEvent *e)
 {
     if(!mRoot)
     {
-        //initOgreSystem();
-        //Initialize();
         initMyScene();
     }
 
@@ -456,50 +355,6 @@ void AppWidget::wheelEvent(QWheelEvent *e)
     e->accept();
 }
 
-/*****************************************************************************/
-/*
-void AppWidget::initOgreSystem()
-{
-    mRoot = new Ogre::Root();
-
-    Ogre::RenderSystem *renderSystem = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
-    mRoot->setRenderSystem(renderSystem);
-    mRoot->initialise(false);
-
-    mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
-
-    Ogre::NameValuePairList viewConfig;
-    Ogre::String widgetHandle;
-#ifdef Q_WS_WIN
-    widgetHandle = Ogre::StringConverter::toString((size_t)((HWND)winId()));
-#else
-    QWidget *q_parent = dynamic_cast <QWidget *> (parent());
-    QX11Info xInfo = x11Info();
-
-    widgetHandle = Ogre::StringConverter::toString ((unsigned long)xInfo.display()) +
-        ":" + Ogre::StringConverter::toString ((unsigned int)xInfo.screen()) +
-        ":" + Ogre::StringConverter::toString ((unsigned long)q_parent->winId());
-
-#endif
-    viewConfig["externalWindowHandle"] = widgetHandle;
-    mWindow = mRoot->createRenderWindow("Ogre rendering window",
-                width(), height(), false, &viewConfig);
-
-    camera = mSceneMgr->createCamera("myCamera");
-    Ogre::Vector3 camPos(0, 50,150);
-        camera->setPosition(camPos);
-        camera->lookAt(0,50,0);
-    emit cameraPositionChanged(camPos);
-
-    ogreViewport = mWindow->addViewport(camera);
-    ogreViewport->setBackgroundColour(Ogre::ColourValue(0,0,255));
-    camera->setAspectRatio(Ogre::Real(width()) / Ogre::Real(height()));
-
-        setupNLoadResources();
-        //createScene();
-        initScene();
-}
-*/
 /*****************************************************************************/
 
 void AppWidget::initMyScene ()

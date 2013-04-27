@@ -102,3 +102,24 @@ void MainWindow::on_actionQuitter_triggered()
 {
     this->close();
 }
+
+void MainWindow::on_actionCharger_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(
+        this,
+        tr("Open XML file"),
+        QDir::currentPath(),
+        tr("XML files (*.xml);;All files (*.*)") );
+    if( !filename.isNull() )
+    {
+        std::string myName="";
+        QByteArray Arr = filename.toAscii();
+        for(int i=0;i<Arr.size();i++)
+        {
+            myName+=Arr[i];
+        }
+        myApp->getScene()->ClearFuselages();
+        LoadModel(*myApp->getScene(),myName);
+        myApp->getScene()->CalculateGravityCenter();
+    }
+}

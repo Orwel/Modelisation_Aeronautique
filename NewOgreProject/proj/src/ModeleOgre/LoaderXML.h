@@ -2,6 +2,8 @@
 #define LOADERXML_H
 
 #include <string>
+#include <sstream>
+#include <vector>
 
 class Scene;
 

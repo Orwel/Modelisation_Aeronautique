@@ -18,16 +18,14 @@ public:
 
     /** Destructor */
     ~AppWidget();
-    
-    /** Initialise l'appli Ogre, notamment la gestion des inputs */
-    bool Initialize ();
 
     QPaintEngine* paintEngine() const; // Turn off QTs paint engine for the Ogre widget.
 
+    /** Accesseur*/
+    Scene * getScene();
 
 private:
-    /** Initialise la scene */
-    void initScene ();
+    /** Initialise la scene et le widget*/
     void initMyScene();
 
 public slots:
@@ -59,9 +57,7 @@ protected:
 
 
 private:
-    void initOgreSystem();
     void setupNLoadResources();
-    void createScene();
 
 private:
     static const Ogre::Real turboModifier;

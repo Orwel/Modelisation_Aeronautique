@@ -14,7 +14,7 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
     gravityBalance(sceneManager)
 {
     setLight();
-    LoadModel(*this,"Model2.xml");
+    LoadModel(*this,"../proj/rsc/Model2.xml");
     gravityCenter.BecomePavet(Volume(0.5,0.5,0.5),ColourConstant::gravityCenterModel);
     gravityBalance.BecomePavet(Volume(10,10,10),ColourConstant::balanceGravity);
     CalculateGravityCenter();

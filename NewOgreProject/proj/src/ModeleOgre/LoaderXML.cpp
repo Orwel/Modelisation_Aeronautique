@@ -10,13 +10,16 @@ XMLElement* LoadDocument(XMLDocument& doc,std::string file);
 void LoadSection(XMLElement *element,Scene &scene);
 void LoadPlacePiece(XMLElement *placePiece,Fuselage &fuselage);
 Piece* LoadPiece(XMLElement *element,Fuselage &Fuselage,Relative stickFace);
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems);
+std::vector<std::string> split(const std::string &s, char delim);
 
+
+static std::string dosPath;
 
 /*****************************************************************************/
 XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 {
-    std::string directory("../proj/rsc/");
-    std::string patch_file = directory + patch;
+    std::string patch_file = dosPath + patch;
 
     int result = doc.LoadFile(patch_file.c_str());
     if(result!=XML_NO_ERROR)
@@ -40,7 +43,17 @@ XMLElement* LoadDocument(XMLDocument& doc,std::string patch)
 void LoadModel(Scene &scene,const std::string &patch)
 {
     XMLDocument doc;
-    XMLElement* modelXML = LoadDocument(doc,patch);
+
+    std::vector <std::string> mySplit = split(patch,'/');
+    std::string namePatch = mySplit[mySplit.size()-1];
+    std::string dosTemp = "";
+    for(int i=0;i<mySplit.size()-1;i++)
+    {
+        dosTemp += mySplit[i]+ "/";
+    }
+    dosPath = dosTemp;
+
+    XMLElement* modelXML = LoadDocument(doc,namePatch);
 
     if(modelXML == nullptr)
     {
@@ -174,4 +187,22 @@ Piece* LoadPiece(XMLElement *pieceXML,Fuselage &fuselage,Relative stickFace)
         }
     }
     return new Piece(fuselage,mass,polygon,offset,stickFace);
+}
+
+/***************************Méthode de split***************************************/
+
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, elems);
+    return elems;
 }
