@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>595</width>
+    <height>487</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>595</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFichier">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="actionCharger"/>
+    <addaction name="actionSauvegarder"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menuPi_ces">
+    <property name="title">
+     <string>Pièces</string>
+    </property>
+    <addaction name="actionAjouter"/>
+    <addaction name="actionAjouter_2"/>
+    <addaction name="actionSauvegarder_2"/>
+    <addaction name="actionSauvegarder_Biblio"/>
+   </widget>
+   <widget class="QMenu" name="menuBiblioth_que">
+    <property name="title">
+     <string>Bibliothèque</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuA_propos">
+    <property name="title">
+     <string>A propos</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuFuselage">
+    <property name="title">
+     <string>Fuselage</string>
+    </property>
+    <addaction name="actionAjouter_Section"/>
+   </widget>
+   <widget class="QMenu" name="menuCam_ra_2">
+    <property name="title">
+     <string>Caméra</string>
+    </property>
+    <addaction name="actionTop_2"/>
+    <addaction name="actionBottom_2"/>
+   </widget>
+   <addaction name="menuFichier"/>
+   <addaction name="menuFuselage"/>
+   <addaction name="menuPi_ces"/>
+   <addaction name="menuBiblioth_que"/>
+   <addaction name="menuCam_ra_2"/>
+   <addaction name="menuA_propos"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionCharger">
+   <property name="text">
+    <string>Charger</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder">
+   <property name="text">
+    <string>Sauvegarder</string>
+   </property>
+  </action>
+  <action name="actionAjouter">
+   <property name="text">
+    <string>Créer</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder_2">
+   <property name="text">
+    <string>Sauvegarder</string>
+   </property>
+  </action>
+  <action name="actionAjouter_2">
+   <property name="text">
+    <string>Ajouter</string>
+   </property>
+  </action>
+  <action name="actionTop">
+   <property name="text">
+    <string>Top</string>
+   </property>
+  </action>
+  <action name="actionBottom">
+   <property name="text">
+    <string>Bottom</string>
+   </property>
+  </action>
+  <action name="actionAjouter_Section">
+   <property name="text">
+    <string>Ajouter Section</string>
+   </property>
+  </action>
+  <action name="actionTop_2">
+   <property name="text">
+    <string>Top</string>
+   </property>
+  </action>
+  <action name="actionBottom_2">
+   <property name="text">
+    <string>Bottom</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder_Biblio">
+   <property name="text">
+    <string>Sauvegarder (Biblio)</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
