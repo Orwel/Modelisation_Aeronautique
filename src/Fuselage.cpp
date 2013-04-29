@@ -11,8 +11,9 @@ Fuselage::Fuselage(Scene &_scene,float _mass,Volume _total,float thickness):Base
     total(_total),volume(total.w-thickness,total.h-thickness,total.d-thickness),massTotal(1)
 {
     scene.AddFuselage(this);
+    //object.BecomePavet(total,ColourConstant::fuselage);
     box.BecomePavet(volume,ColourConstant::fuselageBox);
-    CreateGravityObject();
+    //CreateGravityObject();
     volume.addArrayPoint(points);
 }
 

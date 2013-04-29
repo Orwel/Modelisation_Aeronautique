@@ -112,6 +112,8 @@ public:
     /////////////////////////////////////////////////
     void Display();
 
+    Fuselage& getParentSection(){return fuselage;};
+
 public:
     ///Where is this piece in XML file
     std::string file;

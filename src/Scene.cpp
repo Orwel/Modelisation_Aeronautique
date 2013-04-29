@@ -15,7 +15,8 @@ Scene::Scene(Ogre::SceneManager *_sceneManager):sceneManager(_sceneManager),sele
     gravityBalance(sceneManager)
 {
     setLight();
-    LoadModel(*this,"Model2.xml");
+    LoadModel(*this,"Model1.xml");
+
     gravityCenter.BecomePavet(Volume(0.5,0.5,0.5),ColourConstant::gravityCenterModel);
     gravityBalance.BecomePavet(Volume(10,10,10),ColourConstant::balanceGravity);
     CalculateGravityCenter();
@@ -154,4 +155,10 @@ void Scene::DisplayGravityCenterAllEntity()
         std::cout<<"Section "<<++countSection<<" : "<<(*itF)->getGravityCenter()<<std::endl;
     }
     std::cout<<"Model : "<<gravityCenter.getPosition()<<std::endl;
+}
+
+/*****************************************************************************/
+void Scene::SelectPiece(Piece* piece)
+{
+    selected = piece;
 }

@@ -31,9 +31,10 @@ Piece::Piece(Fuselage& _fuselage,float _mass,ArrayPoints &polygone,Ogre::Vector3
     //Create shape
     object.BecomePolygon3D(points,ColourConstant::piece);
     //Create Gravity center
-    CreateGravityObject();
+    //CreateGravityObject();
 
-    Base::setPosition(position);
+    //Base::setPosition(position);
+    setPosition(position);
     //CorrectCollission();
 }
 

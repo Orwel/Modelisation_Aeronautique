@@ -39,6 +39,8 @@ public:
 
     void setVisiblePiecesBox(bool visible);
 
+    void SelectPiece(Piece* piece);
+
     /** Calcule et place le centre de gravite du modele */
     void CalculateGravityCenter();
 
@@ -58,7 +60,7 @@ public:
     /** Listes des sections du fuselage */
     ListFuselagePtr sections;
     /** Piece selectionnee */
-    Piece * selected;
+    Piece* selected;
     /** Centre de gravite du modele */
     DisplayObject gravityCenter;
     /** Zone aim to gravity center */

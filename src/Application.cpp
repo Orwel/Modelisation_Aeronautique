@@ -59,7 +59,7 @@ bool Application::Initialize ()
 }
 
 /*****************************************************************************/
-void Application::initScene ()
+void Application::initScene()
 {
     // on crée la fenêtre
     mWindow = mRoot->initialise(true, "Short Story");

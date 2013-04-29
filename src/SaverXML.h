@@ -7,5 +7,4 @@ class Scene;
 
 void SaveModel(Scene &scene,const std::string &patch);
 
-
-#endif // SAVERXML_H
+#endif //SAVERXML_H

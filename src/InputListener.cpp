@@ -14,6 +14,7 @@ InputListener::InputListener(Scene *_scene,SceneManager* _sceneManager,RenderWin
     startOIS();
     mContinuer = true;
     zooningOrbitalCamera = false;
+    Fuselage * test = scene->sections.begin()->get();
 }
 
 /*****************************************************************************/
@@ -109,17 +110,22 @@ bool InputListener::mousePressed (const MouseEvent &arg, MouseButtonID id)
     }
     else if(id == OIS::MB_Left)
     {
-        Fuselage* piece = Picking::PickSection(*scene,sceneManager,orbitCamera->getRay());
+        Piece* piece = Picking::PickPiece(*scene,sceneManager,orbitCamera->getRay());
+        Fuselage* section = nullptr;
         if(piece)
         {
-            std::cout<<"FIND COOL"<<std::endl;
-            piece->setVisibleBox(false);
+            section = &piece->getParentSection();
+            //piece->setVisibleBox(false);
         }
         else
         {
-            std::cout<<"NOT COOL"<<std::endl;
+            section = Picking::PickSection(*scene,sceneManager,orbitCamera->getRay());
         }
-
+        scene->SelectPiece(piece);
+        if(section)
+        {
+            //orbitCamera->setTarget(section->node);
+        }
     }
     return true;
 }
@@ -168,14 +174,14 @@ bool InputListener::keyPressed (const KeyEvent &e)
     case OIS::KC_L:
         scene->setMagnetism(NEG_Z);
         break;
-    case OIS::KC_B:
+    case OIS::KC_V:
         scene->ClearFuselages();
         scene->CalculateGravityCenter();
         break;
     case OIS::KC_N:
         scene->DisplayGravityCenterAllEntity();
         break;
-    case OIS::KC_V:
+    case OIS::KC_B:
         scene->setVisiblePiecesBox(false);
         break;
     case OIS::KC_1:
